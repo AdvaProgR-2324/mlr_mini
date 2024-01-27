@@ -10,8 +10,10 @@ Models <- function(data, inducer) {
   )
 }
 
-
-
+ModelXGBoost <- function(data, inducer) {
+  model <- ModelRegression(data, inducer)
+  class(model) <- c("ModelXGBoost", class(model))
+}
 
 
 configuration.Models <- function(model, ...) {

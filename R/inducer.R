@@ -22,12 +22,6 @@ Inducer <- function(name, configuration, ...) {
 }
 
 
-InducerXGBoost <- function(){
-  # TODO assert
-  inducerxgb <- Inducer() # TODO input Inducer
-  class(inducerxgb) <- c("InducerXGBoost", class(inducerxgb))
-  inducerxgb
-}
 
 print.Inducer <- function(inducer, ...) {
   # TODO assert??
@@ -36,4 +30,11 @@ print.Inducer <- function(inducer, ...) {
   cat("Configuration:", paste(names(inducer$configuration), "=", unlist(inducer$configuration),
                               collapse = ", "))
   invisible(inducer)
+}
+
+InducerXGBoost <- function(){
+  # TODO assert
+  inducerxgb <- Inducer() # TODO input Inducer
+  class(inducerxgb) <- c("InducerXGBoost", class(inducerxgb))
+  inducerxgb
 }
