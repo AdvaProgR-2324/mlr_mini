@@ -4,6 +4,6 @@ Inducer <- function() {
 
 
   structure(list(),
-            class = "Inducer")
+            class = "Model")
 
 }
