@@ -1,5 +1,5 @@
-Package: mlr.mini
-Title: mlr.mini
+Package: mlrmini
+Title: mlrmini
 Version: 0.0.1
 Authors@R: c(
     person(given = "Fake", family = "Name", role = c("aut", "cre"), email = "teru.mlrmini@gmail.com")
@@ -17,3 +17,4 @@ Imports:
   checkmate
 Suggests:
   testthat
+RoxygenNote: 7.3.0

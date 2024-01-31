@@ -13,25 +13,25 @@
 
 
 .onLoad <- function(libname, pkgname) {
-
-  ind <- new.env(parent = emptyenv())
+  backports::import(pkgname)
+  # ind <- new.env(parent = emptyenv())
   # attach(ind, pos = 2, name = "ind")
-
-  # ggf backports::import(pkgname)
-
-
-
-
-
-
 
 }
 
+#.onLoad <- function(libname, pkgname) {
+#  cat("Package", pkgname, "is loaded.\n")
+  # Add your custom code or setup tasks here
+#}
+
+
+#ind <- new.env(parent = emptyenv()) 
 
 # Inducer zuweisen ausserhalb ?
 ind$xgboost <- InducerXGBoost # Inducer zuweisen
 
 
+# evtl. .onAttach function definieren??
 
 # Optional: onUnload-Funktion für Bereinigungen beim Entladen des Pakets
 .onUnload <- function(libpath) {
