@@ -13,7 +13,7 @@ ModelRegression <- function(data, inducer){
 
 #' @title Printing Regression Models
 #' @description Print a regression model.
-#' @param model object of class `ModelRegression`.
+#' @param model object of class `ModelRegression`
 #' @examples
 #' # example code
 #' @export

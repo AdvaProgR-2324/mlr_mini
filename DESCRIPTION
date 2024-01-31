@@ -14,7 +14,12 @@ Config/testthat/edition: 3
 Config/testthat/parallel: true
 Roxygen: list(markdown = TRUE)
 Imports:
-  checkmate
+  checkmate,
+  backports,
+  xgboost,
+  ranger,
+  rpart,
+  stats
 Suggests:
   testthat
 RoxygenNote: 7.3.0

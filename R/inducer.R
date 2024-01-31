@@ -1,20 +1,20 @@
 # # Environment
 # ind <- new.env()
 
-xgboost <- function(x) {
-  x^2
-}
+#xgboost <- function(x) {
+#  x^2
+#}
 
 # Assign the function to the environment
 # ind$xgboost <- xgboost
 
-for (i in inducer_names) {
-  assign(i, get(i), envir = ind)
-}
+#for (i in inducer_names) {
+#  assign(i, get(i), envir = ind)
+#}
 
 
 
-Inducer <- function(name, configuration, ...) {
+Inducer <- function(name, package, configuration, ...) {
   # TODO: assert
   inducer <- function(name, configuration, ...) {
 
@@ -58,4 +58,10 @@ InducerXGBoost <- function() {
   ) # TODO input Inducer
   class(inducerxgb) <- c("InducerXGBoost", class(inducerxgb))
   inducerxgb
+}
+
+
+
+RangerRF <- function(){
+  
 }

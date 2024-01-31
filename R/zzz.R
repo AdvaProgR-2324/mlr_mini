@@ -2,15 +2,10 @@
 #' @import xgboost
 #' @import ranger
 #' @import rpart
+#' @import stats
 "_PACKAGE"
 
-# lm nicht, lol
-
-
-
-## import die anderen Packages
-
-
+## import remaining
 
 .onLoad <- function(libname, pkgname) {
   backports::import(pkgname)
@@ -25,19 +20,19 @@
 #}
 
 
-#ind <- new.env(parent = emptyenv()) 
+ind <- new.env(parent = emptyenv()) 
 
 # Inducer zuweisen ausserhalb ?
-ind$xgboost <- InducerXGBoost # Inducer zuweisen
-
+ind$xgboost <- xgboost # Inducer zuweisen
+ind$ranger <- ranger
+ind$rpart <- rpart
+ind$lm <- lm
 
 # evtl. .onAttach function definieren??
 
 # Optional: onUnload-Funktion für Bereinigungen beim Entladen des Pakets
-.onUnload <- function(libpath) {
+#.onUnload <- function(libpath) {
   # Führe hier Bereinigungsaktionen durch, falls erforderlich
 
-  detach(pos = 2, name = "ind")
-}
-
-
+  #detach(pos = 2, name = "ind")
+#}

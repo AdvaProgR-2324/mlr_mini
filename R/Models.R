@@ -34,7 +34,7 @@ configuration.Models <- function(model, ...) {
 #' 
 #' @export
 inducer.Models <- function(model, ...) {
-  stopifnot("model must be of class 'Models'" = class(model) == "Models")
+  stopifnot(class(model) == "Models")
   cat("Inducer:", model$inducer, "\n")
   cat("Configuration:", paste(names(model$configuration), "=", unlist(model$configuration),
             collapse = ", "))
@@ -59,7 +59,7 @@ modelObject.Models <- function(model, ...) {
 #' @export
 modelInfo.Models <- function(model, ...) {
   # TODO: add assert Models
-  stopifnot(class(model) = "Models")
+  stopifnot(class(model) == "Models")
   return(model$training.time.sec)
   
 }
@@ -67,5 +67,5 @@ modelInfo.Models <- function(model, ...) {
 predict.Models <-function(model, newdata, ...) {
   # TODO: add assert Models and assert dataframe
   # TODO: ???? dataframe or dataset as input? ?? different behaviour?
-  stopifnot(class(model) = "Models")
+  stopifnot(class(model) == "Models")
 }
