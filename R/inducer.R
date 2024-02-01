@@ -6,7 +6,7 @@
 # ind$xgboost <- xgboost
 
 
-Inducer <- function(name, package, configuration, ...) {
+Inducer <- function(name, configuration, ...) {  #  package,
   # TODO: assert
   inducer <- function(name, configuration, ...) {
 
@@ -44,16 +44,21 @@ InducerXGBoost <- function() {
   inducerxgb <- Inducer(
     name = "InducerXGBoost",
     configuration = list(a = 2, b = 3),
-    params = list(c = 4, d = 5),  # TODO warum funktioniert das hier nicht???
-    testlol = "sdfgsfs"
+    params = list(c = 4, d = 5),  # TODO warum funktioniert das hier nicht?
+    test = "sdfgsfs"
 
   ) # TODO input Inducer
+
+
+  # TODO check if data is given
+
   class(inducerxgb) <- c("InducerXGBoost", class(inducerxgb))
   inducerxgb
 }
 
+ind$xgboost <- InducerXGBoost()
 
 
 RangerRF <- function(){
-  
+
 }
