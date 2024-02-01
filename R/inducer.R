@@ -1,34 +1,19 @@
-
-# # Environment
-# ind <- new.env()
-
-
-# Assign the function to the environment
-# ind$xgboost <- xgboost
-
-
 #' @title Create an Inducer
 #' @description Build an Inducer
 #' @param name name of the inducer
 #' @configuration configuration of the inducer
 #* @export
-Inducer <- function(name, configuration, ...) {  #  package,   # .data arg ?
-
-  # TODO: assert
-  inducer <- function(name, configuration, ...) {
-
+Inducer <- function(name, configuration, hyperparameter) {
+  assert_string(name)
+  assert_list(configuration)
+  assert_list(hyperparameter)
     structure(
       list(
         name = name,
-        configuration = configuration
+        configuration = configuration,
+        hyperparameter = hypermeter
       ), class = "Inducer"
     )
-
-  }
-
-
-  class(inducer) <- c("Inducer", "function")
-  inducer(name, configuration, ...)
 
 }
 
@@ -58,17 +43,11 @@ InducerXGBoost <- function() {
   inducerxgb <- Inducer(
     name = "InducerXGBoost",
     configuration = list(a = 2, b = 3),
-    params = list(c = 4, d = 5),  # TODO warum funktioniert das hier nicht?
-    test = "sdfgsfs"
-
-  ) # TODO input Inducer
-
-
-  # TODO check if data is given
+    hyperparameter = list(c = 4, d = 5)
+  )
 
   # formalArgs(xgboost)
 
-  class(inducerxgb) <- c("InducerXGBoost", class(inducerxgb))
   inducerxgb
 }
 
