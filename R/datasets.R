@@ -6,7 +6,7 @@ Dataset <- function(dat, target, type)
   #Subset dataset so it can be splitted into features and target . It is useful to implement the [-function for this dataset for subsetting.
   dat <-  subset(dat, select=sapply(dat, is.numeric))
   print(dat)
-  target <- strsplit(as.character(dat), " ")
+  target <- sapply(strsplit(as.character(dat), " "), "[", 1)
   print(target)
   
   #Dataset is an object 
