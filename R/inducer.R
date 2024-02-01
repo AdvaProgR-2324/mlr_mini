@@ -6,7 +6,7 @@
 # ind$xgboost <- xgboost
 
 
-Inducer <- function(name, configuration, ...) {  #  package,
+Inducer <- function(name, configuration, ...) {  #  package,   # .data arg ?
   # TODO: assert
   inducer <- function(name, configuration, ...) {
 
@@ -37,6 +37,8 @@ print.Inducer <- function(inducer, ...) {
 }
 
 
+
+
 InducerXGBoost <- function() {
   # TODO assert
 
@@ -51,6 +53,8 @@ InducerXGBoost <- function() {
 
 
   # TODO check if data is given
+
+  # formalArgs(xgboost)
 
   class(inducerxgb) <- c("InducerXGBoost", class(inducerxgb))
   inducerxgb
