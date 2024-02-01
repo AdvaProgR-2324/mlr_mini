@@ -44,7 +44,7 @@ InducerXGBoost <- function() {
   inducerxgb <- Inducer(
     name = "InducerXGBoost",
     configuration = list(a = 2, b = 3),
-    hyperparameter = list(c = 4, d = 5)
+    hyperparameter = list(eta = c("eta", 1), d = 5, gamma = 0)
   )
 
   # formalArgs(xgboost)
