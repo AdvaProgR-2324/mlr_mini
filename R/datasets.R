@@ -20,9 +20,6 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 
 # implementation of [ subset operator
 `[.Dataset` <- function(to_subset, drop = FALSE) {
-  
-  subset_data <- to_subset$data
-  # TODO: do actual subsetting on subset_data and return in structure
 }
 
 # implementation of as.data.frame
