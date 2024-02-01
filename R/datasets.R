@@ -30,8 +30,15 @@ as.data.frame.Dataset <- function(dataset) {
   as.data.frame(dataset$data)
 }
 
-metainfo.Dataset <- function(dataset) {
-  lapply(dataset, structure)
+metainfo.Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute(data), 20)[[1]])) {
+  
+ target <-  if (!is.character(data$target)) {
+    stop(sprintf("Exptected 'target' to be of type character, got %s", class(target)))
+  }
+  lda <- list(data = data, target = target, type, name = name, class = "Dataset")
+  
+ x <-  lapply(lda, class)
+ print(x)
   # Create a list with nrow, ncol, target, type and name, and class 
     # class(cars.data)
   # str(cars.data)
