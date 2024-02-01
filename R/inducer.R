@@ -1,9 +1,19 @@
+
+# # Environment
+# ind <- new.env()
+
+
+# Assign the function to the environment
+# ind$xgboost <- xgboost
+
+
 #' @title Create an Inducer
 #' @description Build an Inducer
 #' @param name name of the inducer
 #' @configuration configuration of the inducer
 #* @export
-Inducer <- function(name, configuration, ...) {  #  package,
+Inducer <- function(name, configuration, ...) {  #  package,   # .data arg ?
+
   # TODO: assert
   inducer <- function(name, configuration, ...) {
 
@@ -37,6 +47,7 @@ print.Inducer <- function(inducer, ...) {
 
 
 
+
 #' @title Create an InducerXGBoost
 #' @description Build an InducerXGBoost
 #' @export
@@ -54,6 +65,8 @@ InducerXGBoost <- function() {
 
 
   # TODO check if data is given
+
+  # formalArgs(xgboost)
 
   class(inducerxgb) <- c("InducerXGBoost", class(inducerxgb))
   inducerxgb
