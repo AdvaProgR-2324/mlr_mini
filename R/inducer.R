@@ -11,7 +11,7 @@ Inducer <- function(name, configuration, hyperparameter) {
       list(
         name = name,
         configuration = configuration,
-        hyperparameter = hypermeter
+        hyperparameter = hyperparameter
       ), class = "Inducer"
     )
 
