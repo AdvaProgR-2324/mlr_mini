@@ -46,8 +46,22 @@ InducerXGBoost <- function() {
   inducerxgb <- Inducer(
     name = "InducerXGBoost",
     configuration = list(a = 2, b = 3),
-    hyperparameter = list(eta = c("eta", 1), d = 5, gamma = 0)
+    # hyperparameter = list(eta = c("eta", 1), d = 5, gamma = 0)
+    hyperparameter = list(eta = c(default = 0.3, lower = 0, upper = 1),
+                          gamma = c(default = 0, lower = 0, upper = Inf),
+                          max_depth = c(default = 6, lower = 0, upper = Inf),
+                          min_child_weight = c(default = 1, lower = 0, upper = Inf),
+                          subsample = c(default = 1, lower = 0, upper = Inf),
+                          colsample_bytree = c(default = 1, lower = 0, upper = Inf),
+                          lambda = c(default = 1, lower = 0, upper = Inf),
+                          alpha = c(default = 0, lower = 0, upper = Inf),
+                          num_parallel_tree = c(default = 1, lower = 0, upper = Inf)  # lower right?
+                          # monotone_constraints
+                          # interaction_constraints
+
+                          )
   )
+  class(inducerxgb) <- c("InducerXGBoost", "Inducer", "function")
 
   # formalArgs(xgboost)
 
@@ -65,7 +79,16 @@ InducerRanger <- function() {
   inducerranger <- Inducer(
     name = "InducerRanger",
     configuration = list(a = 2, b = 1),
-    hyperparameter = list(b = 3, d = 4)
+    hyperparameter = list(num.trees = c(default = 500),
+                          mtry = c(default = 2),  # Default is the (rounded down) square root of the number variables
+                          # importance
+                          min.node.size = c(default = 1)  # Default 1 for classification, 5 for regression, 3 for survival, and 10 for probability.
+                          max.depth = c(default = 0)
+
+
+
+
+                          )
   )
   inducerranger
 }
@@ -81,3 +104,22 @@ InducerRpart <- function() {
   )
   inducerpart
 }
+
+
+hyperparameters <- function(inducer) {
+  # TODO assert inducer
+
+  as.list
+  #inducer = InducerXGBoost
+
+
+  #eval(parse(text = paste0("InducerXGBoost", "()")))
+  #substitute(inducer)
+
+
+
+  # hyperparameters()
+
+}
+
+
