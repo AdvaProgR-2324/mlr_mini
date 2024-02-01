@@ -6,6 +6,14 @@
 \usage{
 \method{predict}{Models}(model, newdata, ...)
 }
+\arguments{
+\item{model}{A \code{Models} object}
+
+\item{newdata}{A \code{dataset} object for which the values should be fitted}
+}
+\value{
+the fitted values
+}
 \description{
 Predicted values based on a Models object.
 }

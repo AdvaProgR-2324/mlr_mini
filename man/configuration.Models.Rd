@@ -6,6 +6,12 @@
 \usage{
 configuration.Models(model, ...)
 }
+\arguments{
+\item{model}{A Models object for which the configuration should be obtained.}
+}
+\value{
+The configuration of the model.
+}
 \description{
 Get the configuration of a Models object.
 }

@@ -14,8 +14,6 @@ ModelClassification <- function(data, inducer) {
 #' @title Printing Classification Models
 #' @description Print a classification model.
 #' @param model object of class `ModelClassification`.
-#' @examples
-#' # example code
 #' @export
 print.ModelClassification <- function(model, ...) {
   cat("Classification Model:", model$name, "fitted on", model$name, "dataset.\n")

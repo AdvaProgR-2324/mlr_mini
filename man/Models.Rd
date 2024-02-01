@@ -6,6 +6,11 @@
 \usage{
 Models(data, inducer)
 }
+\arguments{
+\item{data}{The data given in an Dataset object.}
+
+\item{inducer}{An Inducer object: The applied inducer}
+}
 \description{
 Create a Models object given a dataset and an inducer.
 }

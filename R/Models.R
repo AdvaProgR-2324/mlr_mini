@@ -2,7 +2,8 @@
 #' @title Create a Models object
 #' @description
 #' Create a Models object given a dataset and an inducer.
-#' 
+#' @param data The data given in an Dataset object.
+#' @param inducer An Inducer object: The applied inducer
 #' @export
 
 Models <- function(data, inducer) {
