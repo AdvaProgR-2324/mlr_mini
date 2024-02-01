@@ -24,7 +24,10 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 
 # implementation of as.data.frame
 as.data.frame.Dataset <- function(dataset) {
-  # TODO:
+  if (!class(dataset) == "Dataset") {
+    stop(sprintf("Expected dataset to be of type 'Dataset', got %s", class(dataset)))
+  }
+  as.data.frame(dataset$data)
 }
 
 metainfo.Dataset <- function(dataset) {
