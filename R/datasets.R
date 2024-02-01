@@ -31,6 +31,7 @@ as.data.frame.Dataset <- function(dataset) {
 }
 
 metainfo.Dataset <- function(dataset) {
+  lapply(dataset, structure)
   # Create a list with nrow, ncol, target, type and name, and class 
     # class(cars.data)
   # str(cars.data)
@@ -40,10 +41,10 @@ metainfo.Dataset <- function(dataset) {
   # ncol(cars.data)
   # class(cars.data)
 
-  
-  list(nrow(Dataset), ncol(dataset), target, name, type)
-  target 
-  class(strsplit(dataset, split = " ")[[1]][2])
+  # 
+  # list(nrow(Dataset), ncol(dataset), target, name, type)
+  # target 
+  # class(strsplit(dataset, split = " ")[[1]][2])
  # x <- lapply(dataset, class)
  # #attr(object, "attribute_name") <- attribute_value
  # print(x)
