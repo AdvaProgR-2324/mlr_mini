@@ -1,5 +1,14 @@
-
-# implementation of Dataset class
+#' Create a Dataset object.
+#'
+#' This function creates a Dataset object based on a given matrix/data.frame with data.
+#'
+#' @param data A matrix or data.frame object with relevant data and named columns.
+#' @param target A string of a column name of data specifying the target.
+#' @param type A string specifying whether a regression or classification should be done.
+#'
+#' @return A object of class 'Dataset'.
+#'
+#' @export
 Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute(data), 20)[[1]])) {
   # TODO: check whether there are column names
   # checks
@@ -19,7 +28,19 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
   structure(list(data = data, target = target, type = type, name = name), class = "Dataset")
 }
 
-# implementation of [ subset operator
+#' Subset a Dataset Object.
+#'
+#' This function subsets a custom dataset object based on specified row indices and optional column names.
+#' If column names are not specified, it defaults to using all columns. The function checks if the provided
+#' column names exist in the dataset and whether they include the target variable, which cannot be removed.
+#'
+#' @param to_subset A  Dataset.
+#' @param ... Additional arguments where the first is assumed to be row indices (numeric vector) for subsetting, 
+#' and the second (optional) is column names (character vector) to subset.
+#' If only one argument is provided, it is assumed to be row indices, and all columns are included.
+#' @return A object of type 'Dataset.
+#'
+#' @export
 `[.Dataset` <- function(to_subset, ...) {
   data_cols <- colnames(to_subset$data)
   lst_args <- list(...)
@@ -51,7 +72,16 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
   subseted <- to_subset[arg_rows, arg_cols]
 }
 
-# implementation of as.data.frame
+#' Create a data.frame object from a Dataset.
+#' 
+#' This function returns the actual data of a Dataset as a data.frame.
+#' Additional information associated with a Dataset are neglected. 
+#' 
+#' @param dataset A Dataset object.
+#' 
+#' @return A data.frame with the actual data of the original Dataset.
+#' 
+#' @export
 as.data.frame.Dataset <- function(dataset) {
   if (!class(dataset) == "Dataset") {
     stop(sprintf("Expected dataset to be of type 'Dataset', got %s", class(dataset)))
