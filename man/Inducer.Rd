@@ -4,7 +4,7 @@
 \alias{Inducer}
 \title{Create an Inducer}
 \usage{
-Inducer(name, configuration, ...)
+Inducer(name, configuration, hyperparameter)
 }
 \arguments{
 \item{name}{name of the inducer}
