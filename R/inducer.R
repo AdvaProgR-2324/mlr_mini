@@ -1,11 +1,8 @@
-# # Environment
-# ind <- new.env()
-
-
-# Assign the function to the environment
-# ind$xgboost <- xgboost
-
-
+#' @title Create an Inducer
+#' @description Build an Inducer
+#' @param name name of the inducer
+#' @configuration configuration of the inducer
+#* @export
 Inducer <- function(name, configuration, ...) {  #  package,
   # TODO: assert
   inducer <- function(name, configuration, ...) {
@@ -25,8 +22,10 @@ Inducer <- function(name, configuration, ...) {  #  package,
 
 }
 
-
-
+#' @title Print method for Inducer object
+#' @description Print an Inducer.
+#' @param inducer An inducer being an Inducer object.
+#' @export
 print.Inducer <- function(inducer, ...) {
   # TODO assert??
 
@@ -37,6 +36,10 @@ print.Inducer <- function(inducer, ...) {
 }
 
 
+
+#' @title Create an InducerXGBoost
+#' @description Build an InducerXGBoost
+#' @export
 InducerXGBoost <- function() {
   # TODO assert
 
@@ -58,7 +61,3 @@ InducerXGBoost <- function() {
 
 ind$xgboost <- InducerXGBoost()
 
-
-RangerRF <- function(){
-
-}
