@@ -6,6 +6,11 @@
 \usage{
 ModelClassification(data, inducer)
 }
+\arguments{
+\item{data}{Data provided as a Dataset object}
+
+\item{inducer}{The used inducer provided as an Inducer object}
+}
 \description{
 Building a classification model given a Dataset object and an inducer.
 }

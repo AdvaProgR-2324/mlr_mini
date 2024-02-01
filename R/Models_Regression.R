@@ -1,5 +1,5 @@
-#' @title
-#' @description
+#' @title Build a ModelRegression object
+#' @description Create a ModelRegression object
 #' @param name description
 #' @examples
 #' # example code

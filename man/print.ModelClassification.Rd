@@ -12,6 +12,3 @@
 \description{
 Print a classification model.
 }
-\examples{
-# example code
-}
