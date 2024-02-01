@@ -59,5 +59,6 @@ InducerXGBoost <- function() {
   inducerxgb
 }
 
+ind <- new.env(parent = emptyenv()) 
 ind$xgboost <- InducerXGBoost()
 
