@@ -21,22 +21,27 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 
 # implementation of [ subset operator
 `[.Dataset` <- function(to_subset, ...) {
+  data_cols <- colnames(to_subset$data)
   lst_args <- list(...)
   arg_rows <- lst_args[[1]]
   if (length(lst_args) == 2) {
     arg_cols <- lst_args[[2]]
   }
-  if (exists(arg_cols)) {
+  # depending whether arguments for covariates are given, do checks,
+  # if not select all covariates
+  if (exists("arg_cols")) {
     if (!is.character(arg_cols)) {
       stop(sprintf("Expected (char) names of covariates, got %s", class(arg_col)))
     }
     # check whether covariate names do actually exist
-    data_cols <- colnames(to_subset$data)
     matched <- arg_cols %in% data_cols
     if (!all(matched)) {
       stop(sprintf("Some given covariate names could not be found: %s", data_cols[matched]))
     }
     # check whether covariates contain target
+    if (!to_subset$target %in% arg_cols) {
+      stop(sprintf("Cannot remove target column '%s'", to_subset$target))
+    }
     
   } else {
     arg_cols <- data_cols
@@ -82,8 +87,7 @@ data = cars
 cars.data <- Dataset(data = cars, target = "dist")
 print(cars.data)
 class(cars.data)
-cars.data[c(1, 2, 3), c("dist")]
-cars.data[c(1, 2, 3, 4), ]
+cars.data[c(1, 2, 3, 4), "speed" ]
 metainfo.Dataset(cars.data)
 colnames(cars.data)
 typeof(cars.data)
