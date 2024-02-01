@@ -54,3 +54,27 @@ InducerXGBoost <- function() {
 ind <- new.env(parent = emptyenv()) 
 ind$xgboost <- InducerXGBoost()
 
+
+#' @title Create an InducerRanger
+#' @description Build an InducerRanger
+#' @export
+InducerRanger <- function() {
+  inducerranger <- Inducer(
+    name = "InducerRanger",
+    configuration = list(a = 2, b = 1),
+    hyperparameter = list(b = 3, d = 4)
+  )
+  inducerranger
+}
+
+#' @title Create an InducerRanger
+#' @description Build an InducerRanger
+#' @export
+InducerRpart <- function() {
+  inducerranger <- Inducer(
+    name = "InducerRpart",
+    configuration = list(a = 2, b = 1),
+    hyperparameter = list(b = 3, d = 4)
+  )
+  inducerpart
+}
