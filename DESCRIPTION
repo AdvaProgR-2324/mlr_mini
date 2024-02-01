@@ -6,8 +6,8 @@ Authors@R: c(
   )
 Description: A package  for machine learning in R
 License: MIT + file LICENSE
-URL: https://github.com/AdvaProgR-2324/mlr_mini
-BugReports: https://github.com/AdvaProgR-2324/mlr_mini/issues
+URL: https://github.com/AdvaProgR-2324/mlrmini
+BugReports: https://github.com/AdvaProgR-2324/mlrmini/issues
 ByteCompile: true
 Encoding: UTF-8
 Config/testthat/edition: 3
