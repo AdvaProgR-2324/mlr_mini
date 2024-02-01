@@ -1,17 +1,9 @@
 # # Environment
 # ind <- new.env()
 
-#xgboost <- function(x) {
-#  x^2
-#}
 
 # Assign the function to the environment
 # ind$xgboost <- xgboost
-
-#for (i in inducer_names) {
-#  assign(i, get(i), envir = ind)
-#}
-
 
 
 Inducer <- function(name, package, configuration, ...) {
