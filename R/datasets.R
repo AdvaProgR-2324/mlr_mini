@@ -1,6 +1,7 @@
 
 # implementation of Dataset class
 Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute(data), 20)[[1]])) {
+  # TODO: check whether there are column names
   # checks
   if (!(is.data.frame(data) | is.matrix(data))) {
     stop(sprintf("Data must be a data.frame or matrix, got %s", class(data)))
@@ -19,7 +20,30 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 }
 
 # implementation of [ subset operator
-`[.Dataset` <- function(to_subset, drop = FALSE) {
+`[.Dataset` <- function(to_subset, ...) {
+  lst_args <- list(...)
+  arg_rows <- lst_args[[1]]
+  if (length(lst_args) == 2) {
+    arg_cols <- lst_args[[2]]
+  }
+  if (exists(arg_cols)) {
+    if (!is.character(arg_cols)) {
+      stop(sprintf("Expected (char) names of covariates, got %s", class(arg_col)))
+    }
+    # check whether covariate names do actually exist
+    data_cols <- colnames(to_subset$data)
+    matched <- arg_cols %in% data_cols
+    if (!all(matched)) {
+      stop(sprintf("Some given covariate names could not be found: %s", data_cols[matched]))
+    }
+    # check whether covariates contain target
+    
+  } else {
+    arg_cols <- data_cols
+  }
+  # subset normal data.frame
+  to_subset <- as.data.frame(to_subset)
+  subseted <- to_subset[arg_rows, arg_cols]
 }
 
 # implementation of as.data.frame
@@ -42,4 +66,4 @@ data = cars
 cars.data <- Dataset(data = cars, target = "dist")
 print(cars.data)
 class(cars.data)
-cars.data[c(1, 2, 3, 4), ]
+cars.data[c(1, 2, 3), c("dist")]
