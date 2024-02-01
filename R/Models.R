@@ -30,7 +30,8 @@ ModelXGBoost <- function(data, inducer) {
 #' @return The configuration of the model.
 #' @export
 configuration.Models <- function(model, ...) {
-  assert_class(model, "Modelss")
+  assert_class(model, "Models")
+  return(model$configuration)
 }
 
 
