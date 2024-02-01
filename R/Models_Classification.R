@@ -1,6 +1,7 @@
-#' @title
-#' @description
-#' @param name description
+#' @title Build a classification model
+#' @description Building a classification model given a Dataset object and an inducer.
+#' @param data
+#' @param inducer
 #' @examples
 #' # example code
 #' @export

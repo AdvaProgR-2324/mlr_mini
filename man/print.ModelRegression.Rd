@@ -7,7 +7,7 @@
 \method{print}{ModelRegression}(data, inducer, ...)
 }
 \arguments{
-\item{model}{object of class \code{ModelRegression}.}
+\item{model}{object of class \code{ModelRegression}}
 }
 \description{
 Print a regression model.

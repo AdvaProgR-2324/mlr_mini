@@ -11,8 +11,8 @@ A package for machine learning in R
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/AdvaProgR-2324/mlr_mini}
-  \item Report bugs at \url{https://github.com/AdvaProgR-2324/mlr_mini/issues}
+  \item \url{https://github.com/AdvaProgR-2324/mlrmini}
+  \item Report bugs at \url{https://github.com/AdvaProgR-2324/mlrmini/issues}
 }
 
 }

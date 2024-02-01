@@ -1,8 +1,8 @@
 #' @import checkmate
-#' @import xgboost
-#' @import ranger
-#' @import rpart
-#' @import stats
+#' @importFrom xgboost xgboost
+#' @importFrom ranger ranger
+#' @importFrom rpart rpart
+#' @importFrom stats lm
 "_PACKAGE"
 
 ## import remaining
