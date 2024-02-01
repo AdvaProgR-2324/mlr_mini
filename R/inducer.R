@@ -17,6 +17,8 @@ Inducer <- function(name, configuration, hyperparameter) {
 
 }
 
+# hyper <- list(eta = c(default = 0.3, lower = 0, upper = 1))
+
 #' @title Print method for Inducer object
 #' @description Print an Inducer.
 #' @param inducer An inducer being an Inducer object.
