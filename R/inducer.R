@@ -11,7 +11,7 @@ Inducer <- function(name, configuration, hyperparameter) {
       list(
         name = name,
         configuration = configuration,
-        hyperparameter = hypermeter
+        hyperparameter = hyperparameter
       ), class = "Inducer"
     )
 
@@ -39,6 +39,7 @@ print.Inducer <- function(inducer, ...) {
 InducerXGBoost <- function() {
   # TODO assert
 
+  # Hyperparameter Quelle: https://xgboost.readthedocs.io/en/latest/parameter.html
 
   inducerxgb <- Inducer(
     name = "InducerXGBoost",
@@ -51,7 +52,7 @@ InducerXGBoost <- function() {
   inducerxgb
 }
 
-ind <- new.env(parent = emptyenv()) 
+ind <- new.env(parent = emptyenv())
 ind$xgboost <- InducerXGBoost()
 
 
