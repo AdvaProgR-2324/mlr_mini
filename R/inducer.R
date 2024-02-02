@@ -33,10 +33,8 @@ print.Inducer <- function(inducer, ...) {
 }
 
 
-
-
 #' @title Create an InducerXGBoost
-#' @description Build an InducerXGBoost
+#' @description Build an InducerXGBoost.
 #' @export
 InducerXGBoost <- function() {
   # TODO assert
@@ -73,7 +71,7 @@ ind$xgboost <- InducerXGBoost()
 
 
 #' @title Create an InducerRanger
-#' @description Build an InducerRanger
+#' @description Build an InducerRanger.
 #' @export
 InducerRanger <- function() {
   inducerranger <- Inducer(
@@ -82,9 +80,8 @@ InducerRanger <- function() {
     hyperparameter = list(num.trees = c(default = 500),
                           mtry = c(default = 2),  # Default is the (rounded down) square root of the number variables
                           # importance
-                          min.node.size = c(default = 1)  # Default 1 for classification, 5 for regression, 3 for survival, and 10 for probability.
+                          min.node.size = c(default = 1),  # Default 1 for classification, 5 for regression, 3 for survival, and 10 for probability.
                           max.depth = c(default = 0)
-
 
 
 
@@ -94,32 +91,62 @@ InducerRanger <- function() {
 }
 
 #' @title Create an InducerRanger
-#' @description Build an InducerRanger
+#' @description Build an InducerRanger.
 #' @export
 InducerRpart <- function() {
-  inducerranger <- Inducer(
+  inducerrpart <- Inducer(
     name = "InducerRpart",
     configuration = list(a = 2, b = 1),
     hyperparameter = list(b = 3, d = 4)
   )
-  inducerpart
+  inducerrpart
 }
 
 
-hyperparameters <- function(inducer) {
-  # TODO assert inducer
+#' @title Create an InducerLm
+#' @description Build an InducerLm.
+#' @export
+InducerLm <- function() {
+  inducerlm <- Inducer(
+    name = "InducerLm",
+    configuration = list(),
+    hyperparameter = list()
+  )
+  inducerlm
+}
 
-  as.list
+
+#' @title Get hyperparameters of an inducer
+#' @description Get the hyperparameters of an inducer.
+#' @param inducer An Inducer object for which the hyperparameters should
+#' be obtained.
+#' @return The hyperparameters of the given inducer and their range.
+#' @export
+
+hyperparameters <- function(inducer) {
+  assert_class(inducer, "Inducer")
+  inducer$hyperparameter
+  # as.list
   #inducer = InducerXGBoost
 
 
   #eval(parse(text = paste0("InducerXGBoost", "()")))
   #substitute(inducer)
 
-
-
   # hyperparameters()
 
 }
 
+#' @title Get the configuration of an inducer
+#' @description Get the hyperparameter configuration of an inducer.
+#' @param inducer An Inducer object for which the hyperparameter configuration
+#' should be obtained.
+#' @return The hyperparameter configuration of a given inducer.
+#' @export
+configuration <- function(inducer) {
+  
+}
 
+#' @title Assign a hyperparameter configuration to Inducer
+#' @description Assign a valid hyperparameter configuration to an inducer.
+#TODO

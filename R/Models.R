@@ -100,7 +100,7 @@ predict.Models <- function(model, newdata, ...) {
 
 
 fit <- function(.inducer, .data, ...) {
-  # TODO assserts
+  # TODO asserts
 
   # TODO soll das auch funktionieren mit InducerXGBoost ohne Klammern?
 
@@ -123,7 +123,20 @@ fit <- function(.inducer, .data, ...) {
 
 # fit(.inducer = InducerXGBoost(), .data = cars, eta = 0.5, alpha = 2)
 
+fit.InducerXGBoost <- function(.inducer, .data, ...) {
+  assert_class(.inducer, "Inducer")
+  assert_class(.data, "Dataset")
+  data <- as.matrix(.data)
+  fittedModel <- xgboost(data)
+  return(fittedModel)
+}
 
-
-
-
+fit.InducerLm <- function(.inducer, .data, ...) {
+  assert_class(.inducer, "Inducer")
+  assert_class(.data, "Dataset")
+  # optional: check if the Inducer exists??
+  data <- as.data.frame(.data)
+  # TODO: how to get the formula? out of the hyperparameters??
+  fittedModel <- lm(formula, data)
+  return(fittedModel)
+}
