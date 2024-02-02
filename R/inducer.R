@@ -6,11 +6,11 @@
 #' The list should contain the names of the hyperparameters, the type of the hyperparameters,
 #' the lower and upper bound of the hyperparameter range as well as a default value.
 #* @export
-Inducer <- function(name, configuration, hyperparameter) {
+Inducer <- function(.data = NULL, name, configuration, hyperparameter) {
   assert_string(name)
   assert_list(configuration)
   assert_list(hyperparameter)
-  stopifnot("hyperparameter must be a correctly named list" = names(hyperparameter) == c("name", "type", "lower", "upper", "default"), )
+  # stopifnot("hyperparameter must be a correctly named list" = names(hyperparameter) == c("name", "type", "lower", "upper", "default"), )
     structure(
       list(
         name = name,
@@ -40,23 +40,24 @@ print.Inducer <- function(inducer, ...) {
 #' @title Create an InducerXGBoost
 #' @description Build an InducerXGBoost.
 #' @export
-InducerXGBoost <- function() {
+InducerXGBoost <- function(.data = NULL) {
   # TODO assert
 
   # Hyperparameter Quelle: https://xgboost.readthedocs.io/en/latest/parameter.html
 
   inducerxgb <- Inducer(
+    .data = .data,  # TODO möglicherweise verbesserungswürdig
     name = "InducerXGBoost",
-    configuration = list(a = 2, b = 3),
+    configuration = list(eta = 0.1, gamma = 1),
     # hyperparameter = list(eta = c("eta", 1), d = 5, gamma = 0)
     hyperparameter = list(
       name = c("eta", "gamma", "max_depth", "min_child_weight", "subsample",
                "colsample_bytree", "lambda", "alpha", "num_parallel_tree"),
-      type = c(),
+      type = c(1:9),  # TODO
       lower = c(0, 0, 0, 0, 0, 0, 0, 0, 0),
       upper = c(1, Inf, Inf, Inf, Inf, Inf, Inf, Inf, Inf),
       default = c(0.3, 0, 6, 1, 1, 1, 1, 0, 1)
-      
+
       #eta = c(default = 0.3, lower = 0, upper = 1),
       #                    gamma = c(default = 0, lower = 0, upper = Inf),
       #                    max_depth = c(default = 6, lower = 0, upper = Inf),
@@ -71,11 +72,17 @@ InducerXGBoost <- function() {
 
                           )
   )
-  class(inducerxgb) <- c("InducerXGBoost", "Inducer", "function")
+  # class(inducerxgb) <- c("InducerXGBoost", "Inducer", "function")  # # TODO
 
   # formalArgs(xgboost)
+  if (is.null(.data)) {
+    inducerxgb
+  } else {
+    #### TODO fit function aufrufen
+    fit.InducerXGBoost(.inducer = inducerxgb, .data = .data)
+  }
 
-  inducerxgb
+
 }
 
 ind <- new.env(parent = emptyenv())
@@ -85,8 +92,9 @@ ind$xgboost <- InducerXGBoost()
 #' @title Create an InducerRanger
 #' @description Build an InducerRanger.
 #' @export
-InducerRanger <- function() {
+InducerRanger <- function(.data = NULL) {
   inducerranger <- Inducer(
+    .data = NULL,
     name = "InducerRanger",
     configuration = list(a = 2, b = 1),
     hyperparameter = list(
@@ -95,7 +103,7 @@ InducerRanger <- function() {
       lower = c(),
       upper = c(),
       default = c(500, NA, NA, NA, 0)
-      
+
       #num.trees = c(default = 500),
       #                    mtry = c(default = 2),  # Default is the (rounded down) square root of the number variables
       #                    # importance
@@ -109,8 +117,9 @@ InducerRanger <- function() {
 #' @title Create an InducerRanger
 #' @description Build an InducerRanger.
 #' @export
-InducerRpart <- function() {
+InducerRpart <- function(.data = NULL) {
   inducerrpart <- Inducer(
+    .data = NULL,
     name = "InducerRpart",
     configuration = list(a = 2, b = 1),
     hyperparameter = list(
@@ -128,8 +137,9 @@ InducerRpart <- function() {
 #' @title Create an InducerLm
 #' @description Build an InducerLm.
 #' @export
-InducerLm <- function() {
+InducerLm <- function(.data = NULL) {
   inducerlm <- Inducer(
+    .data = NULL,
     name = "InducerLm",
     configuration = list(),
     hyperparameter = list(

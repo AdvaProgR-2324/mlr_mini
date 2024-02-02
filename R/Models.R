@@ -125,9 +125,16 @@ fit <- function(.inducer, .data, ...) {
 
 fit.InducerXGBoost <- function(.inducer, .data, ...) {
   assert_class(.inducer, "Inducer")
-  assert_class(.data, "Dataset")
+  # TODO assert_class(.data, "Dataset")
+  argumentsDots <- list(...)  # Arguments/Hyperparameter
   data <- as.matrix(.data)
-  fittedModel <- xgboost(data)
+  # TODO data aus data branch,
+  fittedModel <- xgboost(data = data, label = data[, "dist"], nrounds = 1, params = configuration(.inducer))
+
+
+
+
+
   return(fittedModel)
 }
 
