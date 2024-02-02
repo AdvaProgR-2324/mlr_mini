@@ -45,15 +45,23 @@ InducerXGBoost <- function() {
     name = "InducerXGBoost",
     configuration = list(a = 2, b = 3),
     # hyperparameter = list(eta = c("eta", 1), d = 5, gamma = 0)
-    hyperparameter = list(eta = c(default = 0.3, lower = 0, upper = 1),
-                          gamma = c(default = 0, lower = 0, upper = Inf),
-                          max_depth = c(default = 6, lower = 0, upper = Inf),
-                          min_child_weight = c(default = 1, lower = 0, upper = Inf),
-                          subsample = c(default = 1, lower = 0, upper = Inf),
-                          colsample_bytree = c(default = 1, lower = 0, upper = Inf),
-                          lambda = c(default = 1, lower = 0, upper = Inf),
-                          alpha = c(default = 0, lower = 0, upper = Inf),
-                          num_parallel_tree = c(default = 1, lower = 0, upper = Inf)  # lower right?
+    hyperparameter = list(
+      name = c("eta", "gamma", "max_depth", "min_child_weight", "subsample",
+               "colsample_bytree", "lambda", "alpha", "num_parallel_tree"),
+      type = c(),
+      lower = c(0, 0, 0, 0, 0, 0, 0, 0, 0),
+      upper = c(1, Inf, Inf, Inf, Inf, Inf, Inf, Inf, Inf),
+      default = c(0.3, 0, 6, 1, 1, 1, 1, 0, 1)
+      
+      #eta = c(default = 0.3, lower = 0, upper = 1),
+      #                    gamma = c(default = 0, lower = 0, upper = Inf),
+      #                    max_depth = c(default = 6, lower = 0, upper = Inf),
+      #                    min_child_weight = c(default = 1, lower = 0, upper = Inf),
+      #                    subsample = c(default = 1, lower = 0, upper = Inf),
+      #                    colsample_bytree = c(default = 1, lower = 0, upper = Inf),
+      #                    lambda = c(default = 1, lower = 0, upper = Inf),
+      #                    alpha = c(default = 0, lower = 0, upper = Inf),
+      #                    num_parallel_tree = c(default = 1, lower = 0, upper = Inf)  # lower right?
                           # monotone_constraints
                           # interaction_constraints
 
@@ -77,14 +85,18 @@ InducerRanger <- function() {
   inducerranger <- Inducer(
     name = "InducerRanger",
     configuration = list(a = 2, b = 1),
-    hyperparameter = list(num.trees = c(default = 500),
-                          mtry = c(default = 2),  # Default is the (rounded down) square root of the number variables
-                          # importance
-                          min.node.size = c(default = 1),  # Default 1 for classification, 5 for regression, 3 for survival, and 10 for probability.
-                          max.depth = c(default = 0)
-
-
-
+    hyperparameter = list(
+      name = c("num.trees", "mtry", "importance", "min.node.size", "max.depth"),
+      type = c("int", "int", "???", "???", "int"),
+      lower = c(),
+      upper = c(),
+      default = c(500, NA, NA, NA, 0)
+      
+      #num.trees = c(default = 500),
+      #                    mtry = c(default = 2),  # Default is the (rounded down) square root of the number variables
+      #                    # importance
+      #                    min.node.size = c(default = 1),  # Default 1 for classification, 5 for regression, 3 for survival, and 10 for probability.
+      #                    max.depth = c(default = 0)
                           )
   )
   inducerranger
@@ -97,7 +109,13 @@ InducerRpart <- function() {
   inducerrpart <- Inducer(
     name = "InducerRpart",
     configuration = list(a = 2, b = 1),
-    hyperparameter = list(b = 3, d = 4)
+    hyperparameter = list(
+      name = c(),
+      type = c(),
+      lower = c(),
+      upper = c(),
+      default = c()
+    )
   )
   inducerrpart
 }
@@ -110,7 +128,13 @@ InducerLm <- function() {
   inducerlm <- Inducer(
     name = "InducerLm",
     configuration = list(),
-    hyperparameter = list()
+    hyperparameter = list(
+      name = c(),
+      type = c(),
+      lower = c(),
+      upper = c(),
+      default = c()
+    )
   )
   inducerlm
 }

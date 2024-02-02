@@ -17,9 +17,8 @@ ModelRegression <- function(data, inducer){
 #' @examples
 #' # example code
 #' @export
-print.ModelRegression <- function(data, inducer, ...) {
+print.ModelRegression <- function(model, ...) {
   # TODO assert??
-  
   cat("Regression Model:", inducer$name, "fitted on", data$name, "dataset.\n")
   #  TODO: ??? invisible(inducer) mehrere invisible??
 }
