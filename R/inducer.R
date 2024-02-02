@@ -31,8 +31,10 @@ print.Inducer <- function(inducer, ...) {
   # TODO assert??
 
   cat("Inducer:", inducer$name, "\n")
-  cat("Configuration:", paste(names(inducer$configuration), "=", unlist(inducer$configuration),
-                              collapse = ", "))
+  # cat("Configuration:", paste(names(inducer$configuration), "=", unlist(inducer$configuration), collapse = ", "))
+
+  # NEU mit configuration function
+  cat("Configuration:", paste(names(configuration(inducer)), "=", unlist(configuration(inducer)), collapse = ", "))
   invisible(inducer)
 }
 
@@ -48,8 +50,7 @@ InducerXGBoost <- function(.data = NULL) {
   inducerxgb <- Inducer(
     .data = .data,  # TODO möglicherweise verbesserungswürdig
     name = "InducerXGBoost",
-    configuration = list(eta = 0.1, gamma = 4),  # , nrounds = 2
-    # hyperparameter = list(eta = c("eta", 1), d = 5, gamma = 0)
+    configuration = list(), # list(eta = 0.1, gamma = 4),  # , nrounds = 2
     hyperparameter = list(
       name = c("eta", "gamma", "max_depth", "min_child_weight", "subsample",
                "colsample_bytree", "lambda", "alpha", "num_parallel_tree", "nrounds"),
@@ -195,9 +196,8 @@ hyperparameters <- function(inducer) {
 configuration <- function(inducer) {
   # TODO assert
 
-  inducer$configuration
-
-  # check if configuration setup is the same as in hyperparameters
+  # inducer$configuration
+  # configP$nrounds <- 3  # test
   # inducer <- InducerXGBoost()
 
   # Hyperparameters as List
@@ -206,7 +206,7 @@ configuration <- function(inducer) {
 
   configP <- inducer$configuration
 
-  # configP$nrounds <- 3  # test
+  # check if configuration setup is the same as in hyperparameters
   difference <- Map(`%in%`, hyperP, configP)
   difference <- names(difference[difference == F])
 
@@ -217,3 +217,10 @@ configuration <- function(inducer) {
 #' @title Assign a hyperparameter configuration to Inducer
 #' @description Assign a valid hyperparameter configuration to an inducer.
 #TODO
+'configuration<-' <- function(inducer, input) {
+  # TODO assert
+
+  # inducer$hyperparameter
+  input
+}
+

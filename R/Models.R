@@ -98,28 +98,6 @@ predict.Models <- function(model, newdata, ...) {
   return(ind)
 }
 
-########## kann weg?
-fit <- function(.inducer, .data, ...) {
-  # TODO asserts
-
-  # TODO soll das auch funktionieren mit InducerXGBoost ohne Klammern?
-
-  classInd <- class(.inducer)
-
-  argumentsDots <- list(...)
-  pastedArgs <- paste(names(argumentsDots), "=", argumentsDots, collapse = ", ")
-
-
-
-
-  if (classInd[1] == "InducerXGBoost") {  # fit xgboost model
-    # xgb.train()  params = argumentsDots
-  }
-
-  # pastedArgs
-
-
-}
 
 # fit(.inducer = InducerXGBoost(), .data = cars, eta = 0.5, alpha = 2)
 
@@ -131,28 +109,31 @@ fit.InducerXGBoost <- function(.inducer, .data, ...) {
   # TODO data aus data branch,
 
 
-  # TODO argumentsDots & configuration zusammenführen
+  # argumentsDots & configuration zusammenführen
+  configInd <- configuration(.inducer)  # TODO if empty ? named list()
+  pastedHyperparam <- c(configInd, argumentsDots)
+
   # überprüfen
 
   # which("nrounds" == names(configuration(.inducer))) --> aus configuration(.inducer) löschen, sonst doppelt drinnen
 
 
-  if ("nrounds" %in% names(configuration(.inducer))) {  # nrounds not in params !!!
-    xgb_nRound <- configuration(.inducer)$nrounds
+  if ("nrounds" %in% names(pastedHyperparam)) {  # nrounds not in params !!!
+    xgb_nRound <- pastedHyperparam$nrounds
+    pastedHyperparam$nrounds <- NULL  # delete otherwise twice
   } else {
     xgb_nRound <- 1  # Hyperparameter default
   }
 
 
   fittedModel <- xgboost(data = data, label = data[, "dist"], nrounds = xgb_nRound,
-                         params = configuration(.inducer))
-
-
+                         params = pastedHyperparam)
 
 
 
   return(fittedModel)
-  # InducerXGBoost(InducerXGBoost(.data = cars))
+  # fit.InducerXGBoost(InducerXGBoost(.data = cars))
+  # fit.InducerXGBoost(InducerXGBoost(), .data = cars, nrounds = 3)  # funktioniert
 }
 
 
@@ -166,4 +147,15 @@ fit.InducerLm <- function(.inducer, .data, ...) {
   # TODO: how to get the formula? out of the hyperparameters??
   fittedModel <- lm(formula, data)
   return(fittedModel)
+}
+
+
+
+
+modelObject <- function(modelObj) {
+  # TODO asserts
+
+  print(modelObj)
+
+
 }
