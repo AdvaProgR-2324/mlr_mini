@@ -98,7 +98,7 @@ predict.Models <- function(model, newdata, ...) {
   return(ind)
 }
 
-
+########## kann weg?
 fit <- function(.inducer, .data, ...) {
   # TODO asserts
 
@@ -129,14 +129,34 @@ fit.InducerXGBoost <- function(.inducer, .data, ...) {
   argumentsDots <- list(...)  # Arguments/Hyperparameter
   data <- as.matrix(.data)
   # TODO data aus data branch,
-  fittedModel <- xgboost(data = data, label = data[, "dist"], nrounds = 1, params = configuration(.inducer))
+
+
+  # TODO argumentsDots & configuration zusammenführen
+  # überprüfen
+
+  # which("nrounds" == names(configuration(.inducer))) --> aus configuration(.inducer) löschen, sonst doppelt drinnen
+
+
+  if ("nrounds" %in% names(configuration(.inducer))) {  # nrounds not in params !!!
+    xgb_nRound <- configuration(.inducer)$nrounds
+  } else {
+    xgb_nRound <- 1  # Hyperparameter default
+  }
+
+
+  fittedModel <- xgboost(data = data, label = data[, "dist"], nrounds = xgb_nRound,
+                         params = configuration(.inducer))
 
 
 
 
 
   return(fittedModel)
+  # InducerXGBoost(InducerXGBoost(.data = cars))
 }
+
+
+
 
 fit.InducerLm <- function(.inducer, .data, ...) {
   assert_class(.inducer, "Inducer")

@@ -48,15 +48,15 @@ InducerXGBoost <- function(.data = NULL) {
   inducerxgb <- Inducer(
     .data = .data,  # TODO möglicherweise verbesserungswürdig
     name = "InducerXGBoost",
-    configuration = list(eta = 0.1, gamma = 1),
+    configuration = list(eta = 0.1, gamma = 4),  # , nrounds = 2
     # hyperparameter = list(eta = c("eta", 1), d = 5, gamma = 0)
     hyperparameter = list(
       name = c("eta", "gamma", "max_depth", "min_child_weight", "subsample",
-               "colsample_bytree", "lambda", "alpha", "num_parallel_tree"),
-      type = c(1:9),  # TODO
-      lower = c(0, 0, 0, 0, 0, 0, 0, 0, 0),
-      upper = c(1, Inf, Inf, Inf, Inf, Inf, Inf, Inf, Inf),
-      default = c(0.3, 0, 6, 1, 1, 1, 1, 0, 1)
+               "colsample_bytree", "lambda", "alpha", "num_parallel_tree", "nrounds"),
+      type = c(1:10),  # TODO
+      lower = c("num", "num", "num", "num", "num", "num", "num", "num", "num", "num"),
+      upper = c(1, Inf, Inf, Inf, Inf, Inf, Inf, Inf, Inf, Inf),
+      default = c(0.3, 0, 6, 1, 1, 1, 1, 0, 1, 1)
 
       #eta = c(default = 0.3, lower = 0, upper = 1),
       #                    gamma = c(default = 0, lower = 0, upper = Inf),
@@ -72,7 +72,12 @@ InducerXGBoost <- function(.data = NULL) {
 
                           )
   )
-  # class(inducerxgb) <- c("InducerXGBoost", "Inducer", "function")  # # TODO
+  # add default values as configuration
+  config <- as.list(inducerxgb$hyperparameter$default)
+  names(config) <- inducerxgb$hyperparameter$name
+  inducerxgb$configuration <- config
+  # add class names
+  class(inducerxgb) <- c("InducerXGBoost", "Inducer", class(inducerxgb))
 
   # formalArgs(xgboost)
   if (is.null(.data)) {
@@ -85,8 +90,8 @@ InducerXGBoost <- function(.data = NULL) {
 
 }
 
-ind <- new.env(parent = emptyenv())
-ind$xgboost <- InducerXGBoost()
+#ind <- new.env(parent = emptyenv())
+#ind$xgboost <- InducerXGBoost()
 
 
 #' @title Create an InducerRanger
@@ -188,7 +193,25 @@ hyperparameters <- function(inducer) {
 #' @return The hyperparameter configuration of a given inducer.
 #' @export
 configuration <- function(inducer) {
+  # TODO assert
+
   inducer$configuration
+
+  # check if configuration setup is the same as in hyperparameters
+  # inducer <- InducerXGBoost()
+
+  # Hyperparameters as List
+  hyperP <- as.list(inducer$hyperparameter$default)
+  names(hyperP) <- inducer$hyperparameter$name
+
+  configP <- inducer$configuration
+
+  # configP$nrounds <- 3  # test
+  difference <- Map(`%in%`, hyperP, configP)
+  difference <- names(difference[difference == F])
+
+  configP[names(configP) == difference]  # show only elements which are not the same as in hyperparameters
+
 }
 
 #' @title Assign a hyperparameter configuration to Inducer
