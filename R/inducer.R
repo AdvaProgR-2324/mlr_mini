@@ -125,7 +125,7 @@ InducerLm <- function() {
 
 hyperparameters <- function(inducer) {
   assert_class(inducer, "Inducer")
-  inducer$hyperparameter
+  # inducer$hyperparameter
   # as.list
   #inducer = InducerXGBoost
 
@@ -134,7 +134,13 @@ hyperparameters <- function(inducer) {
   #substitute(inducer)
 
   # hyperparameters()
-
+  hyperparameter_table <- data.table::data.table(
+    name = inducer$hyperparameter$name,
+    type = inducer$hyperparameter$type,
+    range = paste0("[", inducer$hyperparameter$lower, ",", inducer$hyperparameter$upper, "]")
+  )
+  cat("Hyperparameter Space:\n")
+  print(hyperparameter_table, quote = FALSE)
 }
 
 #' @title Get the configuration of an inducer
@@ -144,7 +150,7 @@ hyperparameters <- function(inducer) {
 #' @return The hyperparameter configuration of a given inducer.
 #' @export
 configuration <- function(inducer) {
-  
+  inducer$configuration
 }
 
 #' @title Assign a hyperparameter configuration to Inducer
