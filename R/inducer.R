@@ -1,12 +1,16 @@
 #' @title Create an Inducer
 #' @description Build an Inducer
-#' @param name name of the inducer
-#' @param configuration configuration of the inducer
+#' @param name The name of the inducer
+#' @param configuration The configuration of the inducer.
+#' @hyperparameter A named list containing the hyperparameters of the inducer.
+#' The list should contain the names of the hyperparameters, the type of the hyperparameters,
+#' the lower and upper bound of the hyperparameter range as well as a default value.
 #* @export
 Inducer <- function(name, configuration, hyperparameter) {
   assert_string(name)
   assert_list(configuration)
   assert_list(hyperparameter)
+  stopifnot("hyperparameter must be a correctly named list" = names(hyperparameter) == c("name", "type", "lower", "upper", "default"), )
     structure(
       list(
         name = name,
