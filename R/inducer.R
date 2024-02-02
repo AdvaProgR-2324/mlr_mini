@@ -1,7 +1,7 @@
 #' @title Create an Inducer
 #' @description Build an Inducer
 #' @param name name of the inducer
-#' @configuration configuration of the inducer
+#' @param configuration configuration of the inducer
 #* @export
 Inducer <- function(name, configuration, hyperparameter) {
   assert_string(name)

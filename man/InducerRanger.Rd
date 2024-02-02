@@ -7,5 +7,5 @@
 InducerRanger()
 }
 \description{
-Build an InducerRanger
+Build an InducerRanger.
 }

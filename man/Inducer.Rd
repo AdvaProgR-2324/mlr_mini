@@ -8,6 +8,8 @@ Inducer(name, configuration, hyperparameter)
 }
 \arguments{
 \item{name}{name of the inducer}
+
+\item{configuration}{configuration of the inducer}
 }
 \description{
 Build an Inducer

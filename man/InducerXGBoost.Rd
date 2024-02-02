@@ -7,5 +7,5 @@
 InducerXGBoost()
 }
 \description{
-Build an InducerXGBoost
+Build an InducerXGBoost.
 }
