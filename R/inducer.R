@@ -42,7 +42,7 @@ print.Inducer <- function(inducer, ...) {
 #' @title Create an InducerXGBoost
 #' @description Build an InducerXGBoost.
 #' @export
-InducerXGBoost <- function(.data = NULL) {
+InducerXGBoost <- function(.data = NULL, ...) {
   # TODO assert
 
   # Hyperparameter Quelle: https://xgboost.readthedocs.io/en/latest/parameter.html
@@ -80,6 +80,15 @@ InducerXGBoost <- function(.data = NULL) {
   # add class names
   class(inducerxgb) <- c("InducerXGBoost", "Inducer", class(inducerxgb))
 
+  ## optional: add configuration to inducer
+  configDots <- list(...)
+  if (length(configDots) > 0) {
+    inducerxgb$configuration[which(names(configDots) == names(inducerxgb$configuration))] <- configDots
+
+  }
+
+
+
   # formalArgs(xgboost)
   if (is.null(.data)) {
     inducerxgb
@@ -98,7 +107,7 @@ InducerXGBoost <- function(.data = NULL) {
 #' @title Create an InducerRanger
 #' @description Build an InducerRanger.
 #' @export
-InducerRanger <- function(.data = NULL) {
+InducerRanger <- function(.data = NULL, ...) {
   inducerranger <- Inducer(
     .data = NULL,
     name = "InducerRanger",
@@ -123,7 +132,7 @@ InducerRanger <- function(.data = NULL) {
 #' @title Create an InducerRanger
 #' @description Build an InducerRanger.
 #' @export
-InducerRpart <- function(.data = NULL) {
+InducerRpart <- function(.data = NULL, ...) {
   inducerrpart <- Inducer(
     .data = NULL,
     name = "InducerRpart",
@@ -143,7 +152,7 @@ InducerRpart <- function(.data = NULL) {
 #' @title Create an InducerLm
 #' @description Build an InducerLm.
 #' @export
-InducerLm <- function(.data = NULL) {
+InducerLm <- function(.data = NULL, ...) {
   inducerlm <- Inducer(
     .data = NULL,
     name = "InducerLm",
