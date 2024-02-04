@@ -8,6 +8,8 @@ metainfo.Dataset <- function(data, target = data$target,  type = data$type,  nam
   # if (target %in% names(data$data)) {
   #  data$feature <-  if (is.factor(data[[target]])) "target" else "feature"
   # }
+  
+  data$feature <- ifelse(target %in% names(data$data), "target", "feature")
  
  x <-  structure(list(name = as.character(name), target = data$target, type = data$type, nrow = nrow(data$data), missings = anyNA(data)), class = "Dataset")
  print(x)

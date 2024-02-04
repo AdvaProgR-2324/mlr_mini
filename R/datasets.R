@@ -91,29 +91,7 @@ as.data.frame.Dataset <- function(dataset) {
 
 metainfo.Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute(data), 20)[[1]])) {
   
- target <-  if (!is.character(data$target)) {
-    stop(sprintf("Exptected 'target' to be of type character, got %s", class(target)))
-  }
-  lda <- list(data = data, target = target, type, name = name, class = "Dataset")
-  
- x <-  lapply(lda, class)
- print(x)
-  # Create a list with nrow, ncol, target, type and name, and class 
-    # class(cars.data)
-  # str(cars.data)
-  # cars.data$name
-  # cars.data$type
-  # cars.data$target
-  # ncol(cars.data)
-  # class(cars.data)
-
-  # 
-  # list(nrow(Dataset), ncol(dataset), target, name, type)
-  # target 
-  # class(strsplit(dataset, split = " ")[[1]][2])
- # x <- lapply(dataset, class)
- # #attr(object, "attribute_name") <- attribute_value
- # print(x)
+ ### look at the meta.info R file please 
 }
 
 
