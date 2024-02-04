@@ -7,6 +7,10 @@
 #' @param type A string specifying whether a regression or classification should be done.
 #'
 #' @return A object of class 'Dataset'.
+#' 
+#' @examples 
+#' cars.data <- Dataset(data = cars, target = "dist")
+#' 
 #'
 #' @export
 Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute(data), 20)[[1]])) {
@@ -40,14 +44,17 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' If only one argument is provided, it is assumed to be row indices, and all columns are included.
 #' @return A object of type 'Dataset.
 #'
+#' @examples
+#' data.cars <- Dataset(data = cars, target = "dist")
+#' cars.data[c(1, 2, 3, 4), "dist"]
+#'
 #' @export
 `[.Dataset` <- function(to_subset, ...) {
+  
   data_cols <- colnames(to_subset$data)
   lst_args <- list(...)
   arg_rows <- lst_args[[1]]
-  if (length(lst_args) == 2) {
-    arg_cols <- lst_args[[2]]
-  }
+  if (length(lst_args) == 2) arg_cols <- lst_args[[2]]
   # depending whether arguments for covariates are given, do checks,
   # if not select all covariates
   if (exists("arg_cols")) {
@@ -68,8 +75,8 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
     arg_cols <- data_cols
   }
   # subset normal data.frame
-  to_subset <- as.data.frame(to_subset)
-  subseted <- to_subset[arg_rows, arg_cols]
+  to_subset$data <- to_subset$data[arg_rows, arg_cols]
+  to_subset
 }
 
 #' Create a data.frame object from a Dataset.
@@ -124,7 +131,7 @@ data = cars
 cars.data <- Dataset(data = cars, target = "dist")
 print(cars.data)
 class(cars.data)
-cars.data[c(1, 2, 3, 4), "speed" ]
+cars.data[c(1, 2, 3, 4), "dist"]
 metainfo.Dataset(cars.data)
 colnames(cars.data)
 typeof(cars.data)
