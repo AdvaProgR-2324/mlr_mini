@@ -6,7 +6,9 @@
 #' @param target A string of a column name of data specifying the target.
 #' @param type A string specifying whether a regression or classification should be done.
 #'
-#' @return A object of class 'Dataset'.
+#' @return An object of class 'Dataset' with attributes 'data' containing the actual data as a data.frame,
+#' 'target' with the name of the target covariable, 'type' which is either 'classification' or 'regression'
+#' and 'name'.
 #' 
 #' @examples 
 #' cars.data <- Dataset(data = cars, target = "dist")
@@ -14,22 +16,24 @@
 #'
 #' @export
 Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute(data), 20)[[1]])) {
-  # TODO: check whether there are column names
   # checks
-  if (!(is.data.frame(data) | is.matrix(data))) {
-    stop(sprintf("Data must be a data.frame or matrix, got %s", class(data)))
+  assert(check_data_frame(data), check_matrix(data))
+  assert(target %in% names(data))
+  if (class(data) == "matrix") {
+    assert_numeric(data)
   }
-  if (!is.character(target)) {
-    stop(sprintf("Exptected 'target' to be of type character, got %s", class(target)))
-  }
-  if (!target %in% names(data)) {
-    stop(sprintf("Target column %s could not be found in data", target))
-  }
+  assert_named(data)
+  assert_character(target)
+  # set type to classification or regression
   if (is.null(type)) {
     type <- if (is.factor(data[[target]]) || is.character(data[[target]])) "classification" else "regression"
   }
   # return a structure with actual data and metainfo
-  structure(list(data = data, target = target, type = type, name = name), class = "Dataset")
+  structure(list(data = as.data.frame(data),
+                 target = target,
+                 type = type,
+                 name = name),
+            class = "Dataset")
 }
 
 #' Subset a Dataset Object.
@@ -38,8 +42,9 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' If column names are not specified, it defaults to using all columns. The function checks if the provided
 #' column names exist in the dataset and whether they include the target variable, which cannot be removed.
 #'
-#' @param to_subset A  Dataset.
-#' @param ... Additional arguments where the first is assumed to be row indices (numeric vector) for subsetting, 
+#' @param to_subset A  Dataset object.
+#' @param arg_row row indices or nothing.
+#' @param arg_col covariate names or nothing.
 #' and the second (optional) is column names (character vector) to subset.
 #' If only one argument is provided, it is assumed to be row indices, and all columns are included.
 #' @return A object of type 'Dataset.
@@ -49,33 +54,24 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' cars.data[c(1, 2, 3, 4), "dist"]
 #'
 #' @export
-`[.Dataset` <- function(to_subset, ...) {
-  
-  data_cols <- colnames(to_subset$data)
-  lst_args <- list(...)
-  arg_rows <- lst_args[[1]]
-  if (length(lst_args) == 2) arg_cols <- lst_args[[2]]
-  # depending whether arguments for covariates are given, do checks,
-  # if not select all covariates
-  if (exists("arg_cols")) {
-    if (!is.character(arg_cols)) {
-      stop(sprintf("Expected (char) names of covariates, got %s", class(arg_col)))
-    }
-    # check whether covariate names do actually exist
-    matched <- arg_cols %in% data_cols
-    if (!all(matched)) {
-      stop(sprintf("Some given covariate names could not be found: %s", data_cols[matched]))
-    }
-    # check whether covariates contain target
-    if (!to_subset$target %in% arg_cols) {
-      stop(sprintf("Cannot remove target column '%s'", to_subset$target))
-    }
-    
+`[.Dataset` <- function(to_subset, arg_row, arg_col, ...) {
+  assert(class(to_subset) == "Dataset")
+  # check or set subsetting args
+  if (missing(arg_row)) {
+    arg_row <- seq_len(nrow(to_subset$data))
   } else {
-    arg_cols <- data_cols
+    assert_integerish(arg_row)
   }
-  # subset normal data.frame
-  to_subset$data <- to_subset$data[arg_rows, arg_cols]
+  if (missing(arg_col)) {
+    arg_col <- colnames(to_subset$data)
+  } else {
+    assert_character(arg_col)
+    assert(all(arg_col %in% names(to_subset$data)))
+  }
+  # check for target covariate
+  if (!to_subset$target %in% arg_col) stop(sprintf('Cannot remove target column "%s"', to_subset$target))
+  subsetted <- to_subset$data[arg_row, arg_col]
+  to_subset$data <- subsetted
   to_subset
 }
 
@@ -88,11 +84,13 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' 
 #' @return A data.frame with the actual data of the original Dataset.
 #' 
+#' @examples
+#' cars.data <- Dataset(data = cars, target = "dist")
+#' as.data.frame(cars.data)
+#' 
 #' @export
 as.data.frame.Dataset <- function(dataset) {
-  if (!class(dataset) == "Dataset") {
-    stop(sprintf("Expected dataset to be of type 'Dataset', got %s", class(dataset)))
-  }
+  assert(class(dataset) == "Dataset")
   as.data.frame(dataset$data)
 }
 
@@ -100,16 +98,3 @@ metainfo.Dataset <- function(data, target, type = NULL, name = as.name(deparse(s
   
  ### look at the meta.info R file please 
 }
-
-
-
-# ignore:
-data = cars
-!is.data.frame(data)
-cars.data <- Dataset(data = cars, target = "dist")
-print(cars.data)
-class(cars.data)
-cars.data[c(1, 2, 3, 4), "dist"]
-metainfo.Dataset(cars.data)
-colnames(cars.data)
-typeof(cars.data)
