@@ -8,7 +8,7 @@
 #* @export
 Inducer <- function(.data = NULL, name, configuration, hyperparameter) {
   assert_string(name)
-  assert_list(configuration)
+  #assert_list(configuration)
   assert_list(hyperparameter)
   # stopifnot("hyperparameter must be a correctly named list" = names(hyperparameter) == c("name", "type", "lower", "upper", "default"), )
     structure(
@@ -21,14 +21,15 @@ Inducer <- function(.data = NULL, name, configuration, hyperparameter) {
 
 }
 
-# hyper <- list(eta = c(default = 0.3, lower = 0, upper = 1))
 
 #' @title Print method for Inducer object
 #' @description Print an Inducer.
 #' @param inducer An inducer being an Inducer object.
 #' @export
 print.Inducer <- function(inducer, ...) {
-  # TODO assert??
+  assert_class(inducer, "Inducer")
+  
+  # TODO: print Configuration only if it was changed.
 
   cat("Inducer:", inducer$name, "\n")
   # cat("Configuration:", paste(names(inducer$configuration), "=", unlist(inducer$configuration), collapse = ", "))
@@ -158,11 +159,13 @@ InducerLm <- function(.data = NULL, ...) {
     name = "InducerLm",
     configuration = list(),
     hyperparameter = list(
-      name = c(),
-      type = c(),
+      name = c("formula", "subset", "weights", "na.action", "method", "model", "x", "y",
+               "qr", "singular.ok", "contrasts", "offset"),
+      type = c("formula", NA, "numeric", NA, "character", "logical", "logical", "logical",
+               "logical", "logical", "list", "numeric"),
       lower = c(),
       upper = c(),
-      default = c()
+      default = c(NA, NA, NA, NA, "qr", "TRUE", "FALSE", "FALSE", "TRUE", "TRUE", "NULL")
     )
   )
   inducerlm
@@ -192,6 +195,24 @@ hyperparameters <- function(inducer) {
     type = inducer$hyperparameter$type,
     range = paste0("[", inducer$hyperparameter$lower, ",", inducer$hyperparameter$upper, "]")
   )
+  
+  
+  # for other structure of the hyperparameter list:
+  hyperparameters <- data.table::data.table(
+    name = sapply(hyper, function(x) x$name),
+    type = sapply(hyper, function(x) x$type),
+    range = sapply(hyper, function(x) {
+      if (x$type == "numeric") {
+        paste0("[", x$lower, ", ", x$upper, "]")
+      } else if (x$type == "logical") {
+        "(TRUE, FALSE)"
+      } else {
+        "NA"
+      }
+    })
+  )
+  
+  
   cat("Hyperparameter Space:\n")
   print(hyperparameter_table, quote = FALSE)
 }
@@ -226,7 +247,7 @@ configuration <- function(inducer) {
 #' @title Assign a hyperparameter configuration to Inducer
 #' @description Assign a valid hyperparameter configuration to an inducer.
 #TODO
-'configuration<-' <- function(inducer, input) {
+`configuration<-` <- function(inducer, input) {
   # TODO assert
 
   # inducer$hyperparameter

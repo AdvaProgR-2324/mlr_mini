@@ -141,7 +141,7 @@ fit.InducerXGBoost <- function(.inducer, .data, ...) {
 
 fit.InducerLm <- function(.inducer, .data, ...) {
   assert_class(.inducer, "Inducer")
-  assert_class(.data, "Dataset")
+  # assert_class(.data, "Dataset")
   # optional: check if the Inducer exists??
   data <- as.data.frame(.data)
   # TODO: how to get the formula? out of the hyperparameters??
