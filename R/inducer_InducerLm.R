@@ -7,7 +7,9 @@ hyperparameters <- function(inducer, ...) {
         paste0("[", x$lower, ", ", x$upper, "]")
       } else if (x$type == "logical") {
         "(TRUE, FALSE)"
-      } else {
+      } else if (x$type == "character"){
+        paste0("(", paste0(x$values, collapse = ","), ")")
+        } else {
         "NA"
       }
     })
@@ -51,9 +53,9 @@ InducerLm <- function(.data = NULL, formula, subset, weights, na.action, method 
     hyperparameter = list(
       formula = list(name = "formula", type = "formula"),
       subset = list(name = "subset", type = "logical"), # TODO: type checken!!
-      weights = list(name = "weights", type = "numeric"), 
+      weights = list(name = "weights", type = "numeric", lower = 0, upper = Inf), 
       na.action = list(name = "na.action", type = "???"), # TODO:type checken!!!
-      method = list(name = "method", type = "character"),
+      method = list(name = "method", type = "character", values = c("qr", "model.frame")),
       model = list(name = "model", type = "logical"),
       x = list(name = "x", type = "logical"),
       y = list(name = "y", type = "logical"),
