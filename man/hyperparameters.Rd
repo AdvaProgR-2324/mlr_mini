@@ -2,17 +2,13 @@
 % Please edit documentation in R/inducer.R
 \name{hyperparameters}
 \alias{hyperparameters}
-\title{Get hyperparameters of an inducer}
+\title{Get the Hyperparameters of an inducer}
 \usage{
-hyperparameters(inducer)
+hyperparameters(inducer, ...)
 }
 \arguments{
-\item{inducer}{An Inducer object for which the hyperparameters should
-be obtained.}
-}
-\value{
-The hyperparameters of the given inducer and their range.
+\item{inducer}{An object of class Inducer.}
 }
 \description{
-Get the hyperparameters of an inducer.
+Get the Hyperparameters of an inducer.
 }

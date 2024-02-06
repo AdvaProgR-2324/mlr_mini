@@ -4,12 +4,18 @@
 \alias{Inducer}
 \title{Create an Inducer}
 \usage{
-Inducer(name, configuration, hyperparameter)
+Inducer(.data = NULL, name, configuration, defaults, hyperparameter)
 }
 \arguments{
-\item{name}{name of the inducer}
+\item{name}{The name of the inducer}
 
-\item{configuration}{configuration of the inducer}
+\item{configuration}{The configuration of the inducer.}
+
+\item{defaults}{The default values of the inducer.}
+
+\item{hyperparameter}{A named list containing the hyperparameters of the inducer.
+The list should contain the names of the hyperparameters, the type of the hyperparameters,
+the lower and upper bound of the hyperparameter range as well as a default value.}
 }
 \description{
 Build an Inducer
