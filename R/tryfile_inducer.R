@@ -12,7 +12,7 @@ hyperparameters <- function(inducer, ...) {
       }
     })
   )
-  
+
   # Print the formatted output
   cat("Hyperparameter Space:\n")
   print(hyperparameters)
@@ -35,7 +35,7 @@ fit.InducerLm <- function(.inducer, .data, ...) { # TODO: why do I have to call 
 
 InducerLm <- function(.data = NULL, formula, subset, weights, na.action, method = "qr", model = TRUE,
                          x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE, contrasts = NULL, offset) {
-  
+
   original_call <- match.call(expand.dots = FALSE)
   original_defaults <- formals(InducerLm)
   given_args <- original_call[-1]
@@ -44,16 +44,16 @@ InducerLm <- function(.data = NULL, formula, subset, weights, na.action, method 
     formals(InducerLm)[[arg]] <- given_args[[arg]]
   }
   # TODO create LM model with new formals
-  
+
   inducerlm <- Inducer(
     .data = .data,
     name = "InducerLm",
     configuration = formals(InducerLm),
-    defaults = original_defaults, 
+    defaults = original_defaults,
     hyperparameter = list(
       formula = list(name = "formula", type = "formula"),
       subset = list(name = "subset", type = "logical"), # TODO: type checken!!
-      weights = list(name = "weights", type = "numeric"), 
+      weights = list(name = "weights", type = "numeric"),
       na.action = list(name = "na.action", type = "???"), # TODO:type checken!!!
       method = list(name = "method", type = "character", default = "qr"),
       model = list(name = "model", type = "logical", default = TRUE),
@@ -82,23 +82,23 @@ InducerLm <- function(.data = NULL, formula, subset, weights, na.action, method 
 
 configuration <- function(inducer) {
   # TODO assert
-  
+
   # inducer$configuration
   # configP$nrounds <- 3  # test
   # inducer <- InducerXGBoost()
-  
+
   # Hyperparameters as List
   hyperP <- as.list(inducer$hyperparameter)
   names(hyperP) <- inducer$hyperparameter
-  
+
   configP <- inducer$configuration
-  
+
   # check if configuration setup is the same as in hyperparameters
   difference <- Map(`%in%`, hyperP, configP)
   difference <- names(difference[difference == F])
-  
+
   configP[names(configP) == difference]  # show only elements which are not the same as in hyperparameters
-  
+
 }
 
 configuration <- function(inducer) {
@@ -114,12 +114,12 @@ configuration <- function(inducer) {
     stop(paste("Unknown configuration parameter:", name))
   } else{
     inducer$configuration[[name]] <- value
-    
+
     if (!is.null(attr(inducer$configuration, "model"))) {
       cat("Inducer:", attr(inducer$configuration, "model"), "\n")
       cat("Configuration:", paste(names(inducer$configuration), "=", unname(inducer$configuration)), "\n")
     }
-    
+
     return(inducer)
   }
 }

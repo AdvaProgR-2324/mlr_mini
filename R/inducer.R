@@ -29,14 +29,18 @@ Inducer <- function(.data = NULL, name, configuration, defaults, hyperparameter)
 #' @export
 print.Inducer <- function(inducer, ...) {
   assert_class(inducer, "Inducer")
-  
+
   # TODO: print Configuration only if it was changed.
 
   cat("Inducer:", inducer$name, "\n")
   # cat("Configuration:", paste(names(inducer$configuration), "=", unlist(inducer$configuration), collapse = ", "))
 
   # NEU mit configuration function
-  cat("Configuration:", paste(names(configuration(inducer)), "=", unlist(configuration(inducer)), collapse = ", "))
+  # cat("Configuration:", paste(names(configuration(inducer)), "=", unlist(configuration(inducer)), collapse = ", "))
+
+  # nochmal NEU
+  cat("Configuration:", paste(names(configuration(inducer)), "=", as.vector(configuration(inducer)), collapse = ", "))
+
   invisible(inducer)
 }
 
@@ -196,8 +200,8 @@ hyperparameters <- function(inducer) {
     type = inducer$hyperparameter$type,
     range = paste0("[", inducer$hyperparameter$lower, ",", inducer$hyperparameter$upper, "]")
   )
-  
-  
+
+
   # for other structure of the hyperparameter list:
   hyperparameters <- data.table::data.table(
     name = sapply(hyper, function(x) x$name),
@@ -212,8 +216,8 @@ hyperparameters <- function(inducer) {
       }
     })
   )
-  
-  
+
+
   cat("Hyperparameter Space:\n")
   print(hyperparameter_table, quote = FALSE)
 }
