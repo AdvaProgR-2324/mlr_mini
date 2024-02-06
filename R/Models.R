@@ -103,15 +103,22 @@ predict.Models <- function(model, newdata, ...) {
 
 fit.InducerXGBoost <- function(.inducer, .data, ...) {
   assert_class(.inducer, "Inducer")
+
   # TODO assert_class(.data, "Dataset")
   argumentsDots <- list(...)  # Arguments/Hyperparameter
   data <- as.matrix(.data)
   # TODO data aus data branch,
 
+  # TODO ... args im Function Kopf klüger lösen, ggf alles reinschreiben
 
   # argumentsDots & configuration zusammenführen
-  configInd <- configuration(.inducer)  # TODO if empty ? named list()
-  pastedHyperparam <- c(configInd, argumentsDots)
+
+  configInd <- as.list(configuration(.inducer))  # TODO if empty ? named list()
+  for (arg in names(argumentsDots)) {
+    configInd[[arg]] <- argumentsDots[[arg]]
+  }
+  pastedHyperparam <- configInd
+  # pastedHyperparam <- c(configInd, argumentsDots)
 
   # überprüfen
 
