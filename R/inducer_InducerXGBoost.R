@@ -20,7 +20,7 @@ InducerXGBoost <- function(.data = NULL, nrounds = 1, eta = 0.3, gamma = 0, max_
   inducerxgb <- Inducer(
     .data = .data,  # TODO möglicherweise verbesserungswürdig
     name = "InducerXGBoost",
-    configuration = formals(InducerXGBoost), # list(eta = 0.1, gamma = 4),  # , nrounds = 2
+    configuration = formals(InducerXGBoost)[-1], # list(eta = 0.1, gamma = 4),  # , nrounds = 2
     defaults = original_defaults,
     hyperparameter = list(
       nrounds = list(name = "nrounds", type = "numeric", default = 1, lower = 1, upper = Inf),
@@ -51,7 +51,7 @@ InducerXGBoost <- function(.data = NULL, nrounds = 1, eta = 0.3, gamma = 0, max_
 
   )
   # add class names
-  class(inducerxgb) <- c("InducerXGBoost", "Inducer", class(inducerxgb))
+  class(inducerxgb) <- c("InducerXGBoost", "Inducer")  # , class(inducerxgb)
 
   if (is.null(.data)) {
     if (length(names_given_args) > 0) {
