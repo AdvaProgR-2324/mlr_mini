@@ -4,7 +4,7 @@
 \alias{print.ModelRegression}
 \title{Printing Regression Models}
 \usage{
-\method{print}{ModelRegression}(data, inducer, ...)
+\method{print}{ModelRegression}(model, ...)
 }
 \arguments{
 \item{model}{object of class \code{ModelRegression}}

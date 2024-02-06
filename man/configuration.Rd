@@ -2,17 +2,13 @@
 % Please edit documentation in R/inducer.R
 \name{configuration}
 \alias{configuration}
-\title{Get the configuration of an inducer}
+\title{Configuration print function for an Inducer object}
 \usage{
 configuration(inducer)
 }
 \arguments{
-\item{inducer}{An Inducer object for which the hyperparameter configuration
-should be obtained.}
-}
-\value{
-The hyperparameter configuration of a given inducer.
+\item{inducer}{An inducer being an Inducer object.}
 }
 \description{
-Get the hyperparameter configuration of an inducer.
+Print the configuration of an Inducer.
 }
