@@ -100,9 +100,6 @@ configuration <- function(inducer) {
   return(inducer$configuration)
 }
 
-# }  By calling the Inducer itself with new values, or by using the configuration<- generic.
-
-
 #' @title Configuration function for changing config of an Inducer object
 #' @description change values of the configuration of an Inducer.
 #' @param inducer An inducer being an Inducer object.
@@ -123,8 +120,29 @@ configuration <- function(inducer) {
 }
 
 
-
-
-### hier Hyperp Function hin
-
-
+#' @title Get the Hyperparameters of an inducer
+#' @description Get the Hyperparameters of an inducer.
+#' @param inducer An object of class Inducer.
+#' @value a datatable containing the name, the type and the range of the hyperparameters of an Inducer object.
+#' @export
+hyperparameters <- function(inducer, ...) {
+  hyperparameters <- data.table::data.table(
+    name = sapply(inducer$hyperparameter, function(x) x$name),
+    type = sapply(inducer$hyperparameter, function(x) x$type),
+    range = sapply(inducer$hyperparameter, function(x) {
+      if (x$type == "numeric") {
+        paste0("[", x$lower, ", ", x$upper, "]")
+      } else if (x$type == "logical") {
+        "(TRUE, FALSE)"
+      } else if (x$type == "character") {
+        paste0("(", paste0("'", x$values, "'", collapse = ","), ")")
+      } else {
+        "NA"
+      }
+    })
+  )
+  
+  # Print the formatted output
+  cat("Hyperparameter Space:\n")
+  print(hyperparameters)
+}

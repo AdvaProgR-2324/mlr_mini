@@ -1,27 +1,3 @@
-hyperparameters <- function(inducer, ...) {
-  hyperparameters <- data.table::data.table(
-    name = sapply(inducer$hyperparameter, function(x) x$name),
-    type = sapply(inducer$hyperparameter, function(x) x$type),
-    range = sapply(inducer$hyperparameter, function(x) {
-      if (x$type == "numeric") {
-        paste0("[", x$lower, ", ", x$upper, "]")
-      } else if (x$type == "logical") {
-        "(TRUE, FALSE)"
-      } else if (x$type == "character") {
-        paste0("(", paste0("'", x$values, "'", collapse = ","), ")")
-        } else {
-        "NA"
-      }
-    })
-  )
-  
-  # Print the formatted output
-  cat("Hyperparameter Space:\n")
-  print(hyperparameters)
-}
-
-
-
 fit.InducerLm <- function(.inducer, .data, ...) { # TODO: why do I have to call fit.InducerLM explicitly and not only fit??
   assert_class(.inducer, "Inducer")
   #assert_class(.data, "Dataset")
@@ -69,27 +45,5 @@ InducerLm <- function(.data = NULL, formula, subset, weights, na.action, method 
     return(inducerlm)
   } else {
     return(fit.InducerLm(inducerlm, .data))
-  }
-}
-
-
-configuration <- function(inducer) {
-  return(inducer$configuration)
-}
-
-# }  By calling the Inducer itself with new values, or by using the configuration<- generic.
-
-
-`configuration<-` <- function(inducer, value) {
-  names_inducer_config <- names(inducer$configuration)
-  names_value <- names(value)
-  if (all(names_value %in% names_inducer_config)) {
-    for (name in names_value) {
-      # TODO checken if type of value is correct and in the range of hyperparameter
-      inducer$configuration[[name]] <- value[[name]]
-    }
-    return(inducer)
-  } else {
-    stop(paste("Error in `configuration<-`: invalid variable for", class(inducer)))
   }
 }
