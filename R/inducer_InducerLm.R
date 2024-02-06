@@ -12,12 +12,11 @@ hyperparameters <- function(inducer, ...) {
       }
     })
   )
-
+  
   # Print the formatted output
   cat("Hyperparameter Space:\n")
   print(hyperparameters)
 }
-
 
 
 
@@ -35,7 +34,7 @@ fit.InducerLm <- function(.inducer, .data, ...) { # TODO: why do I have to call 
 
 InducerLm <- function(.data = NULL, formula, subset, weights, na.action, method = "qr", model = TRUE,
                          x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE, contrasts = NULL, offset) {
-
+  
   original_call <- match.call(expand.dots = FALSE)
   original_defaults <- formals(InducerLm)
   given_args <- original_call[-1]
@@ -43,37 +42,29 @@ InducerLm <- function(.data = NULL, formula, subset, weights, na.action, method 
   for (arg in names(given_args)) {
     formals(InducerLm)[[arg]] <- given_args[[arg]]
   }
-  # TODO create LM model with new formals
-
+  
   inducerlm <- Inducer(
     .data = .data,
     name = "InducerLm",
     configuration = formals(InducerLm),
-    defaults = original_defaults,
+    defaults = original_defaults, 
     hyperparameter = list(
       formula = list(name = "formula", type = "formula"),
       subset = list(name = "subset", type = "logical"), # TODO: type checken!!
-      weights = list(name = "weights", type = "numeric"),
+      weights = list(name = "weights", type = "numeric"), 
       na.action = list(name = "na.action", type = "???"), # TODO:type checken!!!
-      method = list(name = "method", type = "character", default = "qr"),
-      model = list(name = "model", type = "logical", default = TRUE),
-      x = list(name = "x", type = "logical", default = FALSE),
-      y = list(name = "y", type = "logical", default = FALSE),
-      qr = list(name = "qr", type = "logical", default = TRUE),
-      singular.ok = list(name = "singular.ok", type = "logical", default = TRUE),
-      contrasts = list(name = "contrasts", type = "list", default = NULL),
+      method = list(name = "method", type = "character"),
+      model = list(name = "model", type = "logical"),
+      x = list(name = "x", type = "logical"),
+      y = list(name = "y", type = "logical"),
+      qr = list(name = "qr", type = "logical"),
+      singular.ok = list(name = "singular.ok", type = "logical"),
+      contrasts = list(name = "contrasts", type = "list"),
       offset = list(name = "offset", type = "numeric"))
   )
   class(inducerlm) <- c("InducerLm", "Inducer")
   if (is.null(.data)) {
-    if (length(names_given_args) > 0) {
-      cat("Inducer:", inducerlm$name, "\n")
-      cat("Configuration:", paste(sprintf("%s = %s", names_given_args, unlist(formals(InducerLm)[names_given_args])), collapse = ", "))
-      return(inducerlm)
-    } else {
-      cat("Inducer:", inducerlm$name, "\n")
-      return(inducerlm)
-    }
+    return(inducerlm)
   } else {
     return(fit.InducerLm(inducerlm, .data))
   }
@@ -81,45 +72,22 @@ InducerLm <- function(.data = NULL, formula, subset, weights, na.action, method 
 
 
 configuration <- function(inducer) {
-  # TODO assert
-
-  # inducer$configuration
-  # configP$nrounds <- 3  # test
-  # inducer <- InducerXGBoost()
-
-  # Hyperparameters as List
-  hyperP <- as.list(inducer$hyperparameter)
-  names(hyperP) <- inducer$hyperparameter
-
-  configP <- inducer$configuration
-
-  # check if configuration setup is the same as in hyperparameters
-  difference <- Map(`%in%`, hyperP, configP)
-  difference <- names(difference[difference == F])
-
-  configP[names(configP) == difference]  # show only elements which are not the same as in hyperparameters
-
+  return(inducer$configuration)
 }
 
-configuration <- function(inducer) {
-  inducer$configuration
-}
+# }  By calling the Inducer itself with new values, or by using the configuration<- generic.
+
 
 `configuration<-` <- function(inducer, value) {
-  inducer$configuration <- value
-}
-
-`$<-.configuration` <- function(inducer, name, value) {
-  if (!name %in% names(inducer$configuration)) {
-    stop(paste("Unknown configuration parameter:", name))
-  } else{
-    inducer$configuration[[name]] <- value
-
-    if (!is.null(attr(inducer$configuration, "model"))) {
-      cat("Inducer:", attr(inducer$configuration, "model"), "\n")
-      cat("Configuration:", paste(names(inducer$configuration), "=", unname(inducer$configuration)), "\n")
+  names_inducer_config <- names(inducer$configuration)
+  names_value <- names(value)
+  if (all(names_value %in% names_inducer_config)) {
+    for (name in names_value) {
+      # TODO checken if type of value is correct and in the range of hyperparameter
+      inducer$configuration[[name]] <- value[[name]]
     }
-
     return(inducer)
+  } else {
+    stop(paste("Error in `configuration<-`: invalid variable for", class(inducer)))
   }
 }
