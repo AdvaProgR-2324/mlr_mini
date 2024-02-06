@@ -45,69 +45,6 @@ print.Inducer <- function(inducer, ...) {
 }
 
 
-#' @title Create an InducerXGBoost
-#' @description Build an InducerXGBoost.
-#' @export
-InducerXGBoost <- function(.data = NULL, ...) {
-  # TODO assert
-
-  # Hyperparameter Quelle: https://xgboost.readthedocs.io/en/latest/parameter.html
-
-  inducerxgb <- Inducer(
-    .data = .data,  # TODO möglicherweise verbesserungswürdig
-    name = "InducerXGBoost",
-    configuration = list(), # list(eta = 0.1, gamma = 4),  # , nrounds = 2
-    hyperparameter = list(
-      name = c("eta", "gamma", "max_depth", "min_child_weight", "subsample",
-               "colsample_bytree", "lambda", "alpha", "num_parallel_tree", "nrounds"),
-      type = c(1:10),  # TODO
-      lower = c("num", "num", "num", "num", "num", "num", "num", "num", "num", "num"),
-      upper = c(1, Inf, Inf, Inf, Inf, Inf, Inf, Inf, Inf, Inf),
-      default = c(0.3, 0, 6, 1, 1, 1, 1, 0, 1, 1)
-
-      #eta = c(default = 0.3, lower = 0, upper = 1),
-      #                    gamma = c(default = 0, lower = 0, upper = Inf),
-      #                    max_depth = c(default = 6, lower = 0, upper = Inf),
-      #                    min_child_weight = c(default = 1, lower = 0, upper = Inf),
-      #                    subsample = c(default = 1, lower = 0, upper = Inf),
-      #                    colsample_bytree = c(default = 1, lower = 0, upper = Inf),
-      #                    lambda = c(default = 1, lower = 0, upper = Inf),
-      #                    alpha = c(default = 0, lower = 0, upper = Inf),
-      #                    num_parallel_tree = c(default = 1, lower = 0, upper = Inf)  # lower right?
-                          # monotone_constraints
-                          # interaction_constraints
-
-                          )
-  )
-  # add default values as configuration
-  config <- as.list(inducerxgb$hyperparameter$default)
-  names(config) <- inducerxgb$hyperparameter$name
-  inducerxgb$configuration <- config
-  # add class names
-  class(inducerxgb) <- c("InducerXGBoost", "Inducer", class(inducerxgb))
-
-  ## optional: add configuration to inducer
-  configDots <- list(...)
-  if (length(configDots) > 0) {
-    inducerxgb$configuration[which(names(configDots) == names(inducerxgb$configuration))] <- configDots
-
-  }
-
-
-
-  # formalArgs(xgboost)
-  if (is.null(.data)) {
-    inducerxgb
-  } else {
-    #### TODO fit function aufrufen
-    fit.InducerXGBoost(.inducer = inducerxgb, .data = .data)
-  }
-
-
-}
-
-#ind <- new.env(parent = emptyenv())
-#ind$xgboost <- InducerXGBoost()
 
 
 #' @title Create an InducerRanger
@@ -155,107 +92,39 @@ InducerRpart <- function(.data = NULL, ...) {
 }
 
 
-#' @title Create an InducerLm
-#' @description Build an InducerLm.
-#' @export
-InducerLm <- function(.data = NULL, ...) {
-  inducerlm <- Inducer(
-    .data = NULL,
-    name = "InducerLm",
-    configuration = list(),
-    hyperparameter = list(
-      name = c("formula", "subset", "weights", "na.action", "method", "model", "x", "y",
-               "qr", "singular.ok", "contrasts", "offset"),
-      type = c("formula", NA, "numeric", NA, "character", "logical", "logical", "logical",
-               "logical", "logical", "list", "numeric"),
-      lower = c(),
-      upper = c(),
-      default = c(NA, NA, NA, NA, "qr", "TRUE", "FALSE", "FALSE", "TRUE", "TRUE", "NULL")
-    )
-  )
-  inducerlm
-}
-
-
-#' @title Get hyperparameters of an inducer
-#' @description Get the hyperparameters of an inducer.
-#' @param inducer An Inducer object for which the hyperparameters should
-#' be obtained.
-#' @return The hyperparameters of the given inducer and their range.
-#' @export
-
-hyperparameters <- function(inducer) {
-  assert_class(inducer, "Inducer")
-  # inducer$hyperparameter
-  # as.list
-  #inducer = InducerXGBoost
-
-
-  #eval(parse(text = paste0("InducerXGBoost", "()")))
-  #substitute(inducer)
-
-  # hyperparameters()
-  hyperparameter_table <- data.table::data.table(
-    name = inducer$hyperparameter$name,
-    type = inducer$hyperparameter$type,
-    range = paste0("[", inducer$hyperparameter$lower, ",", inducer$hyperparameter$upper, "]")
-  )
-
-
-  # for other structure of the hyperparameter list:
-  hyperparameters <- data.table::data.table(
-    name = sapply(hyper, function(x) x$name),
-    type = sapply(hyper, function(x) x$type),
-    range = sapply(hyper, function(x) {
-      if (x$type == "numeric") {
-        paste0("[", x$lower, ", ", x$upper, "]")
-      } else if (x$type == "logical") {
-        "(TRUE, FALSE)"
-      } else {
-        "NA"
-      }
-    })
-  )
-
-
-  cat("Hyperparameter Space:\n")
-  print(hyperparameter_table, quote = FALSE)
-}
-
-#' @title Get the configuration of an inducer
-#' @description Get the hyperparameter configuration of an inducer.
-#' @param inducer An Inducer object for which the hyperparameter configuration
-#' should be obtained.
-#' @return The hyperparameter configuration of a given inducer.
+#' @title Configuration print function for an Inducer object
+#' @description Print the configuration of an Inducer.
+#' @param inducer An inducer being an Inducer object.
 #' @export
 configuration <- function(inducer) {
-  # TODO assert
-
-  # inducer$configuration
-  # configP$nrounds <- 3  # test
-  # inducer <- InducerXGBoost()
-
-  # Hyperparameters as List
-  hyperP <- as.list(inducer$hyperparameter$default)
-  names(hyperP) <- inducer$hyperparameter$name
-
-  configP <- inducer$configuration
-
-  # check if configuration setup is the same as in hyperparameters
-  difference <- Map(`%in%`, hyperP, configP)
-  difference <- names(difference[difference == F])
-
-  configP[names(configP) == difference]  # show only elements which are not the same as in hyperparameters
-
+  return(inducer$configuration)
 }
 
-#' @title Assign a hyperparameter configuration to Inducer
-#' @description Assign a valid hyperparameter configuration to an inducer.
-#TODO
-`configuration<-` <- function(inducer, input) {
-  # TODO assert
+# }  By calling the Inducer itself with new values, or by using the configuration<- generic.
 
-  # inducer$hyperparameter
-  input
+
+#' @title Configuration function for changing config of an Inducer object
+#' @description change values of the configuration of an Inducer.
+#' @param inducer An inducer being an Inducer object.
+#' @param value the new value for the config in Inducer
+#' @export
+`configuration<-` <- function(inducer, value) {
+  names_inducer_config <- names(inducer$configuration)
+  names_value <- names(value)
+  if (all(names_value %in% names_inducer_config)) {
+    for (name in names_value) {
+      # TODO checken if type of value is correct and in the range of hyperparameter
+      inducer$configuration[[name]] <- value[[name]]
+    }
+    return(inducer)
+  } else {
+    stop(paste("Error in `configuration<-`: invalid variable for", class(inducer)))
+  }
 }
+
+
+
+
+### hier Hyperp Function hin
+
 
