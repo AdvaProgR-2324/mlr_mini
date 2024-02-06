@@ -101,12 +101,21 @@ predict.Models <- function(model, newdata, ...) {
 
 # fit(.inducer = InducerXGBoost(), .data = cars, eta = 0.5, alpha = 2)
 
+#' @title Fit XGBoost models
+#' @description
+#' Uses an Inducer and a dataset to fit a xgb model
+#' @param .inducer A `Inducer` object
+#' @param .data A `dataset` object for which the values should be fitted
+#' @return an xgb object
+#' @export
 fit.InducerXGBoost <- function(.inducer, .data, ...) {
+  ### Works with Dataset from dataset.R
+
   assert_class(.inducer, "Inducer")
 
   # TODO assert_class(.data, "Dataset")
   argumentsDots <- list(...)  # Arguments/Hyperparameter
-  data <- as.matrix(.data)
+
   # TODO data aus data branch,
 
   # TODO ... args im Function Kopf klüger lösen, ggf alles reinschreiben
@@ -132,15 +141,21 @@ fit.InducerXGBoost <- function(.inducer, .data, ...) {
     xgb_nRound <- 1  # Hyperparameter default
   }
 
+  # old
+  # data <- as.matrix(.data)
+  # fittedModel <- xgboost(data = data, label = data[, "dist"], nrounds = xgb_nRound, params = pastedHyperparam)
 
-  fittedModel <- xgboost(data = data, label = data[, "dist"], nrounds = xgb_nRound,
+  fittedModel <- xgboost(data = as.matrix(.data$data), label = .data$data[, .data$target], nrounds = xgb_nRound,
                          params = pastedHyperparam)
+
 
 
 
   return(fittedModel)
   # fit.InducerXGBoost(InducerXGBoost(.data = cars))
   # fit.InducerXGBoost(InducerXGBoost(), .data = cars, nrounds = 3)  # funktioniert
+  ## FUNKTIONIERT
+  # fit.InducerXGBoost(.inducer = InducerXGBoost(), .data = Dataset(cars, target = "dist"))
 }
 
 
