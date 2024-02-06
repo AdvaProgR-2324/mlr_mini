@@ -165,13 +165,25 @@ fit.InducerLm <- function(.inducer, .data, ...) {
   assert_class(.inducer, "Inducer")
   # assert_class(.data, "Dataset")
   # optional: check if the Inducer exists??
-  data <- as.data.frame(.data)
-  # TODO: how to get the formula? out of the hyperparameters??
-  fittedModel <- lm(formula, data)
-  return(fittedModel)
+
+  # TODO bei lm formula einfügen
+  conifLst <- inducer$configuration[.inducer$configuration != ""]
+  pastedConfig <- paste(names(conifLst), " = ", as.vector(conifLst), collapse = ", ")
+
+  if (.inducer$configuration$formula == "") {  # no formula safe in config
+    pastedFormula <- paste0(.data$target, " ~ ", paste(setdiff(colnames(.data$data), .data$target), collapse = " + "))
+    fittedModel <- lm(formula = pastedFormula, data = .data$data)
+  } else {  # formula safed in config, use the config formula for lm
+    fittedModel <- lm(formula = .inducer$configuration$formula, data = .data$data)
+  }
+
+  return(fittedModel)  # return fitted model
 }
 
+.inducer <- InducerLm()
 
+.data <- Dataset(cars, target = "dist")
+.data$data[, .data$target]
 
 
 modelObject <- function(modelObj) {

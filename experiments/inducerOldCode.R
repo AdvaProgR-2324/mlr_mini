@@ -92,6 +92,29 @@ InducerLm <- function(.data = NULL, ...) {
 }
 
 
+#' @title Print method for Inducer object
+#' @description Print an Inducer.
+#' @param inducer An inducer being an Inducer object.
+#' @export
+print.Inducer <- function(inducer, ...) {
+  assert_class(inducer, "Inducer")
+
+  # TODO: print Configuration only if it was changed.
+
+  cat("Inducer:", inducer$name, "\n")
+  # cat("Configuration:", paste(names(inducer$configuration), "=", unlist(inducer$configuration), collapse = ", "))
+
+  # NEU mit configuration function
+  # cat("Configuration:", paste(names(configuration(inducer)), "=", unlist(configuration(inducer)), collapse = ", "))
+
+  # nochmal NEU
+  cat("Configuration:", paste(names(configuration(inducer)), "=", as.vector(configuration(inducer)), collapse = ", "))
+
+  invisible(inducer)
+}
+
+
+
 #### old functions for configuration
 
 
