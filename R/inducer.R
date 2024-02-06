@@ -6,7 +6,7 @@
 #' The list should contain the names of the hyperparameters, the type of the hyperparameters,
 #' the lower and upper bound of the hyperparameter range as well as a default value.
 #* @export
-Inducer <- function(.data = NULL, name, configuration, hyperparameter) {
+Inducer <- function(.data = NULL, name, configuration, defaults, hyperparameter) {
   assert_string(name)
   #assert_list(configuration)
   assert_list(hyperparameter)
@@ -15,6 +15,7 @@ Inducer <- function(.data = NULL, name, configuration, hyperparameter) {
       list(
         name = name,
         configuration = configuration,
+        defaults = defaults,
         hyperparameter = hyperparameter
       ), class = "Inducer"
     )
