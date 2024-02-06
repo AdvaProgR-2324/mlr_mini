@@ -7,8 +7,8 @@ hyperparameters <- function(inducer, ...) {
         paste0("[", x$lower, ", ", x$upper, "]")
       } else if (x$type == "logical") {
         "(TRUE, FALSE)"
-      } else if (x$type == "character"){
-        paste0("(", paste0(x$values, collapse = ","), ")")
+      } else if (x$type == "character") {
+        paste0("(", paste0("'", x$values, "'", collapse = ","), ")")
         } else {
         "NA"
       }
