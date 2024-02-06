@@ -9,7 +9,12 @@ fit.InducerLm <- function(.inducer, .data, ...) { # TODO: why do I have to call 
   return(fittedModel)
 }
 
-
+#' @title Create an InducerLm object
+#' @description Create an object of class InducerLm
+#' @param .data An optional data set on which the InducerLm should be fitted
+#' @param formula An optional object of class "formula" that describes the model to be fitted.
+#' @param subset An optional object TODO!!!!!
+#' @export
 InducerLm <- function(.data = NULL, formula, subset, weights, na.action, method = "qr", model = TRUE,
                          x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE, contrasts = NULL, offset) {
   
@@ -24,7 +29,7 @@ InducerLm <- function(.data = NULL, formula, subset, weights, na.action, method 
   inducerlm <- Inducer(
     .data = .data,
     name = "InducerLm",
-    configuration = formals(InducerLm),
+    configuration = formals(InducerLm)[-1],
     defaults = original_defaults, 
     hyperparameter = list(
       formula = list(name = "formula", type = "formula"),
