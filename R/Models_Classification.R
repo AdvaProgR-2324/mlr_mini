@@ -6,8 +6,11 @@
 #' # example code
 #' @export
 
-ModelClassification <- function(data, inducer) {
-  model <- Models(data, inducer)
+ModelClassification <- function(inducer.name, inducer.configuration, data.name, data.target, data.features, fitted.values,
+                                coefficients) {
+  # maybe TODO: check if the dataset can be used for a classification task
+  model <- Models(inducer.name, inducer.configuration, data.name, data.target, data.features, fitted.values,
+                  coefficients, model.out)
   class(model) <- c("ModelClassification", class(model))
 }
 
@@ -16,5 +19,7 @@ ModelClassification <- function(data, inducer) {
 #' @param model object of class `ModelClassification`.
 #' @export
 print.ModelClassification <- function(model, ...) {
+  assert_class(model, "ModelClassification")
   cat("Classification Model:", model$name, "fitted on", model$name, "dataset.\n")
+  invisible(model)
 }

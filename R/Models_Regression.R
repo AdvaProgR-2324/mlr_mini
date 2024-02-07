@@ -4,10 +4,13 @@
 #' @examples
 #' # example code
 #' @export
-ModelRegression <- function(data, inducer){
-  # TODO: assert data and inducer
-  model <- Models(data, inducer)
+ModelRegression <- function(inducer.name, inducer.configuration, data.name, data.target, data.features,
+                            fitted.values, coefficients) {
+  # TODO: assertions? can the data set be used for a Regression task?
+  model <- Models(inducer.name, inducer.configuration, data.name, data.target, data.features,
+                  fitted.values, coefficients, model.out)
   class(model) <- c("ModelRegression", class(model))
+  return(model)
 }
 
 
@@ -18,7 +21,7 @@ ModelRegression <- function(data, inducer){
 #' # example code
 #' @export
 print.ModelRegression <- function(model, ...) {
-  # TODO assert??
-  cat("Regression Model:", inducer$name, "fitted on", data$name, "dataset.\n")
-  #  TODO: ??? invisible(inducer) mehrere invisible??
+  assert_class(model, "ModelRegression")
+  cat('Regression Model: "', model$inducer.name, '" fitted on "', model$data.name, '" dataset.\n', sep = "")
+  invisible(model)
 }
