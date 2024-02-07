@@ -1,6 +1,6 @@
 # mlrmini
 
-## What ChatGPT says this pacakge is made for
+## What ChatGPT says this package is made for
 
 In the realm of data, where patterns hide,  
 A tool emerges, mlrmini, with knowledge as its guide.
