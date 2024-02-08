@@ -18,7 +18,7 @@ Inducer <- function(.data = NULL, name, configuration, defaults, hyperparameter)
         configuration = configuration,
         defaults = defaults,
         hyperparameter = hyperparameter
-      ), class = "Inducer"
+      ), class = c("Inducer", "function")
     )
 }
 
@@ -45,7 +45,7 @@ print.Inducer <- function(inducer, ...) {
 #' @param inducer An inducer being an Inducer object.
 #' @value The current configuration of the Inducer.
 #' @export
-configuration <- function(inducer) {
+configuration.Inducer <- function(inducer) {
   return(inducer$configuration)
 }
 

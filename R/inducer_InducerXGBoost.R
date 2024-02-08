@@ -51,20 +51,14 @@ InducerXGBoost <- function(.data = NULL, nrounds = 1, eta = 0.3, gamma = 0, max_
 
   )
   # add class names
-  class(inducerxgb) <- c("InducerXGBoost", "Inducer")  # , class(inducerxgb)
+  class(inducerxgb) <- c("InducerXGBoost", "Inducer")  # , class(inducerxgb)  , "function"
 
   if (is.null(.data)) {
-    if (length(names_given_args) > 0) {
-      cat("Inducer:", inducerxgb$name, "\n")
-      cat("Configuration:", paste(sprintf("%s = %s", names_given_args, unlist(formals(InducerLm)[names_given_args])), collapse = ", "))
-      return(inducerxgb)
-    } else {
-      cat("Inducer:", inducerxgb$name, "\n")
-      return(inducerxgb)
-    }
+    return(inducerxgb)
   } else {
-    fit.InducerXGBoost(.inducer = inducerxgb, .data = .data)
-    }
+    return(fit.InducerXGBoost(.inducer = inducerxgb, .data = .data))
+  }
+  #
 
 
 }  # End XGBoost
