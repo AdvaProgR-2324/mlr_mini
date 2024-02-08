@@ -27,6 +27,11 @@ Model <- function(inducer.name, inducer.configuration, data.name, data.target, d
   )
 }
 
+#' @title Configuration generic
+configuration <- function(...) {
+  UseMethod("configuration")
+}
+
 
 #' @title Configuration method for Model objects
 #' @description Get the configuration of a Model object.
@@ -34,7 +39,7 @@ Model <- function(inducer.name, inducer.configuration, data.name, data.target, d
 #' @return The configuration of the model.
 #' @export
 configuration.Model <- function(model, ...) {
-  assert_class(model, "Model")
+  assert_class(model, "Model") # TODO: is the assert_class necessary if we use a generic?? I dont think so
   return(model$configuration)
 }
 
@@ -51,7 +56,7 @@ configuration.Model <- function(model, ...) {
 #' TODO!!!!
 #'
 #' @export
-inducer.Model <- function(model, ...) {
+inducer <- function(model, ...) {
   assert_class(model, "Model")
   cat("Inducer:", model$inducer.name, "\n")
   cat("Configuration:", paste(names(model$inducer.configuration), "=", unlist(model$inducer.configuration),
@@ -84,6 +89,12 @@ modelInfo.Model <- function(model, ...) {
 }
 
 
+
+#' @title predict function
+predict <- function(...) {
+  UseMethod("predict")
+}
+
 #' @title Predict method for Model
 #' @description
 #' Predicted values based on a Model object.
@@ -102,7 +113,12 @@ predict.Model <- function(model, newdata, ...) {
 }
 
 
-# fit(.inducer = InducerXGBoost(), .data = cars, eta = 0.5, alpha = 2)
+#' @title Fit function
+fit <- function(...) {
+  UseMethod("fit")
+}
+
+
 
 #' @title Fit XGBoost model
 #' @description
