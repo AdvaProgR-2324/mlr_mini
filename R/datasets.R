@@ -60,6 +60,7 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
   if (missing(arg_row)) {
     arg_row <- seq_len(nrow(to_subset$data))
   } else {
+    arg_row <- unique(arg_row)
     assert_integerish(arg_row)
   }
   if (missing(arg_col)) {
@@ -67,10 +68,11 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
   } else {
     assert_character(arg_col)
     assert(all(arg_col %in% names(to_subset$data)))
+    arg_col <- unique(arg_col)
   }
   # check for target covariate
   if (!to_subset$target %in% arg_col) stop(sprintf('Cannot remove target column "%s"', to_subset$target))
-  subsetted <- to_subset$data[arg_row, arg_col]
+  subsetted <- to_subset$data[arg_row, arg_col, drop = FALSE]
   to_subset$data <- subsetted
   to_subset
 }
