@@ -6,7 +6,7 @@ InducerRanger <- function(.data = NULL, formula = NULL, num.trees = 500, mtry = 
   inducerranger <- Inducer(
     .data = NULL,
     name = "Ranger",
-    configuration = formals(InducerLm)[-1],
+    configuration = formals(InducerRanger)[-1],
     defaults = original_defaults,
     hyperparameter = list(
       num.trees = list(name = "num.trees", type = "int", lower = 1, upper = Inf),
@@ -25,8 +25,8 @@ InducerRanger <- function(.data = NULL, formula = NULL, num.trees = 500, mtry = 
 #' @param .inducer An Inducer being an `InducerLm` object
 #' @param .data The data to which the model should be fitted being an `Dataset`.
 #' @export
-fit.InducerLm <- function(.inducer, .data, ...) { # TODO: why do I have to call fit.InducerLM explicitly and not only fit??
-  assert_class(.inducer, "InducerLm")
+fit.InducerRanger <- function(.inducer, .data, ...) {
+  assert_class(.inducer, "InducerRanger")
   assert_class(.data, "Dataset")
   # optional: check if the Inducer exists??
   data <- as.data.frame(.data)

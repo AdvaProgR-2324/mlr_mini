@@ -36,7 +36,7 @@ InducerLm <- function(.data = NULL, formula, subset, weights, na.action, method 
   if (is.null(.data)) {
     return(inducerlm)
   } else {
-    return(fit.InducerLm(inducerlm, .data))
+    return(fit(inducerlm, .data))
   }
 }
 

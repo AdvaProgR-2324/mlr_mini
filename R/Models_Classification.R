@@ -19,7 +19,7 @@ ModelClassification <- function(inducer.name, inducer.configuration, data.name, 
 #' @param model object of class `ModelClassification`.
 #' @export
 print.ModelClassification <- function(model, ...) {
-  assert_class(model, "ModelClassification")
+  # assert_class(model, "ModelClassification") not needed as print method for the ModelRegression class
   cat("Classification Model:", model$name, "fitted on", model$name, "dataset.\n")
   invisible(model)
 }
