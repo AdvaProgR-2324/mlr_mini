@@ -250,3 +250,44 @@ InducerRpart <- function(.data = NULL, ...) {
   inducerrpart
 }
 
+
+
+
+##### Experimente mit
+
+f <- function(.data = NULL, x = 1, obj = F) {
+
+  ret <- list(var_1 = x,
+              var_2 = 2)
+  if (is.null(.data)) {
+    ind <- f
+    # formals(f)["x"]
+    # return(list(ret, f))
+    if (obj) {
+      return(ret)  # return liste
+    } else {
+      return(f)
+    }
+
+  } else {
+    cat("hier fit Funktion aufrufen")
+
+  }
+
+}
+
+print.f <- function(f, ...) {
+  formals_test <- formals(f)
+  formals_test[[3]] <- T
+  formals(f) <- formals_test
+  f()
+  # invisible(f)
+
+
+
+}
+
+f <- f(x = 10)
+asdf <- f(x = 10)
+print.f(f(x = 10))
+f(x = 10, obj = T)
