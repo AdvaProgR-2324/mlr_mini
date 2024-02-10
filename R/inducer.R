@@ -9,7 +9,7 @@
 #* @export
 Inducer <- function(.data = NULL, name, configuration, defaults, hyperparameter) {
   assert_string(name)
-  #assert_list(configuration)
+  assert_list(configuration)
   assert_list(hyperparameter)
   # stopifnot("hyperparameter must be a correctly named list" = names(hyperparameter) == c("name", "type", "lower", "upper", "default"), )
     structure(
@@ -18,9 +18,8 @@ Inducer <- function(.data = NULL, name, configuration, defaults, hyperparameter)
         configuration = configuration,
         defaults = defaults,
         hyperparameter = hyperparameter
-      ), class = "Inducer"
+      ), class = c("Inducer", "function")
     )
-
 }
 
 
@@ -46,7 +45,7 @@ print.Inducer <- function(inducer, ...) {
 #' @param inducer An inducer being an Inducer object.
 #' @value The current configuration of the Inducer.
 #' @export
-configuration <- function(inducer) {
+configuration.Inducer <- function(inducer) {
   return(inducer$configuration)
 }
 
@@ -58,10 +57,6 @@ configuration <- function(inducer) {
 `configuration<-` <- function(inducer, value) {
   names_inducer_config <- names(inducer$configuration)
   names_value <- names(value)
-  print("VALUES:")
-  print(value)
-  print("INDUCER")
-  print(inducer)
   if (all(names_value %in% names_inducer_config)) {
     for (name in names_value) {
       print(value[[name]])
@@ -85,6 +80,7 @@ configuration <- function(inducer) {
 #' @value a datatable containing the name, the type and the range of the hyperparameters of an Inducer object.
 #' @export
 hyperparameters <- function(inducer, ...) {
+  assert_class(inducer, "Inducer")
   hyperparameters <- data.table::data.table(
     name = sapply(inducer$hyperparameter, function(x) x$name),
     type = sapply(inducer$hyperparameter, function(x) x$type),
@@ -100,7 +96,6 @@ hyperparameters <- function(inducer, ...) {
       }
     })
   )
-
   # Print the formatted output
   cat("Hyperparameter Space:\n")
   print(hyperparameters)
