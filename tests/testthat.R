@@ -1,2 +1,5 @@
 library("testthat")
-test_check("mlr_mini")
+test_check("mlrmini")
+
+
+
