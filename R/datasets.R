@@ -39,6 +39,9 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #'
 #' @param dataset: an object of class 'Dataset'
 #'
+#' @examples
+#' cars.data <- Dataset(cars)
+#' cars.data
 #'
 #' @export
 `print.Dataset` <- function(dataset, ...) {
@@ -66,7 +69,7 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #'
 #' @export
 `[.Dataset` <- function(to_subset, arg_row, arg_col, ...) {
-  assert(class(to_subset) == "Dataset")
+  assert_class(to_subset, "Dataset")
   # check or set subsetting args
   if (missing(arg_row)) {
     arg_row <- seq_len(nrow(to_subset$data))
@@ -78,16 +81,15 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
     arg_col <- colnames(to_subset$data)
   } else {
     assert_character(arg_col)
-    assert(all(arg_col %in% names(to_subset$data)))
+      assert(all(arg_col %in% names(to_subset$data)))
     arg_col <- unique(arg_col)
   }
   # check for target covariate
   if (!to_subset$target %in% arg_col) stop(sprintf('Cannot remove target column "%s"', to_subset$target))
-  subsetted <- to_subset$data[arg_row, arg_col, drop = FALSE]
+  subsetted <- to_subset$data[arg_row, .SD, .SDcols = arg_col]
   to_subset$data <- subsetted
   to_subset
 }
-
 #' Create a data.frame object from a Dataset.
 #' 
 #' This function returns the actual data of a Dataset as a data.frame.
@@ -103,7 +105,7 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' 
 #' @export
 as.data.frame.Dataset <- function(dataset) {
-  assert(class(dataset) == "Dataset")
+  assert_class(dataset, "Dataset")
   as.data.frame(dataset$data)
 }
 
