@@ -9,7 +9,7 @@
 ModelClassification <- function(inducer.name, inducer.configuration, data.name, data.target, data.features, fitted.values,
                                 coefficients) {
   # maybe TODO: check if the dataset can be used for a classification task
-  model <- Models(inducer.name, inducer.configuration, data.name, data.target, data.features, fitted.values,
+  model <- Model(inducer.name, inducer.configuration, data.name, data.target, data.features, fitted.values,
                   coefficients, model.out)
   class(model) <- c("ModelClassification", class(model))
 }

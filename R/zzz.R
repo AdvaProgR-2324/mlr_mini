@@ -3,6 +3,7 @@
 #' @importFrom ranger ranger
 #' @importFrom rpart rpart
 #' @importFrom stats lm
+#' @import datasets
 "_PACKAGE"
 
 
@@ -11,7 +12,7 @@
 # }
 
 
-ind <- new.env(parent = emptyenv()) 
+ind <- new.env(parent = emptyenv())
 
 # ind$xgboost <- xgboost # Inducer zuweisen
 # ind$ranger <- ranger

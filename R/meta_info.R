@@ -9,16 +9,16 @@ metainfo.Dataset <- function(data, target = data$target,  type = data$type,  nam
   # if (target %in% names(data$data)) {
   #  data$feature <-  if (is.factor(data[[target]])) "target" else "feature"
   # }
-  #Split dataset info target and feature 
-  
+  #Split dataset info target and feature
+
   #data$feature <- ifelse(target %in% names(data$data), "target", "feature")
- 
+
  x <-  structure(list(name = as.character(name), target = data$target, type = data$type, nrow = nrow(data$data), missings = anyNA(data)), class = "Dataset")
  print(x)
- 
-}
-#To Do: Datensatz in target und feature aufteilen 
 
+}
+#To Do: Datensatz in target und feature aufteilen
+cars.data <- Dataset(cars)
 cars.data$data
 cars.data$target
 cars.data$feature %in% names(cars.data$feature)
@@ -28,9 +28,8 @@ if (!cars.data$target %in% names(cars.data$data)) {
 }
 cars.data$data
 print(cars.data)
-cars.data[cols] <- do.call(rbind, strsplit(as.character(cars.data$data), '')) 
+cars.data[cols] <- do.call(rbind, strsplit(as.character(cars.data$data), ''))
 
 unlist(strsplit(names(cars.data$data), " "))
 cars.data$target
 cars.data$feature
-         
