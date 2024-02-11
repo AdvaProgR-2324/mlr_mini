@@ -1,4 +1,6 @@
-# mlrmini
+
+**mlrmini**
+A mini-package for Machine Learning in R.
 
 ## What ChatGPT says this package is made for
 
@@ -32,3 +34,4 @@ With mlrmini, let the learning begin!
 
 mlrmini is a package developed to provide a simpler and consistent way for using machine learning algorithms in R.
 It allows therefore simplified evaluation and optimization of algorithms and is oriented on the mlr package.
+

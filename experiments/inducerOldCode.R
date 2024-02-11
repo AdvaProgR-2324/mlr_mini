@@ -1,0 +1,293 @@
+#### Archiv Inducer ####
+
+
+### old InducerXGBoost
+
+#' @title Create an InducerXGBoost
+#' @description Build an InducerXGBoost.
+#' @export
+InducerXGBoost <- function(.data = NULL, ...) {
+  # TODO assert
+
+  # Hyperparameter Quelle: https://xgboost.readthedocs.io/en/latest/parameter.html
+
+  inducerxgb <- Inducer(
+    .data = .data,  # TODO möglicherweise verbesserungswürdig
+    name = "InducerXGBoost",
+    configuration = list(), # list(eta = 0.1, gamma = 4),  # , nrounds = 2
+    hyperparameter = list(
+      name = c("eta", "gamma", "max_depth", "min_child_weight", "subsample",
+               "colsample_bytree", "lambda", "alpha", "num_parallel_tree", "nrounds"),
+      type = c(1:10),  # TODO
+      lower = c("num", "num", "num", "num", "num", "num", "num", "num", "num", "num"),
+      upper = c(1, Inf, Inf, Inf, Inf, Inf, Inf, Inf, Inf, Inf),
+      default = c(0.3, 0, 6, 1, 1, 1, 1, 0, 1, 1)
+
+      #eta = c(default = 0.3, lower = 0, upper = 1),
+      #                    gamma = c(default = 0, lower = 0, upper = Inf),
+      #                    max_depth = c(default = 6, lower = 0, upper = Inf),
+      #                    min_child_weight = c(default = 1, lower = 0, upper = Inf),
+      #                    subsample = c(default = 1, lower = 0, upper = Inf),
+      #                    colsample_bytree = c(default = 1, lower = 0, upper = Inf),
+      #                    lambda = c(default = 1, lower = 0, upper = Inf),
+      #                    alpha = c(default = 0, lower = 0, upper = Inf),
+      #                    num_parallel_tree = c(default = 1, lower = 0, upper = Inf)  # lower right?
+      # monotone_constraints
+      # interaction_constraints
+
+    )
+  )
+  # add default values as configuration
+  config <- as.list(inducerxgb$hyperparameter$default)
+  names(config) <- inducerxgb$hyperparameter$name
+  inducerxgb$configuration <- config
+  # add class names
+  class(inducerxgb) <- c("InducerXGBoost", "Inducer", class(inducerxgb))
+
+  ## optional: add configuration to inducer
+  configDots <- list(...)
+  if (length(configDots) > 0) {
+    inducerxgb$configuration[which(names(configDots) == names(inducerxgb$configuration))] <- configDots
+
+  }
+
+
+
+  # formalArgs(xgboost)
+  if (is.null(.data)) {
+    inducerxgb
+  } else {
+    #### TODO fit function aufrufen
+    fit.InducerXGBoost(.inducer = inducerxgb, .data = .data)
+  }
+
+
+}
+
+#ind <- new.env(parent = emptyenv())
+#ind$xgboost <- InducerXGBoost()
+
+
+#### old inducer LM
+
+#' @title Create an InducerLm
+#' @description Build an InducerLm.
+#' @export
+InducerLm <- function(.data = NULL, ...) {
+  inducerlm <- Inducer(
+    .data = NULL,
+    name = "InducerLm",
+    configuration = list(),
+    hyperparameter = list(
+      name = c("formula", "subset", "weights", "na.action", "method", "model", "x", "y",
+               "qr", "singular.ok", "contrasts", "offset"),
+      type = c("formula", NA, "numeric", NA, "character", "logical", "logical", "logical",
+               "logical", "logical", "list", "numeric"),
+      lower = c(),
+      upper = c(),
+      default = c(NA, NA, NA, NA, "qr", "TRUE", "FALSE", "FALSE", "TRUE", "TRUE", "NULL")
+    )
+  )
+  inducerlm
+}
+
+
+#' @title Print method for Inducer object
+#' @description Print an Inducer.
+#' @param inducer An inducer being an Inducer object.
+#' @export
+print.Inducer <- function(inducer, ...) {
+  assert_class(inducer, "Inducer")
+
+  # TODO: print Configuration only if it was changed.
+
+  cat("Inducer:", inducer$name, "\n")
+  # cat("Configuration:", paste(names(inducer$configuration), "=", unlist(inducer$configuration), collapse = ", "))
+
+  # NEU mit configuration function
+  # cat("Configuration:", paste(names(configuration(inducer)), "=", unlist(configuration(inducer)), collapse = ", "))
+
+  # nochmal NEU
+  cat("Configuration:", paste(names(configuration(inducer)), "=", as.vector(configuration(inducer)), collapse = ", "))
+
+  invisible(inducer)
+}
+
+
+
+#### old functions for configuration
+
+
+#' @title Get the configuration of an inducer
+#' @description Get the hyperparameter configuration of an inducer.
+#' @param inducer An Inducer object for which the hyperparameter configuration
+#' should be obtained.
+#' @return The hyperparameter configuration of a given inducer.
+#' @export
+configuration <- function(inducer) {
+  # TODO assert
+
+  # inducer$configuration
+  # configP$nrounds <- 3  # test
+  # inducer <- InducerXGBoost()
+
+  # Hyperparameters as List
+  hyperP <- as.list(inducer$hyperparameter$default)
+  names(hyperP) <- inducer$hyperparameter$name
+
+  configP <- inducer$configuration
+
+  # check if configuration setup is the same as in hyperparameters
+  difference <- Map(`%in%`, hyperP, configP)
+  difference <- names(difference[difference == F])
+
+  configP[names(configP) == difference]  # show only elements which are not the same as in hyperparameters
+
+}
+
+#' @title Assign a hyperparameter configuration to Inducer
+#' @description Assign a valid hyperparameter configuration to an inducer.
+#TODO
+`configuration<-` <- function(inducer, input) {
+  # TODO assert
+
+  # inducer$hyperparameter
+  input
+}
+
+
+#### old Hyperparam Function
+
+#' @title Get hyperparameters of an inducer
+#' @description Get the hyperparameters of an inducer.
+#' @param inducer An Inducer object for which the hyperparameters should
+#' be obtained.
+#' @return The hyperparameters of the given inducer and their range.
+#' @export
+
+hyperparameters <- function(inducer) {
+  assert_class(inducer, "Inducer")
+  # inducer$hyperparameter
+  # as.list
+  #inducer = InducerXGBoost
+
+
+  #eval(parse(text = paste0("InducerXGBoost", "()")))
+  #substitute(inducer)
+
+  # hyperparameters()
+  hyperparameter_table <- data.table::data.table(
+    name = inducer$hyperparameter$name,
+    type = inducer$hyperparameter$type,
+    range = paste0("[", inducer$hyperparameter$lower, ",", inducer$hyperparameter$upper, "]")
+  )
+
+
+  # for other structure of the hyperparameter list:
+  hyperparameters <- data.table::data.table(
+    name = sapply(hyper, function(x) x$name),
+    type = sapply(hyper, function(x) x$type),
+    range = sapply(hyper, function(x) {
+      if (x$type == "numeric") {
+        paste0("[", x$lower, ", ", x$upper, "]")
+      } else if (x$type == "logical") {
+        "(TRUE, FALSE)"
+      } else {
+        "NA"
+      }
+    })
+  )
+
+
+  cat("Hyperparameter Space:\n")
+  print(hyperparameter_table, quote = FALSE)
+}
+
+
+
+
+#' @title Create an InducerRanger
+#' @description Build an InducerRanger.
+#' @export
+InducerRanger <- function(.data = NULL, ...) {
+  inducerranger <- Inducer(
+    .data = NULL,
+    name = "InducerRanger",
+    configuration = list(a = 2, b = 1),
+    hyperparameter = list(
+      name = c("num.trees", "mtry", "importance", "min.node.size", "max.depth"),
+      type = c("int", "int", "???", "???", "int"),
+      lower = c(),
+      upper = c(),
+      default = c(500, NA, NA, NA, 0)
+
+      #num.trees = c(default = 500),
+      #                    mtry = c(default = 2),  # Default is the (rounded down) square root of the number variables
+      #                    # importance
+      #                    min.node.size = c(default = 1),  # Default 1 for classification, 5 for regression, 3 for survival, and 10 for probability.
+      #                    max.depth = c(default = 0)
+    )
+  )
+  inducerranger
+}
+
+#' @title Create an InducerRanger
+#' @description Build an InducerRanger.
+#' @export
+InducerRpart <- function(.data = NULL, ...) {
+  inducerrpart <- Inducer(
+    .data = NULL,
+    name = "InducerRpart",
+    configuration = list(a = 2, b = 1),
+    hyperparameter = list(
+      name = c(),
+      type = c(),
+      lower = c(),
+      upper = c(),
+      default = c()
+    )
+  )
+  inducerrpart
+}
+
+
+
+
+##### Experimente mit
+
+f <- function(.data = NULL, x = 1, obj = F) {
+
+  ret <- list(var_1 = x,
+              var_2 = 2)
+  if (is.null(.data)) {
+    ind <- f
+    # formals(f)["x"]
+    # return(list(ret, f))
+    if (obj) {
+      return(ret)  # return liste
+    } else {
+      return(f)
+    }
+
+  } else {
+    cat("hier fit Funktion aufrufen")
+
+  }
+
+}
+
+print.f <- function(f, ...) {
+  formals_test <- formals(f)
+  formals_test[[3]] <- T
+  formals(f) <- formals_test
+  f()
+  # invisible(f)
+
+
+
+}
+
+f <- f(x = 10)
+asdf <- f(x = 10)
+print.f(f(x = 10))
+f(x = 10, obj = T)
