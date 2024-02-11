@@ -199,10 +199,7 @@ fit.InducerLm <- function(.inducer, .data, ...) {
   return(fittedModel)  # return fitted model
 }
 
-.inducer <- InducerLm()
 
-.data <- Dataset(cars, target = "dist")
-.data$data[, .data$target]
 
 # TODO: Isn't that the same as in line 62 ff?
 modelObject <- function(model) {
