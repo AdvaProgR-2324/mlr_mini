@@ -8,7 +8,7 @@ vignette: >
   %\usepackage[utf8]{inputenc}
 ---
 
-The operator `%+=%` increments a variable by a given value:
+The function `Dataset` converts a given `data.frame` into a `Dataset` object:
 
 ```{r
 library("mlrmini")

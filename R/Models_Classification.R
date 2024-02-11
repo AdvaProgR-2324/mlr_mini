@@ -9,7 +9,7 @@
 ModelClassification <- function(inducer.name, inducer.configuration, data.name, data.target, data.features, fitted.values,
                                 coefficients) {
   # maybe TODO: check if the dataset can be used for a classification task
-  model <- Models(inducer.name, inducer.configuration, data.name, data.target, data.features, fitted.values,
+  model <- Model(inducer.name, inducer.configuration, data.name, data.target, data.features, fitted.values,
                   coefficients, model.out)
   class(model) <- c("ModelClassification", class(model))
 }
@@ -20,6 +20,6 @@ ModelClassification <- function(inducer.name, inducer.configuration, data.name, 
 #' @export
 print.ModelClassification <- function(model, ...) {
   # assert_class(model, "ModelClassification") not needed as print method for the ModelRegression class
-  cat("Classification Model:", model$name, "fitted on", model$name, "dataset.\n")
+  cat("Classification Model:", model$inducer.name, "fitted on", model$data.name, "dataset.\n")
   invisible(model)
 }
