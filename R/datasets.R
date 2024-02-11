@@ -26,16 +26,27 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
   assert_character(target)
   # set type to classification or regression
   if (is.null(type)) {
-    type <- if (is.factor(data[[target]]) || is.character(data[[target]])) "classification" else "regression"
+    type <- if (is.factor(data[[target]]) || is.character(data[[target]])) "Classification" else "Regression"
   }
   # return a structure with actual data and metainfo
-  structure(list(data = as.data.frame(data),
+  structure(list(data = as.data.table(data),
                  target = target,
                  type = type,
-                 name = name),
-            class = "Dataset")
+                 name = as.character(name)),
+                class = c(paste0("Dataset", type), "Dataset"))
 }
-
+#' Print function for a Dataset object.
+#'
+#' @param dataset: an object of class 'Dataset'
+#'
+#'
+#' @export
+`print.Dataset` <- function(dataset, ...) {
+  assertClass(dataset, "Dataset")
+  cat(sprintf('Dataset "%s", predicting "%s" (%s)\n',
+              dataset$name, dataset$target, dataset$type))
+  print(dataset$data, topn = 2)
+}
 #' Subset a Dataset Object.
 #'
 #' This function subsets a custom dataset object based on specified row indices and optional column names.
