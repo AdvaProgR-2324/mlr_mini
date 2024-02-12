@@ -49,6 +49,7 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
   cat(sprintf('Dataset "%s", predicting "%s" (%s)\n',
               dataset$name, dataset$target, dataset$type))
   print(dataset$data, topn = 2)
+  invisible(dataset)
 }
 #' Subset a Dataset Object.
 #'
