@@ -1,28 +1,6 @@
-Split <- function() {
-  
-  splitCV <- function(hyperparameters) {
-    cat("...do cross validation...")
+add_resample_strategy <- function(name, resample_function) {
+  if (!esists("resample_env", envir = .GlobalEnv)) {
+    stop("mlr_mini appears to be not loaded")
   }
-  class(splitCV) <- "splitCV"
-  
-  splitBoots <- function(hyperparameters) {
-    cat("...do bootstrapping...")
-  }
-  class(splitBoots) <- "splitBoots"
-  
-  structure(list(
-    cv = splitCV,
-    boots = splitBoots
-  ),class = "Split")
+  assign(name, resample_function, envir = resample_env)
 }
-
-
-
-
-splt <- Split()
-splt$cv
-splitCV
-identical(splt$cv, splitCV)
-
-rlang::env_print(splitCV)
-rlang::env_print(Split)
