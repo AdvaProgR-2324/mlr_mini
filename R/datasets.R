@@ -17,19 +17,19 @@
 #' @export
 Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute(data), 20)[[1]])) {
   # checks
-  assert(check_data_frame(data), check_matrix(data))
-  assert(target %in% names(data))
+  checkmate::assert(check_data_frame(data), check_matrix(data))
+  checkmate::assert(target %in% names(data))
   if (class(data) == "matrix") {
     assert_numeric(data)
   }
-  assert_named(data)
-  assert_character(target)
+  checkmate::assert_named(data)
+  checkmate::assert_character(target)
   # set type to classification or regression
   if (is.null(type)) {
     type <- if (is.factor(data[[target]]) || is.character(data[[target]])) "Classification" else "Regression"
   }
   # return a structure with actual data and metainfo
-  structure(list(data = as.data.table(data),
+  structure(list(data = data.table::as.data.table(data),
                  target = target,
                  type = type,
                  name = as.character(name)),
@@ -45,7 +45,7 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #'
 #' @export
 `print.Dataset` <- function(x, ...) {
-  assertClass(x, "Dataset")
+  checkmate::assertClass(x, "Dataset")
   cat(sprintf('Dataset "%s", predicting "%s" (%s)\n',
               x$name, x$target, x$type))
   print(x$data, topn = 2)
@@ -70,7 +70,7 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #'
 #' @export
 `[.Dataset` <- function(to_subset, arg_row, arg_col, ...) {
-  assert_class(to_subset, "Dataset")
+  checkmate::assert_class(to_subset, "Dataset")
   # check or set subsetting args
   if (missing(arg_row)) {
     arg_row <- seq_len(nrow(to_subset$data))
@@ -106,7 +106,7 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' 
 #' @export
 as.data.frame.Dataset <- function(x) {
-  assert_class(x, "Dataset")
+  checkmate::assert_class(x, "Dataset")
   as.data.frame(x$data)
 }
 
