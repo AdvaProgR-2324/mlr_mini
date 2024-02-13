@@ -1,6 +1,6 @@
 Split <- function(method = "random", ratio = 0.7) {
-  assertChoice(method, c("random", "stratified"))
-  assertNumber(ratio, lower = 0, upper = 1)
+  checkmate::assertChoice(method, c("random", "stratified"))
+  checkmate::assertNumber(ratio, lower = 0, upper = 1)
 }
 # Generic function to do resampling
 resample <- function(data, resample_function) {

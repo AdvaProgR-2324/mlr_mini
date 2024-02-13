@@ -17,13 +17,13 @@
 #' @export
 Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute(data), 20)[[1]])) {
   # checks
-  assert(check_data_frame(data), check_matrix(data))
-  assert(target %in% names(data))
+  checkmate::assert(check_data_frame(data), check_matrix(data))
+  checkmate::assert(target %in% names(data))
   if (class(data) == "matrix") {
     assert_numeric(data)
   }
-  assert_named(data)
-  assert_character(target)
+  checkmate::assert_named(data)
+  checkmate::assert_character(target)
   # set type to classification or regression
   if (is.null(type)) {
     type <- if (is.factor(data[[target]]) || is.character(data[[target]])) "classification" else "regression"
@@ -55,19 +55,19 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #'
 #' @export
 `[.Dataset` <- function(to_subset, arg_row, arg_col, ...) {
-  assert(class(to_subset) == "Dataset")
+  checkmate::assert(class(to_subset) == "Dataset")
   # check or set subsetting args
   if (missing(arg_row)) {
     arg_row <- seq_len(nrow(to_subset$data))
   } else {
     arg_row <- unique(arg_row)
-    assert_integerish(arg_row)
+    checkmate::assert_integerish(arg_row)
   }
   if (missing(arg_col)) {
     arg_col <- colnames(to_subset$data)
   } else {
-    assert_character(arg_col)
-    assert(all(arg_col %in% names(to_subset$data)))
+    checkmate::assert_character(arg_col)
+    checkmate::assert(all(arg_col %in% names(to_subset$data)))
     arg_col <- unique(arg_col)
   }
   # check for target covariate
@@ -92,7 +92,7 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' 
 #' @export
 as.data.frame.Dataset <- function(dataset) {
-  assert(class(dataset) == "Dataset")
+  checkmate::assert(class(dataset) == "Dataset")
   as.data.frame(dataset$data)
 }
 

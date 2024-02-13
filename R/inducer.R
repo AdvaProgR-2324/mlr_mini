@@ -8,9 +8,9 @@
 #' the lower and upper bound of the hyperparameter range as well as a default value.
 #* @export
 Inducer <- function(.data = NULL, name, configuration, defaults, hyperparameter) {
-  assert_string(name)
-  assert_list(configuration)
-  assert_list(hyperparameter)
+  checkmate::assert_string(name)
+  checkmate::assert_list(configuration)
+  checkmate::assert_list(hyperparameter)
   # stopifnot("hyperparameter must be a correctly named list" = names(hyperparameter) == c("name", "type", "lower", "upper", "default"), )
     structure(
       list(
@@ -28,7 +28,7 @@ Inducer <- function(.data = NULL, name, configuration, defaults, hyperparameter)
 #' @param inducer An inducer being an Inducer object.
 #' @export
 print.Inducer <- function(inducer, ...) {
-  assert_class(inducer, "Inducer")
+  checkmate::assert_class(inducer, "Inducer")
 
   # TODO: print Configuration only if it was changed.
 
@@ -80,7 +80,7 @@ configuration.Inducer <- function(inducer) {
 #' @value a datatable containing the name, the type and the range of the hyperparameters of an Inducer object.
 #' @export
 hyperparameters <- function(inducer, ...) {
-  assert_class(inducer, "Inducer")
+  checkmate::assert_class(inducer, "Inducer")
   hyperparameters <- data.table::data.table(
     name = sapply(inducer$hyperparameter, function(x) x$name),
     type = sapply(inducer$hyperparameter, function(x) x$type),
