@@ -20,7 +20,7 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
   checkmate::assert(check_data_frame(data), check_matrix(data))
   checkmate::assert(target %in% names(data))
   if (class(data) == "matrix") {
-    assert_numeric(data)
+    checkmate::assert_numeric(data)
   }
   checkmate::assert_named(data)
   checkmate::assert_character(target)
@@ -76,13 +76,13 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
     arg_row <- seq_len(nrow(to_subset$data))
   } else {
     arg_row <- unique(arg_row)
-    assert_integerish(arg_row)
+    checkmate::assert_integerish(arg_row)
   }
   if (missing(arg_col)) {
     arg_col <- colnames(to_subset$data)
   } else {
-    assert_character(arg_col)
-      assert(all(arg_col %in% names(to_subset$data)))
+    checkmate::assert_character(arg_col)
+    checkmate::assert(all(arg_col %in% names(to_subset$data)))
     arg_col <- unique(arg_col)
   }
   # check for target covariate
