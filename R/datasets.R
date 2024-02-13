@@ -17,9 +17,9 @@
 #' @export
 Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute(data), 20)[[1]])) {
   # checks
-  checkmate::assert(check_data_frame(data), check_matrix(data))
+  checkmate::assert(checkmate::check_data_frame(data), checkmate::check_matrix(data))
   checkmate::assert(target %in% names(data))
-  if (class(data) == "matrix") {
+  if (inherits(data, "matrix")) {
     checkmate::assert_numeric(data)
   }
   checkmate::assert_named(data)
