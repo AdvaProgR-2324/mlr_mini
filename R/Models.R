@@ -10,10 +10,10 @@ Model <- function(inducer.name, inducer.configuration, data.name, data.target, d
                    fitted.values, coefficients) {
   #TODO: further assertions for data.target -> rather in ModelRegression or ModelClassification
   # data.features and fitted.values
-  assert_string(inducer.name)
-  assert_list(inducer.configuration)
-  assert_character(data.name)
-  assert_numeric(coefficients)
+  checkmate::assert_string(inducer.name)
+  checkmate::assert_list(inducer.configuration)
+  checkmate::assert_character(data.name)
+  checkmate::assert_numeric(coefficients)
   structure(list(
     inducer.name = inducer.name,
     inducer.configuration = inducer.configuration,
@@ -39,7 +39,7 @@ configuration <- function(...) {
 #' @return The configuration of the model.
 #' @export
 configuration.Model <- function(model, ...) {
-  assert_class(model, "Model") # TODO: is the assert_class necessary if we use a generic?? I dont think so
+  checkmate::assert_class(model, "Model") # TODO: is the assert_class necessary if we use a generic?? I dont think so
   return(model$configuration)
 }
 
@@ -57,7 +57,7 @@ configuration.Model <- function(model, ...) {
 #'
 #' @export
 inducer <- function(model, ...) {
-  assert_class(model, "Model")
+  checkmate::assert_class(model, "Model")
   cat("Inducer:", model$inducer.name, "\n")
   cat("Configuration:", paste(names(model$inducer.configuration), "=", unlist(model$inducer.configuration),
             collapse = ", "))
@@ -105,8 +105,8 @@ predict <- function(...) {
 predict.Model <- function(model, newdata, ...) {
   # TODO: add assert Model and assert dataframe
   # TODO: ???? dataframe or dataset as input? ?? different behaviour?
-  assert_class(model, "Model", msg = "model has to be of class'Model'")
-  assert_class(newdata, "dataset")
+  checkmate::assert_class(model, "Model", msg = "model has to be of class'Model'")
+  checkmate::assert_class(newdata, "dataset")
   stopifnot("model has to be of class'Model'" = class(model) == "Model")
   ind <- xgboost
   return(ind)
@@ -130,7 +130,7 @@ fit <- function(...) {
 fit.InducerXGBoost <- function(.inducer, .data, ...) {
   ### Works with Dataset from dataset.R
 
-  assert_class(.inducer, "Inducer")
+  checkmate::assert_class(.inducer, "Inducer")
 
   # TODO assert_class(.data, "Dataset")
   argumentsDots <- list(...)  # Arguments/Hyperparameter
@@ -181,7 +181,7 @@ fit.InducerXGBoost <- function(.inducer, .data, ...) {
 
 
 fit.InducerLm <- function(.inducer, .data, ...) {
-  assert_class(.inducer, "Inducer")
+  checkmate::assert_class(.inducer, "Inducer")
   # assert_class(.data, "Dataset")
   # optional: check if the Inducer exists??
 
@@ -203,7 +203,7 @@ fit.InducerLm <- function(.inducer, .data, ...) {
 
 # TODO: Isn't that the same as in line 62 ff?
 modelObject <- function(model) {
-  assert_class(model, "Model")
+  checkmate::assert_class(model, "Model")
   # TODO asserts
 
   print(modelObj)
