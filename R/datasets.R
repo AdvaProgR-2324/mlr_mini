@@ -37,19 +37,19 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 }
 #' Print function for a Dataset object.
 #'
-#' @param dataset: an object of class 'Dataset'
+#' @param x: an object of class 'Dataset'
 #'
 #' @examples
 #' cars.data <- Dataset(cars)
 #' cars.data
 #'
 #' @export
-`print.Dataset` <- function(dataset, ...) {
-  assertClass(dataset, "Dataset")
+`print.Dataset` <- function(x, ...) {
+  assertClass(x, "Dataset")
   cat(sprintf('Dataset "%s", predicting "%s" (%s)\n',
-              dataset$name, dataset$target, dataset$type))
-  print(dataset$data, topn = 2)
-  invisible(dataset)
+              x$name, x$target, x$type))
+  print(x$data, topn = 2)
+  invisible(x)
 }
 #' Subset a Dataset Object.
 #'
@@ -105,9 +105,9 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' as.data.frame(cars.data)
 #' 
 #' @export
-as.data.frame.Dataset <- function(dataset) {
-  assert_class(dataset, "Dataset")
-  as.data.frame(dataset$data)
+as.data.frame.Dataset <- function(x) {
+  assert_class(x, "Dataset")
+  as.data.frame(x$data)
 }
 
 metainfo.Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute(data), 20)[[1]])) {
