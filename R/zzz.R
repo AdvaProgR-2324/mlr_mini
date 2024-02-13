@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #' @import checkmate
 #' @importFrom xgboost xgboost
 #' @importFrom ranger ranger
