@@ -27,6 +27,8 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
   # set type to classification or regression
   if (is.null(type)) {
     type <- if (is.factor(data[[target]]) || is.character(data[[target]])) "Classification" else "Regression"
+  } else {
+    checkmate::assert_choice(type, c("regression", "classification"))
   }
   # return a structure with actual data and metainfo
   structure(list(data = data.table::as.data.table(data),
