@@ -15,11 +15,11 @@ metainfo.Dataset <- function(data, targets = data$target,  type = data$type,  na
   
   #data$feature <- ifelse(target %in% names(data$data), "target", "feature")
  
- x <-  structure(list(name = as.character(name), target = data$target, features = data$features, type = data$type, nrow = nrow(data$data), missings = anyNA(data)), class = "Dataset")
+ x <-  structure(list(name = as.character(data$name), target = data$target, class(target),  features = data$features, type = data$type, nrow = nrow(data$data), missings = anyNA(data)), class = "Dataset")
+ lapply(x, class)
  print(x)
  
 }
-cars.data$data
-cars.data$feature %in% names(cars.data$feature)
+
 metainfo.Dataset(cars.data)
 
