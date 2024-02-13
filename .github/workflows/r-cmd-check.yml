@@ -1,11 +1,7 @@
 # pkgdown workflow of the mlrmini package
 # https://github.com/mlr-org/actions
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
+  [push, pull_request]
       - master
   release:
     types:
