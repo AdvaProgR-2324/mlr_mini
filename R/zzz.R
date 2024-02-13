@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #' @import checkmate
 #' @importFrom xgboost xgboost
 #' @importFrom ranger ranger
@@ -24,3 +25,7 @@ ind <- new.env(parent = emptyenv())
 
   #detach(pos = 2, name = "ind")
 #}
+# environment for resampling strategy
+.onLoad <- function(libname, pkgname) {
+  resample_env <<- new.env(parent = emptyenv())
+}
