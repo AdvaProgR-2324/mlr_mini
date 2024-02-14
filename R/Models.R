@@ -5,7 +5,6 @@
 #' @param data The data given in an Dataset object.
 #' @param inducer An Inducer object: The applied inducer
 #' @export
-
 Model <- function(inducer.name, inducer.configuration, data.name, data.target, data.features,
                    fitted.values = NULL, coefficients = NULL, model.out, model.data) {
   #TODO: further assertions for data.target -> rather in ModelRegression or ModelClassification
@@ -155,19 +154,6 @@ predict.ModelXGBoost <- function(model, newdata, ...) {
 
 }
 
-### kann alles weg
-# cars_ds <- Dataset(cars, target = "dist")
-# model <- InducerXGBoost(.data = cars_ds)
-# class(model)
-# newdata <- data.frame(speed = 10)
-# newdata <- cars_ds$data[c(1, 2), ]
-# newdata <- cars_ds[c(1, 2, 3, 4), ]
-# data_n_ds <- cars_ds[c(1, 2, 3, 4), ]  # hier newdata
-# data_n_ds$data[, data_n_ds$target]
-
-
-
-
 
 
 #' @title Fit function
@@ -184,47 +170,32 @@ fit <- function(...) {
 #' @param .data A `dataset` object for which the values should be fitted
 #' @return an xgb object
 #' @export
-fit.InducerXGBoost <- function(.inducer, .data, ...) {
-  ### Works with Dataset from dataset.R
+fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, gamma = 0, max_depth = 6, min_child_weight = 1,
+                               subsample = 1, colsample_bytree = 1, lambda = 1, alpha = 0, num_parallel_tree = 1) {
+  # TODO asserts
+  # TODO: formals(model) <- formals(.inducer) how to solve that error???
 
-  assert_class(.inducer, "Inducer")
 
-  # TODO assert_class(.data, "Dataset")
-  argumentsDots <- list(...)  # Arguments/Hyperparameter
+  model <- xgboost
+  original_call <- match.call(expand.dots = FALSE)
+  form_Ind <- formals(.inducer)  # formals of ind
+  form_Ind$.data <- NULL  # remove .data arg
+  given_args <- original_call[-c(1, 2, 3)]  # delete fit... .inducer, .data
 
-  # TODO data aus data branch,
-
-  # TODO ... args im Function Kopf klüger lösen, ggf alles reinschreiben
-
-  # argumentsDots & configuration zusammenführen
-
-  configInd <- as.list(configuration(.inducer))  # TODO if empty ? named list()
-  for (arg in names(argumentsDots)) {
-    configInd[[arg]] <- argumentsDots[[arg]]
+  # for loop will be skipped if empty
+  for (arg in names(form_Ind)) {  # first check the arguments of inducer, paste into model
+    formals(model)[[arg]] <- form_Ind[[arg]]
   }
-  pastedHyperparam <- configInd
-  # pastedHyperparam <- c(configInd, argumentsDots)
-
-  # überprüfen
-
-  # which("nrounds" == names(configuration(.inducer))) --> aus configuration(.inducer) löschen, sonst doppelt drinnen
-
-
-  if ("nrounds" %in% names(pastedHyperparam)) {  # nrounds not in params !!!
-    xgb_nRound <- pastedHyperparam$nrounds
-    pastedHyperparam$nrounds <- NULL  # delete otherwise twice
-  } else {
-    xgb_nRound <- 1  # Hyperparameter default
+  for (arg in names(given_args)) {  # secound check the arguments of fit fct, paste into model
+    if (formals(model)[[arg]] != given_args[[arg]]) {  # only switch if fit.. uses a different param setting as already in Inducer
+      formals(model)[[arg]] <- given_args[[arg]]
+    }
   }
-  pastedHyperparam$.data <- NULL  # delete .data, otherwise twice in xgboost
 
-  # old
-  # data <- as.matrix(.data)
-  # fittedModel <- xgboost(data = data, label = data[, "dist"], nrounds = xgb_nRound, params = pastedHyperparam)
-
+  # estimate model
   featureVars <- setdiff(colnames(.data$data), .data$target)
-  fittedModel <- xgboost(data = as.matrix(.data$data[, featureVars]), label = .data$data[, .data$target], nrounds = xgb_nRound,
-                         params = pastedHyperparam)
+  fittedModel <- model(data = as.matrix(.data$data[, featureVars]), label = .data$data[, .data$target])
+
 
   modelObj <- Model(inducer.name = "InducerXGBoost",
                     inducer.configuration = as.list(configuration(.inducer)),  # also changed in Model()
@@ -233,43 +204,15 @@ fit.InducerXGBoost <- function(.inducer, .data, ...) {
                     data.features = colnames(.data$data),  # change feature names automatic
                     model.out = fittedModel,
                     model.data = .data
-
                     )
+
   class(modelObj) <- c("ModelXGBoost", "ModelRegression", "Model")
-
   return(modelObj)
-  # fit.InducerXGBoost(InducerXGBoost(.data = cars))
-  # fit.InducerXGBoost(InducerXGBoost(), .data = cars, nrounds = 3)  # funktioniert
-  ## FUNKTIONIERT
-  # fit.InducerXGBoost(.inducer = InducerXGBoost(), .data = Dataset(cars, target = "dist"))
+
 }
 
 
 
-
-fit.InducerLm <- function(.inducer, .data, ...) {
-  assert_class(.inducer, "Inducer")
-  # assert_class(.data, "Dataset")
-  # optional: check if the Inducer exists??
-
-  # TODO bei lm formula einfügen
-  conifLst <- inducer$configuration[.inducer$configuration != ""]
-  pastedConfig <- paste(names(conifLst), " = ", as.vector(conifLst), collapse = ", ")
-
-  if (.inducer$configuration$formula == "") {  # no formula safe in config
-    pastedFormula <- paste0(.data$target, " ~ ", paste(setdiff(colnames(.data$data), .data$target), collapse = " + "))
-    fittedModel <- lm(formula = pastedFormula, data = .data$data)
-  } else {  # formula safed in config, use the config formula for lm
-    fittedModel <- lm(formula = .inducer$configuration$formula, data = .data$data)
-  }
-
-  return(fittedModel)  # return fitted model
-}
-
-# .inducer <- InducerLm()
-#
-# .data <- Dataset(cars, target = "dist")
-# .data$data[, .data$target]
 
 # TODO: Isn't that the same as in line 62 ff? -> no?
 modelObject <- function(model) {

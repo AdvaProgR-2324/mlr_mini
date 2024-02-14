@@ -252,6 +252,181 @@ InducerRpart <- function(.data = NULL, ...) {
 
 
 
+#' @title Create an InducerXGBoost
+#' @description Build an InducerXGBoost.
+#' @export
+InducerXGBoost <- function(.data = NULL, nrounds = 1, eta = 0.3, gamma = 0, max_depth = 6, min_child_weight = 1,
+                           subsample = 1, colsample_bytree = 1, lambda = 1, alpha = 0, num_parallel_tree = 1) {
+  # TODO assert
+
+  original_call <- match.call(expand.dots = FALSE)
+  original_defaults <- formals(InducerXGBoost)
+  given_args <- original_call[-1]
+  names_given_args <- names(given_args)
+  for (arg in names(given_args)) {
+    formals(InducerXGBoost)[[arg]] <- given_args[[arg]]
+  }
+
+  # Hyperparameter Quelle: https://xgboost.readthedocs.io/en/latest/parameter.html
+
+  inducerxgb <- Inducer(
+    .data = .data,  # TODO möglicherweise verbesserungswürdig
+    name = "InducerXGBoost",
+    configuration = formals(InducerXGBoost)[-1], # list(eta = 0.1, gamma = 4),  # , nrounds = 2
+    defaults = original_defaults,
+    hyperparameter = list(
+      nrounds = list(name = "nrounds", type = "numeric", default = 1, lower = 1, upper = Inf),
+      eta = list(name = "eta", type = "numeric", default = 0.3, lower = 0, upper = 1),
+      gamma = list(name = "gamma", type = "numeric", default = 0, lower = 0, upper = Inf),
+      max_depth = list(name = "max_depth", type = "numeric", default = 6, lower = 0, upper = Inf),
+      min_child_weight = list(name = "min_child_weight", type = "numeric", default = 1, lower = 0, upper = Inf),
+      subsample = list(name = "subsample", type = "numeric", default = 1, lower = 0, upper = Inf),
+      colsample_bytree = list(name = "colsample_bytree", type = "numeric", default = 1, lower = 0, upper = Inf),
+      lambda = list(name = "lambda", type = "numeric", default = 1, lower = 0, upper = Inf),
+      alpha = list(name = "alpha", type = "numeric", default = 0, lower = 0, upper = Inf),
+      num_parallel_tree = list(name = "num_parallel_tree", type = "numeric", default = 1, lower = 0, upper = Inf)  # lower right?
+
+    )
+
+    #eta = c(default = 0.3, lower = 0, upper = 1),
+    #                    gamma = c(default = 0, lower = 0, upper = Inf),
+    #                    max_depth = c(default = 6, lower = 0, upper = Inf),
+    #                    min_child_weight = c(default = 1, lower = 0, upper = Inf),
+    #                    subsample = c(default = 1, lower = 0, upper = Inf),
+    #                    colsample_bytree = c(default = 1, lower = 0, upper = Inf),
+    #                    lambda = c(default = 1, lower = 0, upper = Inf),
+    #                    alpha = c(default = 0, lower = 0, upper = Inf),
+    #                    num_parallel_tree = c(default = 1, lower = 0, upper = Inf)  # lower right?
+    # monotone_constraints
+    # interaction_constraints
+
+
+  )
+  # add class names
+  class(inducerxgb) <- c("InducerXGBoost", "Inducer")  # , class(inducerxgb)  , "function"
+
+  if (is.null(.data)) {
+    return(inducerxgb)
+  } else {
+    return(fit.InducerXGBoost(.inducer = inducerxgb, .data = .data))
+  }
+  #
+
+
+}  # End XGBoost
+
+
+
+#### fit XGB ALT
+fit.InducerXGBoost <- function(.inducer, .data, ...) {
+  ### Works with Dataset from dataset.R
+
+  assert_class(.inducer, "Inducer")
+
+  # TODO assert_class(.data, "Dataset")
+  argumentsDots <- list(...)  # Arguments/Hyperparameter
+
+  # TODO data aus data branch,
+
+  # TODO ... args im Function Kopf klüger lösen, ggf alles reinschreiben
+
+  # argumentsDots & configuration zusammenführen
+
+  configInd <- as.list(configuration(.inducer))  # TODO if empty ? named list()
+  for (arg in names(argumentsDots)) {
+    configInd[[arg]] <- argumentsDots[[arg]]
+  }
+  pastedHyperparam <- configInd
+  # pastedHyperparam <- c(configInd, argumentsDots)
+
+  # überprüfen
+
+  # which("nrounds" == names(configuration(.inducer))) --> aus configuration(.inducer) löschen, sonst doppelt drinnen
+
+
+  if ("nrounds" %in% names(pastedHyperparam)) {  # nrounds not in params !!!
+    xgb_nRound <- pastedHyperparam$nrounds
+    pastedHyperparam$nrounds <- NULL  # delete otherwise twice
+  } else {
+    xgb_nRound <- 1  # Hyperparameter default
+  }
+  pastedHyperparam$.data <- NULL  # delete .data, otherwise twice in xgboost
+
+  # old
+  # data <- as.matrix(.data)
+  # fittedModel <- xgboost(data = data, label = data[, "dist"], nrounds = xgb_nRound, params = pastedHyperparam)
+
+  featureVars <- setdiff(colnames(.data$data), .data$target)
+  fittedModel <- xgboost(data = as.matrix(.data$data[, featureVars]), label = .data$data[, .data$target], nrounds = xgb_nRound,
+                         params = pastedHyperparam)
+
+  modelObj <- Model(inducer.name = "InducerXGBoost",
+                    inducer.configuration = as.list(configuration(.inducer)),  # also changed in Model()
+                    data.name = as.character(.data$name),
+                    data.target = .data$target,
+                    data.features = colnames(.data$data),  # change feature names automatic
+                    model.out = fittedModel,
+                    model.data = .data
+
+  )
+  class(modelObj) <- c("ModelXGBoost", "ModelRegression", "Model")
+
+  return(modelObj)
+  # fit.InducerXGBoost(InducerXGBoost(.data = cars))
+  # fit.InducerXGBoost(InducerXGBoost(), .data = cars, nrounds = 3)  # funktioniert
+  ## FUNKTIONIERT
+  # fit.InducerXGBoost(.inducer = InducerXGBoost(), .data = Dataset(cars, target = "dist"))
+}
+
+
+
+## fit lm alt
+fit.InducerLm <- function(.inducer, .data, ...) {
+  assert_class(.inducer, "Inducer")
+  # assert_class(.data, "Dataset")
+  # optional: check if the Inducer exists??
+
+  # TODO bei lm formula einfügen
+  conifLst <- inducer$configuration[.inducer$configuration != ""]
+  pastedConfig <- paste(names(conifLst), " = ", as.vector(conifLst), collapse = ", ")
+
+  if (.inducer$configuration$formula == "") {  # no formula safe in config
+    pastedFormula <- paste0(.data$target, " ~ ", paste(setdiff(colnames(.data$data), .data$target), collapse = " + "))
+    fittedModel <- lm(formula = pastedFormula, data = .data$data)
+  } else {  # formula safed in config, use the config formula for lm
+    fittedModel <- lm(formula = .inducer$configuration$formula, data = .data$data)
+  }
+
+  return(fittedModel)  # return fitted model
+}
+
+# .inducer <- InducerLm()
+#
+# .data <- Dataset(cars, target = "dist")
+# .data$data[, .data$target]
+
+
+
+### kann alles weg
+# cars_ds <- Dataset(cars, target = "dist")
+# model <- InducerXGBoost(.data = cars_ds)
+# class(model)
+# newdata <- data.frame(speed = 10)
+# newdata <- cars_ds$data[c(1, 2), ]
+# newdata <- cars_ds[c(1, 2, 3, 4), ]
+# data_n_ds <- cars_ds[c(1, 2, 3, 4), ]  # hier newdata
+# data_n_ds$data[, data_n_ds$target]
+
+
+
+
+
+
+
+
+
+
+
 
 ##### Experimente mit
 

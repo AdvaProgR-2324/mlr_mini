@@ -9,10 +9,10 @@
 #' @return An object of class 'Dataset' with attributes 'data' containing the actual data as a data.frame,
 #' 'target' with the name of the target covariable, 'type' which is either 'classification' or 'regression'
 #' and 'name'.
-#' 
-#' @examples 
+#'
+#' @examples
 #' cars.data <- Dataset(data = cars, target = "dist")
-#' 
+#'
 #'
 #' @export
 Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute(data), 20)[[1]])) {
@@ -78,18 +78,18 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 }
 
 #' Create a data.frame object from a Dataset.
-#' 
+#'
 #' This function returns the actual data of a Dataset as a data.frame.
-#' Additional information associated with a Dataset are neglected. 
-#' 
+#' Additional information associated with a Dataset are neglected.
+#'
 #' @param dataset A Dataset object.
-#' 
+#'
 #' @return A data.frame with the actual data of the original Dataset.
-#' 
+#'
 #' @examples
 #' cars.data <- Dataset(data = cars, target = "dist")
 #' as.data.frame(cars.data)
-#' 
+#'
 #' @export
 as.data.frame.Dataset <- function(dataset) {
   assert(class(dataset) == "Dataset")
@@ -97,6 +97,7 @@ as.data.frame.Dataset <- function(dataset) {
 }
 
 metainfo.Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute(data), 20)[[1]])) {
-  
- ### look at the meta.info R file please 
+
+ ### look at the meta.info R file please
 }
+

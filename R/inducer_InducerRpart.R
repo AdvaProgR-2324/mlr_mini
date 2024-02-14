@@ -63,7 +63,9 @@ fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.actio
     formals(model)[[arg]] <- form_Ind[[arg]]
   }
   for (arg in names(given_args)) {  # secound check the arguments of fit fct, paste into model
-    formals(model)[[arg]] <- given_args[[arg]]
+    if (formals(model)[[arg]] != given_args[[arg]]) {  # only switch if fit.. uses a different param setting as already in Inducer
+      formals(model)[[arg]] <- given_args[[arg]]
+    }
   }
 
   dataF <- as.data.frame(.data)  # prepare dataframe
