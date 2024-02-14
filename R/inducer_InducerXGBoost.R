@@ -1,5 +1,54 @@
 #### Inducer XGBoost ####
 
+
+
+## Inducerxgb neu
+
+InducerXGBoost <- function(.data = NULL, nrounds = 1, eta = 0.3, gamma = 0, max_depth = 6, min_child_weight = 1,
+                           subsample = 1, colsample_bytree = 1, lambda = 1, alpha = 0, num_parallel_tree = 1) {
+  # TODO asserts
+
+  # TODO Beschreibung
+
+  if (is.null(.data)) {
+    ind <- InducerXGBoost
+    original_call <- match.call(expand.dots = FALSE)
+    given_args <- original_call[-1]
+    for (arg in names(given_args)) {
+      formals(ind)[[arg]] <- given_args[[arg]]
+    }
+    class(ind) <- c("InducerXGBoost", "Inducer", "function")
+    return(ind)
+  } else {
+    ind <- InducerXGBoost
+    original_call <- match.call(expand.dots = FALSE)
+    given_args <- original_call[-1]
+    for (arg in names(given_args)) {
+      formals(ind)[[arg]] <- given_args[[arg]]
+    }
+    class(ind) <- c("InducerXGBoost", "Inducer", "function")
+    model <- fit.InducerXGBoost(.inducer = ind, .data = .data)
+    return(model)
+  }
+}
+
+
+print.InducerXGBoost <- function(.inducer, ...) {
+  cat("Inducer: XGBoost\n", sep = "")
+  cat("Configuration: ", paste(names(formals(.inducer))[-1], "=", as.vector(formals(.inducer))[-1], collapse = ", "))
+  invisible(.inducer)
+}
+
+
+
+
+
+
+### ALT, Weg ? Ignorieren
+
+
+
+
 #' @title Create an InducerXGBoost
 #' @description Build an InducerXGBoost.
 #' @export
@@ -62,4 +111,7 @@ InducerXGBoost <- function(.data = NULL, nrounds = 1, eta = 0.3, gamma = 0, max_
 
 
 }  # End XGBoost
+
+
+
 
