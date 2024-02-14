@@ -79,22 +79,25 @@ configuration.Inducer <- function(.inducer, ...) {
 #' @export
 `configuration<-` <- function(.inducer, value) {
   ind <- .inducer
-  # TODO: check if value lies in range
   names_inducer_config <- names(formals(ind))
   names_value <- names(value)
   stopifnot("Invalid variable name for given Inducer." = all(names_value %in% names_inducer_config))
   # TODO: check if value lies in range
   if (all(names_value %in% names_inducer_config)) {
+    for (name in names(value)) {
+      print(name)
+      if (is.null(value[[name]])) {
+        stopifnot("Parameter cannot be NULL." = HyperparameterLm[[name]][["arg.null"]])
+      } else {
+        print(name)
+        assert_class(value[[name]], HyperparameterLm[[name]][["type"]])
+      }
+    }
+    # for-Loop:
+      # check that correct type assert_class("KJKJ", HyperparameterLm[["method"]][["type"]])
+      # check that in range: for numeric and characters
     formals(ind) <- value
   }
-  #  for (name in names_value) {
-     # if (is.null(value[[name]]) || is.name(value[[name]])){ # TODO: || class(value[[name]]) == inducer$hyperparameter[[name]]$type) {
-        # TODO: check if value is in range
-  #      formals(ind)[[name]] <- value[[name]]
-     # } else if (class(value[[name]]) != inducer$hyperparameter[[name]]$type) {
-    #    stop(paste("Error in `configuration<-`: invalid class for variable", name))
-    #  }
-  #  }
   class(ind) <- class(.inducer)
   return(ind)
 }
@@ -112,7 +115,22 @@ configuration.Inducer <- function(.inducer, ...) {
 
 print.InducerLm <- function(.inducer, ...) {
   cat("Inducer: lm\n", sep = "")
-  cat("Configuration: ", paste(names(formals(.inducer)) [-1], "=", as.vector(formals(.inducer))[-1], collapse = ", "))
+  cat("Configuration: ", paste(names(formals(.inducer))[-1], "=", as.vector(formals(.inducer))[-1], collapse = ", "))
   invisible(.inducer)
 }
 
+
+HyperparameterLm = list(
+  data = list(name = "data", arg.null = TRUE),
+  formula = list(name = "formula", type = "formula", arg.null = TRUE),
+  subset = list(name = "subset", type = "logical", arg.null = FALSE), # TODO: type checken!!
+  weights = list(name = "weights", type = "numeric", lower = 0, upper = Inf, arg.null = FALSE),
+  na.action = list(name = "na.action", type = "function", arg.null = FALSE), # TODO:type checken!!!
+  method = list(name = "method", type = "character", values = c("qr", "model.frame"), arg.null = FALSE),
+  model = list(name = "model", type = "logical", arg.null = FALSE),
+  x = list(name = "x", type = "logical", arg.null = FALSE),
+  y = list(name = "y", type = "logical", arg.null = FALSE),
+  qr = list(name = "qr", type = "logical", arg.null = FALSE),
+  singular.ok = list(name = "singular.ok", type = "logical", arg.null = FALSE),
+  contrasts = list(name = "contrasts", type = "list", arg.null = FALSE),
+  offset = list(name = "offset", type = "numeric", arg.null = FALSE))
