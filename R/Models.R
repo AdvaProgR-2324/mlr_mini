@@ -27,10 +27,69 @@ Model <- function(inducer.name, inducer.configuration, data.name, data.target, d
   )
 }
 
-#' @title Configuration generic
+#' @title S3 method fit
+#' @export
+fit <- function(...) {
+  UseMethod("fit")
+}
+
+
+#' @title S3 method configuration
+#' @description
+#' @export
 configuration <- function(...) {
   UseMethod("configuration")
 }
+
+
+#' @title S3 method configuration for class 'InducerLm'
+#' @description Get the configuration of an `InducerLm` object
+#' @example
+#' inducer <- InducerLm()
+#' inducer
+#' configuration(inducer)
+#' @export
+configuration.Inducer <- function(.inducer, ...) {
+  return(formals(.inducer))
+}
+
+
+#' @export
+`configuration<-` <- function(.inducer, value) {
+  ind <- .inducer
+  names_inducer_config <- names(formals(ind))
+  names_value <- names(value)
+  stopifnot("Invalid variable name for given Inducer." = all(names_value %in% names_inducer_config))
+  # TODO: check if value lies in range
+  if (all(names_value %in% names_inducer_config)) {
+    for (name in names(value)) {
+      print(name)
+      if (is.null(value[[name]])) {
+        stopifnot("Parameter cannot be NULL." = HyperparameterLm[[name]][["arg.null"]])
+      } else {
+        print(name)
+        assert_class(value[[name]], HyperparameterLm[[name]][["type"]])
+      }
+    }
+    # for-Loop:
+    # check that correct type assert_class("KJKJ", HyperparameterLm[["method"]][["type"]])
+    # check that in range: for numeric and characters
+    formals(ind) <- value
+  }
+  class(ind) <- class(.inducer)
+  return(ind)
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 #' @title Configuration method for Model objects

@@ -75,10 +75,10 @@ fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.actio
     covar <- setdiff(colnames(.data$data), .data$target)
     targetvar <- .data$target
     form <- paste0(targetvar, " ~ ", paste(covar, collapse = " + "))  # paste formula
-    fitted_model <- model(data = .data, formula = form)
+    fitted_model <- model(data = .data$data, formula = form)
 
   } else {  # formula given in args
-    fitted_model <- model(data = .data, formula = form)
+    fitted_model <- model(data = .data$data)  # , formula = form geht das?
   }
 
   # create Model obj

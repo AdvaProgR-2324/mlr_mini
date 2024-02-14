@@ -1,6 +1,6 @@
-InducerLm <- function(data = NULL, formula, subset, weights, na.action, method = "qr", model = TRUE,
-                      x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE, contrasts = NULL, offset) {
-  if (is.null(data)) {
+InducerLm <- function(.data = NULL, formula, subset, weights, na.action, method = "qr", model = TRUE,
+                      x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE, offset) {  # contrasts = NULL,
+  if (is.null(.data)) {
     ind <- InducerLm
     original_call <- match.call(expand.dots = FALSE)
     given_args <- original_call[-1]
@@ -17,16 +17,28 @@ InducerLm <- function(data = NULL, formula, subset, weights, na.action, method =
       formals(ind)[[arg]] <- given_args[[arg]]
     }
     class(ind) <- c("InducerLm", "Inducer", "function")
-    model <- fit(ind, data)
+    model <- fit(ind, .data)
     return(model)
   }
 }
 
-#' @title S3 method fit
+
+#' @title S3 method print for class 'InducerLm'
+#' @description Print an `InducerLm` object.
+#' @param .inducer object of class `InducerLm`.
+#' @param ... optional arguments to `print` methods.
+#' @seealso [InducerLm()]
+#' @example
+#' inducer<- InducerLm()
+#' inducer
 #' @export
-fit <- function(...) {
-  UseMethod("fit")
+print.InducerLm <- function(.inducer, ...) {
+  cat("Inducer: lm\n", sep = "")
+  cat("Configuration: ", paste(names(formals(.inducer))[-1], "=", as.vector(formals(.inducer))[-1], collapse = ", "))
+  invisible(.inducer)
 }
+
+
 
 #' @title Fit a Model using `InducerLm`
 #' @description Fit a linear model on the provided data.
@@ -40,84 +52,62 @@ fit <- function(...) {
 #' @param method The method which should be used for fitting. For more information see [lm]
 #' @return An object of class `ModelLm`.
 #' @export
-fit.InducerLm <- function(.inducer, data, formula, subset, weights, na.action, method = "qr", model = TRUE,
-                          x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE, contrasts = NULL, offset) {
-  assert_class(data, "Dataset")
+fit.InducerLm <- function(.inducer, .data, formula, subset, weights, na.action, method = "qr", model = TRUE,
+                          x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE, offset) {  # contrasts = NULL,
+  assert_class(.data, "Dataset")
+  assert_class(.inducer, "InducerLm")
+
   model <- lm
-  # TODO: formals(model) <- formals(.inducer) how to solve that error???
   original_call <- match.call(expand.dots = FALSE)
-  given_args <- original_call[-1]
-  for (arg in names(given_args)) {
-    formals(model)[[arg]] <- given_args[[arg]]
+  form_Ind <- formals(.inducer)  # formals of ind
+  form_Ind$.data <- NULL  # remove .data arg
+  given_args <- original_call[-c(1, 2, 3)]  # delete fit... .inducer, .data
+
+  # for loop will be skipped if empty
+  for (arg in names(form_Ind)) {  # first check the arguments of inducer, paste into model
+    formals(model)[[arg]] <- form_Ind[[arg]]
   }
-  .data <- as.data.frame(data)
-  fitted_model <- model(data = .data)
-  class(fitted_model) <- c("ModelLm", "ModelRegression", "Model")
-  fitted_model[["data.name"]] <- data$name
-  fitted_model[["inducer.name"]] <- "Lm"
-  return(fitted_model)
-}
-
-#' @title S3 method configuration
-#' @description
-#' @export
-configuration <- function(...) {
-  UseMethod("configuration")
-}
-
-#' @title S3 method configuration for class 'InducerLm'
-#' @description Get the configuration of an `InducerLm` object
-#' @example
-#' inducer <- InducerLm()
-#' inducer
-#' configuration(inducer)
-#' @export
-configuration.Inducer <- function(.inducer, ...) {
-  return(formals(.inducer))
-}
-
-#' @export
-`configuration<-` <- function(.inducer, value) {
-  ind <- .inducer
-  names_inducer_config <- names(formals(ind))
-  names_value <- names(value)
-  stopifnot("Invalid variable name for given Inducer." = all(names_value %in% names_inducer_config))
-  # TODO: check if value lies in range
-  if (all(names_value %in% names_inducer_config)) {
-    for (name in names(value)) {
-      print(name)
-      if (is.null(value[[name]])) {
-        stopifnot("Parameter cannot be NULL." = HyperparameterLm[[name]][["arg.null"]])
-      } else {
-        print(name)
-        assert_class(value[[name]], HyperparameterLm[[name]][["type"]])
-      }
+  for (arg in names(given_args)) {  # secound check the arguments of fit fct, paste into model
+    if (formals(model)[[arg]] != given_args[[arg]]) {  # only switch if fit.. uses a different param setting as already in Inducer
+      formals(model)[[arg]] <- given_args[[arg]]
     }
-    # for-Loop:
-    # check that correct type assert_class("KJKJ", HyperparameterLm[["method"]][["type"]])
-    # check that in range: for numeric and characters
-    formals(ind) <- value
   }
-  class(ind) <- class(.inducer)
-  return(ind)
+
+  ## Model fitting process
+  if (formals(model)$formula == "") {  # paste own formula (empty formula)
+    # paste target and covariables
+    covar <- setdiff(colnames(.data$data), .data$target)
+    targetvar <- .data$target
+    form <- paste0(targetvar, " ~ ", paste(covar, collapse = " + "))  # paste formula
+    fitted_model <- model(formula = form, data = .data$data)
+
+  } else {  # formula given in args
+    fitted_model <- model(data = .data$data)
+  }
+
+
+
+  # create Model obj
+  modelObj <- Model(inducer.name = "InducerLm",
+                    inducer.configuration = as.list(configuration(.inducer)),  # also changed in Model()
+                    data.name = as.character(.data$name),
+                    data.target = .data$target,
+                    data.features = colnames(.data$data),  # change feature names automatic
+                    model.out = fitted_model,
+                    model.data = .data
+  )
+
+  class(modelObj) <- c("ModelLm", "ModelRegression", "Model")
+  # fitted_model[["data.name"]] <- data$name
+  # fitted_model[["inducer.name"]] <- "Lm"
+  return(modelObj)
 }
 
+## TODO wennfit.InducerLm fertig dann in Models_modelLm.R verschieben
+#  fit.InducerLm(.inducer = InducerLm(), .data = cars_ds)
 
-#' @title S3 method print for class 'InducerLm'
-#' @description Print an `InducerLm` object.
-#' @param .inducer object of class `InducerLm`.
-#' @param ... optional arguments to `print` methods.
-#' @seealso [InducerLm()]
-#' @example
-#' inducer<- InducerLm()
-#' inducer
-#' @export
 
-print.InducerLm <- function(.inducer, ...) {
-  cat("Inducer: lm\n", sep = "")
-  cat("Configuration: ", paste(names(formals(.inducer))[-1], "=", as.vector(formals(.inducer))[-1], collapse = ", "))
-  invisible(.inducer)
-}
+
 
 
 HyperparameterLm = list(
