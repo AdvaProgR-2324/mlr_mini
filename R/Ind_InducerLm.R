@@ -32,7 +32,7 @@ fit <- function(...) {
 #' @description Fit a linear model on the provided data.
 #' @param .inducer An `InducerLm` object. The Inducer which should be used for the fitting.
 #' @param data The data to which the model should be fitted, provided as a `Dataset` object.
-#' @param formula An object of class `formula`. 
+#' @param formula An object of class `formula`.
 #' An optional parameter setting the `formula` argument of an `InducerLm` object.
 #' @param subset An optional argument. A vector specifying a subset of observations that should be used for fitting the model.
 #' @param weights An optional argument. A vector of weights that should be used for fitting the model.
@@ -94,8 +94,8 @@ configuration.Inducer <- function(.inducer, ...) {
       }
     }
     # for-Loop:
-      # check that correct type assert_class("KJKJ", HyperparameterLm[["method"]][["type"]])
-      # check that in range: for numeric and characters
+    # check that correct type assert_class("KJKJ", HyperparameterLm[["method"]][["type"]])
+    # check that in range: for numeric and characters
     formals(ind) <- value
   }
   class(ind) <- class(.inducer)
