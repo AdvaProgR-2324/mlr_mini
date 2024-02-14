@@ -82,7 +82,6 @@ configuration.Inducer <- function(.inducer, ...) {
   # TODO: check if value lies in range
   names_inducer_config <- names(formals(ind))
   names_value <- names(value)
-  class(ind) <- class(.inducer)
   stopifnot("Invalid variable name for given Inducer." = all(names_value %in% names_inducer_config))
   # TODO: check if value lies in range
   if (all(names_value %in% names_inducer_config)) {
@@ -96,7 +95,8 @@ configuration.Inducer <- function(.inducer, ...) {
     #    stop(paste("Error in `configuration<-`: invalid class for variable", name))
     #  }
   #  }
-    return(ind)
+  class(ind) <- class(.inducer)
+  return(ind)
 }
 
 
