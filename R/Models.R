@@ -16,7 +16,7 @@ Model <- function(inducer.name, inducer.configuration, data.name, data.target, d
   # assert_numeric(coefficients)
   structure(list(
     inducer.name = inducer.name,
-    inducer.configuration = inducer.configuration,
+    inducer.configuration = as.list(inducer.configuration),  # inducer config is given as pairlist, not list
     data.name = data.name,
     data.target = data.target,
     data.features = data.features,
@@ -216,6 +216,7 @@ fit.InducerXGBoost <- function(.inducer, .data, ...) {
   } else {
     xgb_nRound <- 1  # Hyperparameter default
   }
+  pastedHyperparam$.data <- NULL  # delete .data, otherwise twice in xgboost
 
   # old
   # data <- as.matrix(.data)
@@ -226,7 +227,7 @@ fit.InducerXGBoost <- function(.inducer, .data, ...) {
                          params = pastedHyperparam)
 
   modelObj <- Model(inducer.name = "InducerXGBoost",
-                    inducer.configuration = configuration(.inducer),
+                    inducer.configuration = as.list(configuration(.inducer)),  # also changed in Model()
                     data.name = as.character(.data$name),
                     data.target = .data$target,
                     data.features = colnames(.data$data),  # change feature names automatic
