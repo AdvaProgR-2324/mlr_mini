@@ -24,12 +24,3 @@ hyperparameter <- function(...) {
   
   return(info)
 }
-
-hyperparameter(
-  learning_rate = c(0.001, 0.01, 0.1),
-  batch_size = c(32, 64, 128),
-  optimizer = c("adam", "sgd", "rmsprop"),
-  num_epochs = 10, Z = factor(letters)
-)
-
-#hyperparameter(ind$xgboost)
