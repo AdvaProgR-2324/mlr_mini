@@ -24,3 +24,10 @@ hyperparameter <- function(...) {
   
   return(info)
 }
+
+hyperparameter(
+  learning_rate = c(0.001, 0.01, 0.1),
+  batch_size = c(32, 64, 128),
+  optimizer = c("adam", "sgd", "rmsprop")
+)
+hyperparameter(x = p_num(0, 1), y = p_int(1, Inf), z = p_fct(letters))
