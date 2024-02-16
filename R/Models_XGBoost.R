@@ -64,7 +64,7 @@ predict.ModelXGBoost <- function(model, newdata, ...) {
   # TODO check if dataset Name of newdata is equal to the dataset name of model obj
 
   fittedModel <- model$model.out
-  dataModel <- modelObj$mode.data$data
+  dataModel <- model$mode.data$data
 
   ## newdata into datamatrix
   if (class(newdata) ==  "data.frame") {  # if dataframe: only vector with prediction values
@@ -78,7 +78,7 @@ predict.ModelXGBoost <- function(model, newdata, ...) {
     data_n_ds <- as.data.frame.Dataset(newdata[, newdata$target])
     data_n_ds <- as.matrix(data_n_ds)
 
-    fitted_ds_vals <- xgboost:::predict.xgb.Booster(object = fittedModel, newdata = data_n_ds)
+    fitted_ds_vals <- xgboost:::predict.xgb.Booster(object = fittedModel, newdata = data_n_ds)  # as.matrix(newdata$data)
     fitted_ds <- data.frame(prediction = fitted_ds_vals, truth = data_n_ds[, 1])  # bind fitted vals and truth together
     return(fitted_ds)
 
