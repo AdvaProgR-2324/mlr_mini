@@ -1,18 +1,26 @@
-#' Create a Dataset object.
+#' @title Wrap a named `matrix` or a named `data.frame` in a `Dataset` object
 #'
-#' This function creates a Dataset object based on a given matrix/data.frame with data.
-#'
+#' @description
+#' From a given named `matrix` or a named `data.frame` a `Dataset` is created.
+#' The user needs to specify the target covariable/columnname as a string.
+#' Optionally the `type` can be set to either `regression` or `classification`.
+#' If this is not provided the target will be automatically inferred from
+#' the type in matrix or data.frame.
+#' 
+#' @details
+#' The actual data is stored as a data.table.
+#' 
+#' 
 #' @param data A matrix or data.frame object with relevant data and named columns.
 #' @param target A string of a column name of data specifying the target.
 #' @param type A string specifying whether a regression or classification should be done.
 #'
 #' @return An object of class 'Dataset' with attributes 'data' containing the actual data as a data.frame,
-#' 'target' with the name of the target covariable, 'type' which is either 'classification' or 'regression'
-#' and 'name'.
+#'     'target' with the name of the target covariable, 'type' which is either 'classification' or 'regression'
+#'  and 'name'.
 #' 
 #' @examples 
 #' cars.data <- Dataset(data = cars, target = "dist")
-#' 
 #'
 #' @export
 Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute(data), 20)[[1]])) {
@@ -37,8 +45,12 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
                  name = as.character(name)),
                 class = c(paste0("Dataset", type), "Dataset"))
 }
-#' Print function for a Dataset object.
-#'
+#' @title A print method for `Dataset` objects
+#' 
+#' @description
+#' Prints the first and last two rows of `data` along with an informative text
+#' on the target and task.
+#' 
 #' @param x: an object of class 'Dataset'
 #'
 #' @examples
@@ -53,17 +65,20 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
   print(x$data, topn = 2)
   invisible(x)
 }
-#' Subset a Dataset Object.
+#' @title Subset a Dataset Object
 #'
+#' @description
 #' This function subsets a custom dataset object based on specified row indices and optional column names.
 #' If column names are not specified, it defaults to using all columns. The function checks if the provided
 #' column names exist in the dataset and whether they include the target variable, which cannot be removed.
-#'
+#' 
+#' @details
+#' Subsetting a `Dataset` object is broken down into subsetting a `data.table`
+#' 
 #' @param to_subset A  Dataset object.
 #' @param arg_row row indices or nothing.
 #' @param arg_col covariate names or nothing.
-#' and the second (optional) is column names (character vector) to subset.
-#' If only one argument is provided, it is assumed to be row indices, and all columns are included.
+#' 
 #' @return A object of type 'Dataset.
 #'
 #' @examples
@@ -89,7 +104,7 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
   }
   # check for target covariate
   if (!to_subset$target %in% arg_col) stop(sprintf('Cannot remove target column "%s"', to_subset$target))
-  subsetted <- to_subset$data[arg_row, .SD, .SDcols = arg_col]
+  subsetted <- to_subset$data[arg_row, ..arg_cols]
   to_subset$data <- subsetted
   to_subset
 }
