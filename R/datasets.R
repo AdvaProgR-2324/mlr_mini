@@ -10,14 +10,12 @@
 #' @param data A matrix or data.frame object with relevant data and named columns.
 #' @param target A string of a column name of data specifying the target.
 #' @param type A string specifying whether a regression or classification should be done.
+#' @param name Name attribute that will be stored internally.
 #'
 #' @return An object of class 'Dataset' with attributes 'data' containing the actual data as a data.frame,
 #'     'target' with the name of the target covariable, 'type' which is either 'classification' or 'regression'
 #'  and 'name'.
 #' 
-#' @examples 
-#' cars.data <- Dataset(data = cars, target = "dist")
-#'
 #' @export
 Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute(data), 20)[[1]])) {
   # checks
@@ -50,10 +48,6 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' @param x an object of class 'Dataset'
 #' @param ... other arguments passed to function
 #'
-#' @examples
-#' cars.data <- Dataset(cars)
-#' cars.data
-#'
 #' @export
 `print.Dataset` <- function(x, ...) {
   checkmate::assertClass(x, "Dataset")
@@ -76,9 +70,6 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' 
 #' @return A object of type 'Dataset.
 #'
-#' @examples
-#' data.cars <- Dataset(data = cars, target = "dist")
-#' cars.data[c(1, 2, 3, 4), "dist"]
 #'
 #' @export
 `[.Dataset` <- function(to_subset, arg_row, arg_col = NULL, ...) {
@@ -114,9 +105,6 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' 
 #' @return A data.frame with the actual data of the original Dataset.
 #' 
-#' @examples
-#' cars.data <- Dataset(data = cars, target = "dist")
-#' as.data.frame(cars.data)
 #' 
 #' @export
 as.data.frame.Dataset <- function(x) {
