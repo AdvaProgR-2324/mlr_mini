@@ -86,8 +86,9 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' cars.data[c(1, 2, 3, 4), "dist"]
 #'
 #' @export
-`[.Dataset` <- function(to_subset, arg_row, arg_col, ...) {
+`[.Dataset` <- function(to_subset, arg_row, arg_col = NULL, ...) {
   checkmate::assert_class(to_subset, "Dataset")
+  checkmate::assert(is.null(arg_col) | is.character(arg_col))
   # check or set subsetting args
   if (missing(arg_row)) {
     arg_row <- seq_len(nrow(to_subset$data))
@@ -95,7 +96,7 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
     arg_row <- unique(arg_row)
     checkmate::assert_integerish(arg_row)
   }
-  if (missing(arg_col)) {
+  if (is.null(arg_col)) {
     arg_col <- colnames(to_subset$data)
   } else {
     checkmate::assert_character(arg_col)
