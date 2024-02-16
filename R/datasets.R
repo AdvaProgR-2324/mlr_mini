@@ -121,8 +121,3 @@ as.data.frame.Dataset <- function(x) {
   checkmate::assert_class(x, "Dataset")
   as.data.frame(x$data)
 }
-
-metainfo.Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute(data), 20)[[1]])) {
-  
- ### look at the meta.info R file please 
-}
