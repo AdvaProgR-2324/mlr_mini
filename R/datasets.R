@@ -104,7 +104,7 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
   }
   # check for target covariate
   if (!to_subset$target %in% arg_col) stop(sprintf('Cannot remove target column "%s"', to_subset$target))
-  subsetted <- to_subset$data[arg_row, ..arg_cols]
+  subsetted <- to_subset$data[arg_row, ..arg_col]
   to_subset$data <- subsetted
   to_subset
 }
