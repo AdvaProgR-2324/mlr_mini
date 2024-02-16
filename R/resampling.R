@@ -1,19 +1,26 @@
-Split <- function(method = "random", ratio = 0.7) {
-  checkmate::assertChoice(method, c("random", "stratified"))
-  checkmate::assertNumber(ratio, lower = 0, upper = 1)
-}
-# Generic function to do resampling
-resample <- function(data, resample_function) {
-  UseMethod("resample")
-}
-# Default method
-resample.default <-function(data, resample_function) {
-  stop("No default resample function implemented")
-}
-
-add_resample_strategy <- function(name, resample_function) {
-  if (!exists("resample_env", envir = .GlobalEnv)) {
-    stop("mlr_mini appears to be not loaded")
+SplitCV <- function(folds, repeats = 1) {
+  
+  splitcv <- function(.data) {
+    n <- nrow(.data)
+    n.train <- ceiling(n / folds)
+    result <- list()
+    for (repetition in seq(repeats)) {
+      indices <- sample(seq(n))
+      result[[repetition]] <- list(training = indices[1:n.train], validation = indices[-(1:n.train)])
+    }
+    structure(result,class = c("SplitInstanceCV", "SplitInstance"))
   }
-  assign(name, resample_function, envir = resample_env)
+  
+  hyperparameters = list(folds = folds, repeats = repeats) 
+  env <- list2env(list(hyperparameters = hyperparameters,
+                       cv = splitcv,
+                       parent = emptyenv()))
+  class(splitcv) <- c("SplitCV", "Split")
+  environment(splitcv) <- env
+  splitcv
+  
+}
+Split <- function() {
+  structure(list(cv = SplitCV),
+            class = "Split")
 }
