@@ -47,7 +47,8 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' Prints the first and last two rows of `data` along with an informative text
 #' on the target and task.
 #' 
-#' @param x: an object of class 'Dataset'
+#' @param x an object of class 'Dataset'
+#' @param ... other arguments passed to function
 #'
 #' @examples
 #' cars.data <- Dataset(cars)
@@ -71,6 +72,7 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' @param to_subset A  Dataset object.
 #' @param arg_row row indices or nothing.
 #' @param arg_col covariate names or nothing.
+#' @param ... Other arguments passed to function
 #' 
 #' @return A object of type 'Dataset.
 #'
@@ -108,7 +110,7 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' This function returns the actual data of a Dataset as a data.frame.
 #' Additional information associated with a Dataset are neglected. 
 #' 
-#' @param dataset A Dataset object.
+#' @param x A Dataset object.
 #' 
 #' @return A data.frame with the actual data of the original Dataset.
 #' 
