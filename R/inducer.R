@@ -79,12 +79,15 @@ configuration.Inducer <- function(inducer) {
 #' @param inducer An object of class Inducer.
 #' @value a datatable containing the name, the type and the range of the hyperparameters of an Inducer object.
 #' @export
-hyperparameters <- function(inducer, ...) {
-  assert_class(inducer, "Inducer")
-  hyperparameters <- data.table::data.table(
-    name = sapply(inducer$hyperparameter, function(x) x$name),
-    type = sapply(inducer$hyperparameter, function(x) x$type),
-    range = sapply(inducer$hyperparameter, function(x) {
+hyperparameters <- function(.inducer, ...) {
+  assert_class(.inducer, c("Inducer", "function"))
+  stopifnot(length(class(.inducer)) == 3)
+  name <- gsub("Inducer", "", class(.inducer)[1]) # take the first class name "Inducer*name*" to get the *name*
+  hyperparams <- get(paste0("Hyperparameter", name)) # get the associated list of the hyperparameters
+  hyperparams_table <- data.table::data.table(
+    name = sapply(hyperparams, function(x) x$name),
+    type = sapply(hyperparams, function(x) x$type),
+    range = sapply(hyperparams, function(x) { # different reaction for different types of hyperparameters
       if (x$type == "numeric") {
         paste0("[", x$lower, ", ", x$upper, "]")
       } else if (x$type == "logical") {
@@ -98,6 +101,5 @@ hyperparameters <- function(inducer, ...) {
   )
   # Print the formatted output
   cat("Hyperparameter Space:\n")
-  print(hyperparameters)
+  print(hyperparams_table)
 }
-
