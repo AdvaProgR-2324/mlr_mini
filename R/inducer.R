@@ -1,3 +1,40 @@
+
+
+
+indEnv <- function() {
+  ind <- list2env(list(xgbooost = InducerXGBoost,
+                       rpart = InducerRpart,
+                       lm = InducerLm),
+                  parent = emptyenv())
+  return(ind)
+
+}
+
+
+ind <- indEnv()
+
+
+inducer2Env <- function(.inducer) {
+  # TODO asserts
+  # assign()
+  if (class(.inducer)[1] == "function") {
+    chrInd <- as.character(substitute(.inducer))
+    assign(x = chrInd, value = .inducer, envir = ind)
+    cat("Inducer", chrInd, "successfully added to environment")
+  } else if ("Inducer" %in% class(.inducer)){
+    # TODO
+
+  }
+}
+
+
+
+
+### alle Funktionen darunter Archiv ?
+
+
+
+
 #' @title Create an Inducer
 #' @description Build an Inducer
 #' @param name The name of the inducer

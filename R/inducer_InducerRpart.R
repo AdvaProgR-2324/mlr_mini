@@ -78,7 +78,12 @@ fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.actio
     fitted_model <- model(data = .data$data, formula = form)
 
   } else {  # formula given in args
-    fitted_model <- model(data = .data$data)  # , formula = form geht das?
+    # no nice style, but it works, if you have formula in formals it doesnt work
+    form <- formals(model)$formula
+    formals(model)$formula <- ""
+    fitted_model <- model(data = .data$data, formula = form)
+    covar <- names(fitted_model$variable.importance)
+
   }
 
   # create Model obj
@@ -99,6 +104,7 @@ fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.actio
 
 }
 
+fit.InducerRpart(.inducer = InducerRpart(), .data = cars_ds, formula = "speed ~ dist")
 
 # model <- InducerRpart(.data = cars_ds)
 # newdata <- cars_ds[c(1, 2, 3, 4, 20), ]
