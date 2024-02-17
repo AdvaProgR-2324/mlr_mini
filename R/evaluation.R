@@ -4,7 +4,7 @@
 #' @param .configuration Optional argument for setting the configuration. The configuration has to be a named list.
 #' @param .value The value of the evaluation measure being used.
 
-Evaluator <- function(.name, .configuration = list(), .value, ...) {
+Evaluator <- function(.function, .name, .configuration = list(), .value = numeric(0), ...) {
   assert_class(.name, "character")
   assert_class(.configuration, "list")
   assert_class(.value, "numeric")
@@ -13,7 +13,7 @@ Evaluator <- function(.name, .configuration = list(), .value, ...) {
       name = .name,
       configuration = .configuration,
       value = .value
-    ), class = "Evaluator"
+    ), class = c("Evaluator", "function")
   )
 }
 
@@ -30,4 +30,5 @@ print.Evaluator <- function(.evaluator, ...) {
   } else {
     cat("Configuration:", .evaluator$.configuration, "\n")
   }
+  invisible(.evaluator)
 }
