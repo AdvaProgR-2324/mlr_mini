@@ -2,9 +2,18 @@
 
 
 
-#' @title Create an InducerRpart
-#' @description Build an InducerRpart
+#' @title Function to create an object of class `InducerRpart`
+#' @description If .data is empty an `InducerRpart` object will be created. If .data is a `Dataset` object a rpart model will be fitted
+#' @seealso [fit.InducerRpart()]
+#' @param .data data object of class `Dataset`.
+#' @return a `InducerRpart` object
 #' @export
+#' @example
+#' inducer <- InducerRpart()
+#' inducer
+#' cars.data <- Dataset(data = cars, target = "dist")
+#' fittedInd <- InducerRpart(.data = cars.data)
+#' fittedInd
 InducerRpart <- function(.data = NULL, formula, weights, subset, na.action = na.rpart, method,
                          model = FALSE, x = FALSE, y = TRUE, parms, control, cost) {  # ggf. ... ?
   # TODO asserts
@@ -33,10 +42,16 @@ InducerRpart <- function(.data = NULL, formula, weights, subset, na.action = na.
   }
 }
 
-#' @title Print method for InducerRpart object
-#' @description Print an InducerRpart
-#' @param inducer An inducer being an InducerRpart object.
+
+#' @title S3 method print for class `InducerRpart`
+#' @description Print an `InducerRpart` object.
+#' @param .inducer object of class `InducerRpart`
+#' @param ... optional arguments to `print` methods.
+#' @seealso [InducerRpart()]
 #' @export
+#' @example
+#' inducer <- InducerRpart()
+#' inducer
 print.InducerRpart <- function(.inducer, ...) {
   cat("Inducer: rpart\n", sep = "")
   cat("Configuration: ", paste(names(formals(.inducer))[-1], "=", as.vector(formals(.inducer))[-1], collapse = ", "))
@@ -45,7 +60,17 @@ print.InducerRpart <- function(.inducer, ...) {
 
 
 
-
+#' @title Fit a Model using `InducerRpart`
+#' @description Fit a rpart model on the provided data.
+#' @param .inducer An `InducerRpart` object. The Inducer which should be used for the fitting.
+#' @param data The data to which the model should be fitted, provided as a `Dataset` object.
+#' @param formula An optional parameter setting the `formula` argument of an `InducerRpart` object.
+#' @return An object of class `InducerRpart`.
+#' @export
+#' @examples
+#' cars.data <- Dataset(data = cars, target = "dist")
+#' inducer <- InducerRpart()
+#' lmfit <- fit.InducerRpart(.inducer = inducer, .data = cars.data)
 fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.action = na.rpart, method,
                              model = FALSE, x = FALSE, y = TRUE, parms, control, cost) {
   # TODO asserts
@@ -104,12 +129,21 @@ fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.actio
 
 }
 
-fit.InducerRpart(.inducer = InducerRpart(), .data = cars_ds, formula = "speed ~ dist")
 
-# model <- InducerRpart(.data = cars_ds)
-# newdata <- cars_ds[c(1, 2, 3, 4, 20), ]
-# newdata <- data.frame(speed = 10)
-
+#' @title Predict values for `fit.InducerRpart`
+#' @description Predict from the results of a rpart model
+#' @seealso [fit.InducerRpart()]
+#' @param model a linear model of class `ModelRpart`
+#' @param newdata data of class `data.frame` or `Dataset`
+#' @param ... additional arguments
+#' @return An object with the predictions of class `numeric` or `data.frame`
+#' @export
+#' @examples
+#' cars.data <- Dataset(data = cars, target = "dist")
+#' inducer <- InducerLm()
+#' rpartfit <- fit.InducerRpart(.inducer = inducer, .data = cars.data)
+#' predict.ModelRpart(model = rpartfit, newdata = data.frame(speed = 10))
+#' predict.ModelRpart(model = rpartfit, newdata = cars.data[c(1, 2, 3, 4), ])
 predict.ModelRpart <- function(model, newdata, ...) {
 
   # TODO asserts

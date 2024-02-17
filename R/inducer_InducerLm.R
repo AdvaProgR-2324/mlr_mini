@@ -35,14 +35,14 @@ InducerLm <- function(.data = NULL, formula, subset, weights, na.action, method 
 }
 
 
-#' @title S3 method print for class 'InducerLm'
+#' @title S3 method print for class `InducerLm`
 #' @description Print an `InducerLm` object.
 #' @param .inducer object of class `InducerLm`.
 #' @param ... optional arguments to `print` methods.
 #' @seealso [InducerLm()]
 #' @export
 #' @example
-#' inducer<- InducerLm()
+#' inducer <- InducerLm()
 #' inducer
 print.InducerLm <- function(.inducer, ...) {
   cat("Inducer: lm\n", sep = "")
