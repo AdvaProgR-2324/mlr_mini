@@ -24,9 +24,9 @@ EvaluatorMAE <- function(.prediction, .data, .target) {
       }
     }
     if(class(.prediction) == "data.frame") {
-      mae <- sum(abs(.prediction$prediction - .prediction$truth))
+      mae <- mean(abs(.prediction$prediction - .prediction$truth))
     } else {
-      mae <- sum(abs(.prediction - .data[, .target]))
+      mae <- mean(abs(.prediction - .data[, .target]))
     }
     evaluation <- Evaluator(.name = "Mean Absolute Error", .value = mae)
     class(evaluation) <- c("EvaluatorMAE", class(evaluation))
@@ -74,9 +74,9 @@ EvaluatorMSE <- function(.prediction, .data, .target) {
       }
     }
     if(class(.prediction) == "data.frame") {
-      mse <- sum(abs(.prediction$prediction - .prediction$truth))
+      mse <- mean((.prediction$prediction - .prediction$truth)^2)
     } else {
-      mse <- sum(abs(.prediction - .data[, .target]))
+      mse <- mean((.prediction - .data[, .target])^2)
     }
     evaluation <- Evaluator(.name = "Mean Squared Error", .value = mse)
     class(evaluation) <- c("EvaluatorMSE", class(evaluation))
