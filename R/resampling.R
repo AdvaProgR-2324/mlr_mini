@@ -1,8 +1,7 @@
 SplitCV <- function(folds, repeats = 1) {
-  
   splitcv <- function(.data) {
     checkmate::assertClass(.data, "Dataset")
-    
+
     n <- nrow(.data$data)
     n.train <- ceiling(n / folds)
     result <- list()
@@ -17,9 +16,11 @@ SplitCV <- function(folds, repeats = 1) {
     environment(result) <- result_env
     result
   }
-  hyperparameters = list(folds = folds, repeats = repeats) 
-  env <- list2env(list(hyperparameters = hyperparameters,
-                       cv = splitcv))
+  hyperparameters <- list(folds = folds, repeats = repeats)
+  env <- list2env(list(
+    hyperparameters = hyperparameters,
+    cv = splitcv
+  ))
   class(splitcv) <- c("SplitCV", "Split")
   environment(splitcv) <- env
   splitcv
@@ -36,7 +37,6 @@ print.SplitInstanceCV <- function(x, ...) {
   hyperparameters <- get("hyperparameters", envir = environment(x))
   name <- get("name", envir = environment(x))
   dim <- get("dim", envir = environment(x))
-  cat(paste0('CV Split Instance of the "', name, '" dataset', '(', dim[1], ") rows"))
+  cat(paste0('CV Split Instance of the "', name, '" dataset', "(", dim[1], ") rows"))
   invisible(x)
 }
-

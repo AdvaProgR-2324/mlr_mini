@@ -11,7 +11,7 @@
 # }
 
 
-ind <- new.env(parent = emptyenv()) 
+ind <- new.env(parent = emptyenv())
 
 # ind$xgboost <- xgboost # Inducer zuweisen
 # ind$ranger <- ranger
@@ -19,11 +19,11 @@ ind <- new.env(parent = emptyenv())
 # ind$lm <- lm
 
 # Optional: onUnload-Funktion für Bereinigungen beim Entladen des Pakets
-#.onUnload <- function(libpath) {
-  # Führe hier Bereinigungsaktionen durch, falls erforderlich
+# .onUnload <- function(libpath) {
+# Führe hier Bereinigungsaktionen durch, falls erforderlich
 
-  #detach(pos = 2, name = "ind")
-#}
+# detach(pos = 2, name = "ind")
+# }
 # environment for resampling strategy
 .onLoad <- function(libname, pkgname) {
   resample_env <<- new.env(parent = emptyenv())
