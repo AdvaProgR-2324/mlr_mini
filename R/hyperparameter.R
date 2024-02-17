@@ -2,32 +2,32 @@
 ## I need a search space, tuning method and resampling method 
 hyperparameter <- function(...) {
   args <- list(...)
-  names <- checkmate::assertNames("args")
+  names <-names(args)
   types <- sapply(args, class)
   ranges <- sapply(args, function(x) {
     if (class(x) == "numeric" || class(x) == "integer") {
-      paste(range(x), collapse = ",")
+      paste("[", paste(range(x), collapse = ", "), "]", collapse = "")
     } else if (class(x) == "character") {
-      paste(unique(x), collapse = ", ")
-    } else if(class(x) == "factor") { paste(unique(x), collapse = ", ")} 
+      paste("[", paste(unique(x), collapse = ", "), "]", collapse = "")
+    } else if(class(x) == "factor") {   paste("{", paste(sprintf("\"%s\"", levels(x)), collapse = ", "), "}", collapse = "")}  
     else {
       "Not applicable"
     }}
   )
   
-  info <- data.frame(
+  info <- data.table(
     name = names,
     type = types,
-    range = ranges,
-    stringsAsFactors = FALSE
+    range = ranges, stringsAsFactors  = FALSE
   )
+ 
   
   return(info)
 }
 
 hyperparameter(
   learning_rate = c(0.001, 0.01, 0.1),
-  batch_size = c(32, 64, 128),
-  optimizer = c("adam", "sgd", "rmsprop")
+  batch_size = c(1, Inf),
+  optimizer = c("adam", "sgd", "rmsprop"),  z = factor(letters)
 )
-hyperparameter(x = p_num(0, 1), y = p_int(1, Inf), z = p_fct(letters))
+
