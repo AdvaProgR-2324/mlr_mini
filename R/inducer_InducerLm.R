@@ -83,6 +83,10 @@ fit.InducerLm <- function(.inducer, .data, formula, subset, weights, na.action, 
 
   } else {  # formula given in args
     fitted_model <- model(data = .data$data)
+    fitted_model$call$formula
+
+    covar <- names(fitted_model$coefficients)[-1]  # features without intercept
+
   }
 
 
@@ -92,7 +96,7 @@ fit.InducerLm <- function(.inducer, .data, formula, subset, weights, na.action, 
                     inducer.configuration = as.list(configuration(.inducer)),  # also changed in Model()
                     data.name = as.character(.data$name),
                     data.target = .data$target,
-                    data.features = colnames(.data$data),  # change feature names automatic
+                    data.features = covar,  # change feature names automatic
                     model.out = fitted_model,
                     model.data = .data
   )
@@ -105,6 +109,41 @@ fit.InducerLm <- function(.inducer, .data, formula, subset, weights, na.action, 
 
 ## TODO wennfit.InducerLm fertig dann in Models_modelLm.R verschieben
 #  fit.InducerLm(.inducer = InducerLm(), .data = cars_ds)
+
+# model <- fit.InducerLm(.inducer = InducerLm(), .data = cars_ds)
+# newdata <- cars_ds[c(1, 2, 3, 4), ]
+# newdata <- data.frame(speed = 10)
+
+
+predict.ModelLm <- function(model, newdata, ...) {
+
+  # TODO asserts
+  # TODO check if dataset Name of newdata is equal to the dataset name of model obj
+
+  fittedModel <- model$model.out
+  dataModel <- model$mode.data$data
+
+
+  ## newdata into datamatrix
+  if (class(newdata) ==  "data.frame") {  # if dataframe: only vector with prediction values
+    stopifnot(setequal(colnames(newdata), model$data.features))  # , "newdata must have same variables as specified in model"
+    fittedVals <- as.numeric(predict.lm(object = fittedModel, newdata = newdata))
+    return(fittedVals)
+
+  } else if (class(newdata) == "Dataset") {  # if Dataset: new dataframe with prediction (values from predict function) and truth (dataset)
+    data_n_ds <- subset(newdata$data, select = model$data.features)  # only take features
+    fitted_ds_vals <- as.numeric(predict.lm(object = fittedModel, newdata = data_n_ds))
+
+    fitted_ds <- data.frame(prediction = fitted_ds_vals, truth = newdata$data[, newdata$target])  # bind fitted vals and truth together
+    return(fitted_ds)
+
+  } else {
+    stop("Type of dataset not supported")  # class(newdata)
+  }
+
+  # predict.ModelLm(InducerLm(.data = cars_ds), cars_ds[c(1, 2, 3, 4), ])
+
+}
 
 
 

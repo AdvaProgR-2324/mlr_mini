@@ -14,10 +14,14 @@ ModelLm <- function(data, inducer) {
                            data.features = data$data[, !names(data$data) %in% data$target, drop = FALSE], # TODO!!! where contained in dataset??
                            fitted.values = fittedModel$fitted.values, coefficients = fittedModel$coefficients,
                            model.out = utils::capture.output(fittedModel))
-  
+
   class(model) <- c("ModelLm", class(model))
   return(model)
 }
+
+
+### kann weg??
+
 
 
 #' @title Build a ModelXGBoost
