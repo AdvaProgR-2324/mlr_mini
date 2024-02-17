@@ -1,5 +1,5 @@
-#' @title Function to create class 'InducerLm'
-#' @description If .data is empty an `InducerLm` object will be created. If .data is `Dataset` object a LM model will be fitted
+#' @title Function to create an object of class `InducerLm`
+#' @description If .data is empty an `InducerLm` object will be created. If .data is a `Dataset` object a LM model will be fitted
 #' @seealso [fit.InducerLm()]
 #' @param .data data object of class `Dataset`.
 #' @return a `InducerLm` object

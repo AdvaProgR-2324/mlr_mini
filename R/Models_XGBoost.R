@@ -1,12 +1,15 @@
 ##### Models XGBoost
 
-#' @title Fit XGBoost model
-#' @description
-#' Uses an Inducer and a dataset to fit a xgb model
-#' @param .inducer A `Inducer` object
-#' @param .data A `dataset` object for which the values should be fitted
-#' @return an xgb object
+#' @title Fit XGBoost model using `InducerXGBoost`
+#' @description Fit a linear model on the provided data.
+#' @param .inducer A `InducerXGBoost` object
+#' @param .data The data to which the model should be fitted, provided as a `Dataset` object.
+#' @return An object of class `InducerXGBoost`.
 #' @export
+#' @examples
+#' cars.data <- Dataset(data = cars, target = "dist")
+#' inducer <- InducerXGBoost()
+#' xgbfit <- fit.InducerXGBoost(.inducer = inducer, .data = cars.data)
 fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, gamma = 0, max_depth = 6, min_child_weight = 1,
                                subsample = 1, colsample_bytree = 1, lambda = 1, alpha = 0, num_parallel_tree = 1) {
   # TODO asserts
@@ -45,19 +48,24 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
 
   class(modelObj) <- c("ModelXGBoost", "ModelRegression", "Model")
   return(modelObj)
-
 }
 
 
 
 
-#' @title Predict method for Model of type ModelXGBoost
-#' @description
-#' Predictes values based on a Model object.
-#' @param model A `ModelXGBoost` object
-#' @param newdata A `dataset` or a `data.frame`object for which the values should be fitted
+
+#' @title Predict values for `fit.InducerXGBoost`
+#' @description Predict from the results of a xgboost model
+#' @param model A model of class `ModelXGBoost`
+#' @param newdata data of class `data.frame` or `Dataset`
 #' @return the fitted values. If the input is a data.frame the predicted values will be given back as a vector. If the input is dataset like used in model, then the result will be a dataframe with predictions and true values in dataset
+#' @return An object with the predictions of class `numeric` or `data.frame`
 #' @export
+#' cars.data <- Dataset(data = cars, target = "dist")
+#' inducer <- InducerXGBoost()
+#' xgbfit <- InducerXGBoost(.inducer = inducer, .data = cars.data)
+#' predict.ModelXGBoost(model = xgbfit, newdata = data.frame(speed = 10))
+#' predict.ModelXGBoost(model = xgbfit, newdata = cars.data[c(1, 2, 3, 4), ])
 predict.ModelXGBoost <- function(model, newdata, ...) {
 
   # TODO asserts
@@ -85,8 +93,5 @@ predict.ModelXGBoost <- function(model, newdata, ...) {
   } else {
     stop("Type of dataset not supported")  # class(newdata)
   }
-
   # xgboost:::predict.xgb.Booster(object = fittedModel, newdata = as.matrix(data.frame(speed = 10)))
-
-
 }

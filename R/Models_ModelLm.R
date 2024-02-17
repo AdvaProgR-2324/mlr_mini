@@ -15,7 +15,6 @@
 #' cars.data <- Dataset(data = cars, target = "dist")
 #' inducer <- InducerLm()
 #' lmfit <- fit.InducerLm(.inducer = inducer, .data = cars.data)
-#'
 fit.InducerLm <- function(.inducer, .data, formula, subset, weights, na.action, method = "qr", model = TRUE,
                           x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE, offset) {  # contrasts = NULL,
   assert_class(.data, "Dataset")
@@ -86,8 +85,8 @@ fit.InducerLm <- function(.inducer, .data, formula, subset, weights, na.action, 
 #' cars.data <- Dataset(data = cars, target = "dist")
 #' inducer <- InducerLm()
 #' lmfit <- fit.InducerLm(.inducer = inducer, .data = cars.data)
-#' predict.ModelLm( model = lmfit, newdata = data.frame(speed = 10))
-#' predict.ModelLm( model = lmfit, newdata = cars.data[c(1, 2, 3, 4), ])
+#' predict.ModelLm(model = lmfit, newdata = data.frame(speed = 10))
+#' predict.ModelLm(model = lmfit, newdata = cars.data[c(1, 2, 3, 4), ])
 predict.ModelLm <- function(model, newdata, ...) {
 
   # TODO asserts

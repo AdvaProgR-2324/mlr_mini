@@ -2,11 +2,19 @@
 
 
 
-## Inducerxgb neu
 
-#' @title Create an InducerXGBoost
-#' @description Build an InducerXGBoost
+#' @title Function to create an object of class `InducerXGBoost`
+#' @description If .data is empty an `InducerXGBoost` object will be created. If .data is a `Dataset` object a xgboost model will be fitted
+#' @seealso [fit.InducerXGBoost()]
+#' @param .data Data object of class `Dataset`.
+#' @return A `InducerXGBoost` object
 #' @export
+#' @example
+#' inducer <- InducerXGBoost()
+#' inducer
+#' cars.data <- Dataset(data = cars, target = "dist")
+#' fittedInd <- InducerXGBoost(.data = cars.data)
+#' fittedInd
 InducerXGBoost <- function(.data = NULL, nrounds = 1, eta = 0.3, gamma = 0, max_depth = 6, min_child_weight = 1,
                            subsample = 1, colsample_bytree = 1, lambda = 1, alpha = 0, num_parallel_tree = 1) {
   # TODO asserts
@@ -35,12 +43,24 @@ InducerXGBoost <- function(.data = NULL, nrounds = 1, eta = 0.3, gamma = 0, max_
   }
 }
 
-
+#' @title S3 method print for class 'InducerXGBoost'
+#' @description Print an `InducerXGBoost` object.
+#' @param .inducer object of class `InducerXGBoost`.
+#' @param ... optional arguments to `print` methods.
+#' @seealso [InducerXGBoost()]
+#' @export
+#' @example
+#' inducer<- InducerXGBoost()
+#' inducer
 print.InducerXGBoost <- function(.inducer, ...) {
   cat("Inducer: XGBoost\n", sep = "")
   cat("Configuration: ", paste(names(formals(.inducer))[-1], "=", as.vector(formals(.inducer))[-1], collapse = ", "))
   invisible(.inducer)
 }
+
+
+
+
 
 hyperparameterXGBoost = list(
   nrounds = list(name = "nrounds", type = "numeric", default = 1, lower = 1, upper = Inf),

@@ -4,7 +4,6 @@
 #' Create a Model object given a dataset and an inducer.
 #' @param data The data given in an Dataset object.
 #' @param inducer An Inducer object: The applied inducer
-#' @export
 Model <- function(inducer.name, inducer.configuration, data.name, data.target, data.features,
                    fitted.values = NULL, coefficients = NULL, model.out, model.data) {
   #TODO: further assertions for data.target -> rather in ModelRegression or ModelClassification
@@ -88,117 +87,6 @@ configuration.Inducer <- function(.inducer, ...) {
 
 
 
-
-
-
-
-#' @title Configuration method for Model objects
-#' @description Get the configuration of a Model object.
-#' @param model A Model object for which the configuration should be obtained.
-#' @return The configuration of the model.
-#' @export
-configuration.Model <- function(model, ...) {
-  assert_class(model, "Model") # TODO: is the assert_class necessary if we use a generic?? I dont think so
-  return(model$inducer.configuration)
-}
-
-
-#' @title inducer: get the name of the inducer and its configuration
-#' @description
-#' This function returns the inducer and the hyperparameter setting used for the model fitting.
-#'
-#' @param model an object of class Model, for which the inducer and the configuration should be returned.
-#'
-#' @return The inducer and the configuration used for the model.
-#'
-#' @examples
-#' TODO!!!!
-#'
-#' @export
-inducer <- function(model, ...) {
-  assert_class(model, "Model")
-  cat("Inducer:", model$inducer.name, "\n")
-  cat("Configuration:", paste(names(model$inducer.configuration), "=", unlist(model$inducer.configuration),
-            collapse = ", "))
-}
-
-
-#' @title modelObject: get the print out of a model
-#' @description print the usual output of a model
-#' @param model A `Model` object.
-#' @export
-modelObject.Model <- function(model, ...) {
-  # TODO: add assert Model?
-  cat(model$model.out, sep = "\n")
-}
-
-#' @title modelInfo: get the needed training time in seconds
-#' @description
-#' This function
-#' @param model an object of class 'Model'.
-#' @return the time needed for the training measured in seconds
-#' @examples
-#' #TODO: Provide Examples
-#' @export
-modelInfo.Model <- function(model, ...) {
-  # TODO: add assert Model
-  stopifnot("model has to be of class'Model'" = class(model) == "Model")
-  return(model$training.time.sec)
-
-}
-
-
-
-#' @title predict function
-predict <- function(...) {
-  UseMethod("predict")
-}
-
-#' @title Predict method for Model
-#' @description
-#' Predicted values based on a Model object.
-#' @param model A `Model` object
-#' @param newdata A `dataset` object for which the values should be fitted
-#' @return the fitted values
-#' @export
-predict.Model <- function(model, newdata, ...) {
-  # TODO: add assert Model and assert dataframe
-  # TODO: ???? dataframe or dataset as input? ?? different behaviour?
-  assert_class(model, "Model", msg = "model has to be of class'Model'")
-  assert_class(newdata, "dataset")
-  stopifnot("model has to be of class'Model'" = class(model) == "Model")
-  ind <- xgboost
-  return(ind)
-}
-
-
-
-
-
-
-
-#' @title Fit function
-fit <- function(...) {
-  UseMethod("fit")
-}
-
-
-
-
-
-
-
-
-# TODO: Isn't that the same as in line 62 ff? -> no?
-modelObject <- function(model) {
-  assert_class(model, "Model")
-  # TODO asserts
-
-  print(modelObj$model.out)  # works !
-
-
- # modelObject(model)
-}
 
 
 
