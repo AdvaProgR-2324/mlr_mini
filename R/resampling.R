@@ -8,11 +8,8 @@
 #' 
 #' @export
 SplitCV <- function(folds, repeats = 1) {
-<<<<<<< HEAD
   checkmate::assertInt(folds, lower = 2)
   checkmate::assertInt(repeats, lower = 1)
-=======
->>>>>>> 685a32eab6c011feaa355e7b5ac13d5fbe9fcc92
   splitcv <- function(.data) {
     checkmate::assertClass(.data, "Dataset")
 
