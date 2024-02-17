@@ -4,7 +4,8 @@
 indEnv <- function() {
   ind <- list2env(list(xgbooost = InducerXGBoost,
                        rpart = InducerRpart,
-                       lm = InducerLm),
+                       lm = InducerLm
+                       ),
                   parent = emptyenv())
   return(ind)
 
