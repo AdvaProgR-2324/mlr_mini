@@ -21,3 +21,9 @@ fit <- function(...) {
 predict <- function(...) {
   UseMethod("predict")
 }
+
+#' @title S3 method modelObject
+#' @export
+modelObject <- function(...){
+  UseMethod("modelObject")
+}
