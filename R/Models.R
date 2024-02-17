@@ -82,7 +82,7 @@ configuration <- function(...) {
 
 
 #' @title S3 method configuration for class 'InducerLm'
-#' @description Get the configuration of an `InducerLm` object
+#' @description Get the configuration of an `inducer` object
 #' @example
 #' inducer <- InducerLm()
 #' inducer
@@ -93,6 +93,12 @@ configuration.Inducer <- function(.inducer, ...) {
 }
 
 
+#' @title S3 method configuration<- for class 'InducerLm'
+#' @description Change configuration of an `inducer` object
+#' @example
+#' inducer <- InducerLm()
+#' inducer
+#' configuration(inducer)$x <- FALSE
 #' @export
 `configuration<-` <- function(.inducer, value) {
   ind <- .inducer

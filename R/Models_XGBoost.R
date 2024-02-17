@@ -12,7 +12,6 @@
 #' xgbfit <- fit.InducerXGBoost(.inducer = inducer, .data = cars.data)
 fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, gamma = 0, max_depth = 6, min_child_weight = 1,
                                subsample = 1, colsample_bytree = 1, lambda = 1, alpha = 0, num_parallel_tree = 1) {
-  # TODO asserts
   # TODO: formals(model) <- formals(.inducer) how to solve that error???
   assert_class(x = .inducer, classes = "InducerXGBoost")
   stopifnot(".data muste be of class Dataset or data.frame" = class(newdata) %in% c("Dataset", "data.frame"))

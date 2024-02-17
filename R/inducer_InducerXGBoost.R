@@ -52,7 +52,7 @@ InducerXGBoost <- function(.data = NULL, nrounds = 1, eta = 0.3, gamma = 0, max_
 #' @seealso [InducerXGBoost()]
 #' @export
 #' @example
-#' inducer<- InducerXGBoost()
+#' inducer <- InducerXGBoost()
 #' inducer
 print.InducerXGBoost <- function(.inducer, ...) {
   cat("Inducer: XGBoost\n", sep = "")
