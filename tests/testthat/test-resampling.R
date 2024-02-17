@@ -7,7 +7,7 @@ test_that("Test Split constructor", {
 
 test_that("Test register_resampling_strategy", {
   splt <- Split()
-  func <- function(){}
+  func <- function(x) x
   class(func) <- c("SplitTest", "Split")
   register_resampling_strategy(splt, func, "myname")
   testthat::expect_true(exists("myname", splt))
