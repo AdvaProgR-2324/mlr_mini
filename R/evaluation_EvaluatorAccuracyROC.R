@@ -35,7 +35,7 @@ EvaluatorAccuracy <- function(.prediction, .dataset, .target, .threshold = 0.5) 
   }
   correct_classif <- sum(prediction == truth)
   n <- length(truth)
-  return(correct_classif/n)
+  return(correct_classif / n)
 }
 
 #' @title Print an EvaluatorAUC.
@@ -87,7 +87,7 @@ EvaluatorAUC <- function(.prediction, .dataset, .target) {
     truth <- .prediction$truth
   }
   pred_data <- data.frame(truth = truth, prediction = prediction)
-  return(pROC::auc(pROC::roc(pred_data, "truth", "prediction", quiet = T)))
+  return(pROC::auc(pROC::roc(pred_data, "truth", "prediction", quiet = TRUE)))
 }
 
 

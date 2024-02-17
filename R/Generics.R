@@ -24,6 +24,6 @@ predict <- function(...) {
 
 #' @title S3 method modelObject
 #' @export
-modelObject <- function(...){
+modelObject <- function(...) {
   UseMethod("modelObject")
 }

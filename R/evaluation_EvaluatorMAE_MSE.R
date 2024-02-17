@@ -17,13 +17,13 @@ EvaluatorMAE <- function(.prediction, .data, .target) {
     return(EvaluatorMAE)
   } else {
     stopifnot(".prediction must be a `Dataset` or a `data.frame`." = class(.prediction) %in% c("data.frame", "numeric"))
-    if(!missing(.data)) {
+    if (!missing(.data)) {
       stopifnot(".data must be a `Dataset` or a `data.frame`." = class(.data) %in% c("Dataset", "data.frame"))
-      if(class(.data) == "data.frame") {
+      if (class(.data) == "data.frame") {
         assert_character(.target, len = 1)
       }
     }
-    if(class(.prediction) == "data.frame") {
+    if (class(.prediction) == "data.frame") {
       mae <- mean(abs(.prediction$prediction - .prediction$truth))
     } else {
       mae <- mean(abs(.prediction - .data[, .target]))
@@ -67,13 +67,13 @@ EvaluatorMSE <- function(.prediction, .data, .target) {
     return(EvaluatorMSE)
   } else {
     stopifnot(".prediction must be a `Dataset` or a `data.frame`." = class(.prediction) %in% c("data.frame", "numeric"))
-    if(!missing(.data)) {
+    if (!missing(.data)) {
       stopifnot(".data must be a `Dataset` or a `data.frame`." = class(.data) %in% c("Dataset", "data.frame"))
-      if(class(.data) == "data.frame") {
+      if (class(.data) == "data.frame") {
         assert_character(.target, len = 1)
       }
     }
-    if(class(.prediction) == "data.frame") {
+    if (class(.prediction) == "data.frame") {
       mse <- mean((.prediction$prediction - .prediction$truth)^2)
     } else {
       mse <- mean((.prediction - .data[, .target])^2)
@@ -85,7 +85,7 @@ EvaluatorMSE <- function(.prediction, .data, .target) {
 }
 
 
-#' @title Print an EvaluatorMSE.
+#' @title Print an EvaluatorMSE
 #' @description Print an `EvaluatorMSE` object.
 #' @export
 print.EvaluatorMSE <- function(.evaluator, ...) {
