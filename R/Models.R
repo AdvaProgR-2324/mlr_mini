@@ -28,6 +28,28 @@ Model <- function(inducer.name, inducer.configuration, data.name, data.target, d
 }
 
 
+#' @title modelObject: get the print out of a model
+#' @description print the usual output of a model
+#' @param model A `Model` object.
+#' @export
+modelObject.Model <- function(model, ...) {
+  assert_class(x = model, classes = "Model")
+
+  model$model.out  # print model output
+
+}
+
+
+#' @title S3 method modelObject
+#' @export
+modelObject <- function(...) {
+  UseMethod("modelObject")
+}
+
+
+
+
+
 #' @title Printing Regression Models
 #' @description Print a regression model.
 #' @param model object of class `ModelRegression`

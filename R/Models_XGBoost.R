@@ -72,7 +72,7 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
 #' predict.ModelXGBoost(model = xgbfit, newdata = cars.data[c(1, 2, 3, 4), ])
 predict.ModelXGBoost <- function(model, newdata, ...) {
 
-  assert_class(x = .inducer, classes = "ModelXGBoost")
+  assert_class(x = model, classes = "ModelXGBoost")
   stopifnot(".data muste be of class Dataset or data.frame" = class(newdata) %in% c("Dataset", "data.frame"))
 
 
