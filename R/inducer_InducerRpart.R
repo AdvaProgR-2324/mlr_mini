@@ -75,7 +75,8 @@ fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.actio
                              model = FALSE, x = FALSE, y = TRUE, parms, control, cost) {
   # TODO asserts
   # TODO: formals(model) <- formals(.inducer) how to solve that error???
-
+  assert_class(x = .inducer, classes = "InducerRpart")
+  assert_class(x = newdata, classes = "Dataset")
 
   model <- rpart
   original_call <- match.call(expand.dots = FALSE)
@@ -145,9 +146,8 @@ fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.actio
 #' predict.ModelRpart(model = rpartfit, newdata = data.frame(speed = 10))
 #' predict.ModelRpart(model = rpartfit, newdata = cars.data[c(1, 2, 3, 4), ])
 predict.ModelRpart <- function(model, newdata, ...) {
-
-  # TODO asserts
-  # TODO check if dataset Name of newdata is equal to the dataset name of model obj
+  assert_class(x = model, classes = "ModelRpart")
+  assert_class(x = newdata, classes = "Dataset" | "data.frame")
 
   fittedModel <- model$model.out
   dataModel <- model$mode.data$data

@@ -34,8 +34,9 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
 
   # estimate model
   featureVars <- setdiff(colnames(.data$data), .data$target)
-  fittedModel <- model(data = as.matrix(.data$data[, featureVars]), label = .data$data[, .data$target])
 
+  fittedModel <- capture.output(model(data = as.matrix(.data$data[, featureVars]), label = .data$data[, .data$target]))
+  # capture.output, otherwise always prints [1]	train-rmse:37.257189
 
   modelObj <- Model(inducer.name = "InducerXGBoost",
                     inducer.configuration = as.list(configuration(.inducer)),  # also changed in Model()
@@ -45,7 +46,7 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
                     model.out = fittedModel,
                     model.data = .data
   )
-
+  print("3")
   class(modelObj) <- c("ModelXGBoost", "ModelRegression", "Model")
   return(modelObj)
 }

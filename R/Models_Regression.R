@@ -14,14 +14,3 @@ ModelRegression <- function(inducer.name, inducer.configuration, data.name, data
 }
 
 
-#' @title Printing Regression Models
-#' @description Print a regression model.
-#' @param model object of class `ModelRegression`
-#' @examples
-#' # example code
-#' @export
-print.ModelRegression <- function(model, ...) {
-  # assert_class(model, "ModelRegression") not needed as print method for the ModelRegression class
-  cat('Regression Model: "', model$inducer.name, '" fitted on "', model$data.name, '" dataset.\n', sep = "")
-  invisible(model)
-}
