@@ -16,9 +16,9 @@
 #' fittedInd
 InducerRpart <- function(.data = NULL, formula, weights, subset, na.action = na.rpart, method,
                          model = FALSE, x = FALSE, y = TRUE, parms, control, cost) {  # ggf. ... ?
-  # TODO asserts
 
-  # TODO Beschreibung
+  assert_class(x = .data, classes = "Dataset")
+
 
   if (is.null(.data)) {
     ind <- InducerRpart
@@ -53,6 +53,7 @@ InducerRpart <- function(.data = NULL, formula, weights, subset, na.action = na.
 #' inducer <- InducerRpart()
 #' inducer
 print.InducerRpart <- function(.inducer, ...) {
+  assert_class(x = .inducer, classes = "InducerRpart")
   cat("Inducer: rpart\n", sep = "")
   cat("Configuration: ", paste(names(formals(.inducer))[-1], "=", as.vector(formals(.inducer))[-1], collapse = ", "))
   invisible(.inducer)
@@ -73,10 +74,9 @@ print.InducerRpart <- function(.inducer, ...) {
 #' lmfit <- fit.InducerRpart(.inducer = inducer, .data = cars.data)
 fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.action = na.rpart, method,
                              model = FALSE, x = FALSE, y = TRUE, parms, control, cost) {
-  # TODO asserts
-  # TODO: formals(model) <- formals(.inducer) how to solve that error???
+
   assert_class(x = .inducer, classes = "InducerRpart")
-  assert_class(x = newdata, classes = "Dataset")
+  assert_class(x = .data, classes = "Dataset")
 
   model <- rpart
   original_call <- match.call(expand.dots = FALSE)
@@ -101,13 +101,22 @@ fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.actio
     covar <- setdiff(colnames(.data$data), .data$target)
     targetvar <- .data$target
     form <- paste0(targetvar, " ~ ", paste(covar, collapse = " + "))  # paste formula
+
+    time_a <- Sys.time()
     fitted_model <- model(data = .data$data, formula = form)
+    time_b <- Sys.time()
+    fit_time <- as.numeric(time_b - time_a)
 
   } else {  # formula given in args
     # no nice style, but it works, if you have formula in formals it doesnt work
     form <- formals(model)$formula
     formals(model)$formula <- ""
+
+    time_a <- Sys.time()
     fitted_model <- model(data = .data$data, formula = form)
+    time_b <- Sys.time()
+    fit_time <- as.numeric(time_b - time_a)
+
     covar <- names(fitted_model$variable.importance)
 
   }
@@ -118,6 +127,7 @@ fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.actio
                     data.name = as.character(.data$name),
                     data.target = .data$target,
                     data.features = covar,  # change feature names automatic
+                    modelInfo = list(training.time.sec = fit_time),
                     model.out = fitted_model,
                     model.data = .data
   )
@@ -147,7 +157,7 @@ fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.actio
 #' predict.ModelRpart(model = rpartfit, newdata = cars.data[c(1, 2, 3, 4), ])
 predict.ModelRpart <- function(model, newdata, ...) {
   assert_class(x = model, classes = "ModelRpart")
-  assert_class(x = newdata, classes = "Dataset" | "data.frame")
+  stopifnot(".data muste be of class Dataset or data.frame" = class(newdata) %in% c("Dataset", "data.frame"))
 
   fittedModel <- model$model.out
   dataModel <- model$mode.data$data

@@ -14,7 +14,8 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
                                subsample = 1, colsample_bytree = 1, lambda = 1, alpha = 0, num_parallel_tree = 1) {
   # TODO asserts
   # TODO: formals(model) <- formals(.inducer) how to solve that error???
-
+  assert_class(x = .inducer, classes = "InducerXGBoost")
+  stopifnot(".data muste be of class Dataset or data.frame" = class(newdata) %in% c("Dataset", "data.frame"))
 
   model <- xgboost
   original_call <- match.call(expand.dots = FALSE)
@@ -34,19 +35,21 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
 
   # estimate model
   featureVars <- setdiff(colnames(.data$data), .data$target)
-
+  time_a <- Sys.time()
   fittedModel <- capture.output(model(data = as.matrix(.data$data[, featureVars]), label = .data$data[, .data$target]))
   # capture.output, otherwise always prints [1]	train-rmse:37.257189
+  time_b <- Sys.time()
+  fit_time <- as.numeric(time_b - time_a)
 
   modelObj <- Model(inducer.name = "InducerXGBoost",
                     inducer.configuration = as.list(configuration(.inducer)),  # also changed in Model()
                     data.name = as.character(.data$name),
                     data.target = .data$target,
                     data.features = featureVars,  # change feature names automatic
+                    modelInfo = list(training.time.sec = fit_time),
                     model.out = fittedModel,
                     model.data = .data
   )
-  print("3")
   class(modelObj) <- c("ModelXGBoost", "ModelRegression", "Model")
   return(modelObj)
 }
@@ -69,8 +72,9 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
 #' predict.ModelXGBoost(model = xgbfit, newdata = cars.data[c(1, 2, 3, 4), ])
 predict.ModelXGBoost <- function(model, newdata, ...) {
 
-  # TODO asserts
-  # TODO check if dataset Name of newdata is equal to the dataset name of model obj
+  assert_class(x = .inducer, classes = "ModelXGBoost")
+  stopifnot(".data muste be of class Dataset or data.frame" = class(newdata) %in% c("Dataset", "data.frame"))
+
 
   fittedModel <- model$model.out
   dataModel <- model$mode.data$data

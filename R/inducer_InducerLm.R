@@ -12,6 +12,8 @@
 #' fittedInd
 InducerLm <- function(.data = NULL, formula, subset, weights, na.action, method = "qr", model = TRUE,
                       x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE, offset) {  # contrasts = NULL,
+  assert_class(x = .data, classes = "Dataset")
+
   if (is.null(.data)) {
     ind <- InducerLm
     original_call <- match.call(expand.dots = FALSE)

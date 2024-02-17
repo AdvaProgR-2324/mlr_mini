@@ -5,7 +5,7 @@
 #' @param data The data given in an Dataset object.
 #' @param inducer An Inducer object: The applied inducer
 Model <- function(inducer.name, inducer.configuration, data.name, data.target, data.features,
-                   fitted.values = NULL, coefficients = NULL, model.out, model.data) {
+                   fitted.values = NULL, coefficients = NULL, modelInfo = NULL, model.out, model.data) {
   #TODO: further assertions for data.target -> rather in ModelRegression or ModelClassification
   # data.features and fitted.values
   assert_string(inducer.name)
@@ -20,6 +20,7 @@ Model <- function(inducer.name, inducer.configuration, data.name, data.target, d
     data.features = data.features,
     fitted.values = fitted.values,
     coefficients = coefficients,
+    modelInfo = modelInfo,
     model.out = model.out,
     mode.data = model.data
   ), class = "Model"

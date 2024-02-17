@@ -42,11 +42,19 @@ fit.InducerLm <- function(.inducer, .data, formula, subset, weights, na.action, 
     covar <- setdiff(colnames(.data$data), .data$target)
     targetvar <- .data$target
     form <- paste0(targetvar, " ~ ", paste(covar, collapse = " + "))  # paste formula
+
+    time_a <- Sys.time()
     fitted_model <- model(formula = form, data = .data$data)
+    time_b <- Sys.time()
+    fit_time <- as.numeric(time_b - time_a)
 
   } else {  # formula given in args
+
+    time_a <- Sys.time()
     fitted_model <- model(data = .data$data)
-    fitted_model$call$formula
+    time_b <- Sys.time()
+    fit_time <- as.numeric(time_b - time_a)
+
 
     covar <- names(fitted_model$coefficients)[-1]  # features without intercept
 
@@ -60,6 +68,7 @@ fit.InducerLm <- function(.inducer, .data, formula, subset, weights, na.action, 
                     data.name = as.character(.data$name),
                     data.target = .data$target,
                     data.features = covar,  # change feature names automatic
+                    modelInfo = list(training.time.sec = fit_time),
                     model.out = fitted_model,
                     model.data = .data
   )
