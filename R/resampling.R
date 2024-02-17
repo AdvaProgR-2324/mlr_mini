@@ -92,3 +92,4 @@ print.SplitInstanceCV <- function(x, ...) {
   dim <- get("dim", envir = environment(x))
   cat(paste0('CV Split Instance of the "', name, '" dataset', "(", dim[1], ") rows"))
   invisible(x)
+}
