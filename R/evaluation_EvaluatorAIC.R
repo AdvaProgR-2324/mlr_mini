@@ -9,6 +9,7 @@
 #' @seealso [EvaluatorBIC()] to get the Bayesian information criterion (BIC), [EvaluatorMAE()] for computing the
 #' mean absolute error, [EvaluatorMSE()] for the mean-squared error.
 #' @export
+
 EvaluatorAIC <- function(.model) {
   if (missing(.model)) {
     eval <- EvaluatorAIC
