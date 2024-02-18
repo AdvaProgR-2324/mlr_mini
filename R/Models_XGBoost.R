@@ -31,7 +31,7 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
   checkmate::assert_class(x = .inducer, classes = "InducerXGBoost")
   stopifnot(".data muste be of class Dataset or data.frame" = class(.data) %in% c("Dataset", "data.frame"))
 
-  model <- xgboost
+  model <- xgboost::xgboost
   original_call <- match.call(expand.dots = FALSE)
   form_Ind <- formals(.inducer) # formals of ind
   form_Ind$.data <- NULL # remove .data arg
