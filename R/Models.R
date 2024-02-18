@@ -40,6 +40,7 @@ modelObject.Model <- function(model, ...) {
 }
 
 
+
 #' @title S3 method modelObject
 #' @export
 modelObject <- function(...) {
