@@ -4,7 +4,8 @@
 
 
 #' @title Function to create an object of class `InducerXGBoost`
-#' @description If .data is empty an `InducerXGBoost` object will be created. If .data is a `Dataset` object a xgboost model will be fitted
+#' @description If .data is empty an `InducerXGBoost` object will be created. If .data is a `Dataset` object
+#' a xgboost model will be fitted
 #' @seealso [fit.InducerXGBoost()]
 #' @param .data Data object of class `Dataset`.
 #' @param nrounds number of rounds
@@ -28,8 +29,9 @@
 #' fittedInd
 InducerXGBoost <- function(.data = NULL, nrounds = 1, eta = 0.3, gamma = 0, max_depth = 6, min_child_weight = 1,
                            subsample = 1, colsample_bytree = 1, lambda = 1, alpha = 0, num_parallel_tree = 1) {
-  # checkmate::assert_class(x = .data, classes = "Dataset")
-
+  if (!is.null(.data)) {
+    checkmate::assert_class(x = .data, classes = "Dataset")
+  }
 
   # TODO Beschreibung
 
@@ -84,5 +86,5 @@ hyperparameterXGBoost <- list(
   colsample_bytree = list(name = "colsample_bytree", type = "numeric", default = 1, lower = 0, upper = Inf),
   lambda = list(name = "lambda", type = "numeric", default = 1, lower = 0, upper = Inf),
   alpha = list(name = "alpha", type = "numeric", default = 0, lower = 0, upper = Inf),
-  num_parallel_tree = list(name = "num_parallel_tree", type = "numeric", default = 1, lower = 0, upper = Inf) # lower right?
-)
+  num_parallel_tree = list(name = "num_parallel_tree", type = "numeric", default = 1, lower = 0, upper = Inf)
+)  # lower right for num_parallel_tree

@@ -11,7 +11,7 @@ Model <- function(inducer.name, inducer.configuration, data.name, data.target, d
   assert_string(inducer.name)
   assert_list(inducer.configuration)
   assert_character(data.name)
-  # assert_numeric(coefficients)
+
   structure(list(
     inducer.name = inducer.name,
     inducer.configuration = as.list(inducer.configuration), # inducer config is given as pairlist, not list

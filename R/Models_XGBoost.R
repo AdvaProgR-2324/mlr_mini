@@ -23,11 +23,13 @@
 #' cars.data <- Dataset(data = cars, target = "dist")
 #' fittedmod <- fit.InducerXGBoost(.inducer = inducer, .data = cars.data)
 #' fittedmod
-fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, gamma = 0, max_depth = 6, min_child_weight = 1,
-                               subsample = 1, colsample_bytree = 1, lambda = 1, alpha = 0, num_parallel_tree = 1) {
+fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, gamma = 0,
+                               max_depth = 6, min_child_weight = 1, subsample = 1,
+                               colsample_bytree = 1, lambda = 1, alpha = 0,
+                               num_parallel_tree = 1) {
   # TODO: formals(model) <- formals(.inducer) how to solve that error???
   checkmate::assert_class(x = .inducer, classes = "InducerXGBoost")
-  stopifnot(".data muste be of class Dataset or data.frame" = class(newdata) %in% c("Dataset", "data.frame"))
+  stopifnot(".data muste be of class Dataset or data.frame" = class(.data) %in% c("Dataset", "data.frame"))
 
   model <- xgboost
   original_call <- match.call(expand.dots = FALSE)
@@ -40,7 +42,8 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
     formals(model)[[arg]] <- form_Ind[[arg]]
   }
   for (arg in names(given_args)) { # secound check the arguments of fit fct, paste into model
-    if (formals(model)[[arg]] != given_args[[arg]]) { # only switch if fit.. uses a different param setting as already in Inducer
+    if (formals(model)[[arg]] != given_args[[arg]]) {
+      # only switch if fit.. uses a different param setting as already in Inducer
       formals(model)[[arg]] <- given_args[[arg]]
     }
   }
@@ -76,7 +79,9 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
 #' @param model A model of class `ModelXGBoost`
 #' @param newdata data of class `data.frame` or `Dataset`
 #' @param ... further arguments
-#' @return the fitted values. If the input is a data.frame the predicted values will be given back as a vector. If the input is dataset like used in model, then the result will be a dataframe with predictions and true values in dataset
+#' @return the fitted values. If the input is a data.frame the predicted values will be given back as a vector.
+#' If the input is dataset like used in model, then the result will be a dataframe with predictions and
+#' true values in dataset
 #' @return An object with the predictions of class `numeric` or `data.frame`
 #' @export
 #' @examples
@@ -91,24 +96,26 @@ predict.ModelXGBoost <- function(model, newdata, ...) {
 
 
   fittedModel <- model$model.out
-  dataModel <- model$mode.data$data
+  # not necessary dataModel <- model$mode.data$data
 
   ## newdata into datamatrix
   if (class(newdata) == "data.frame") { # if dataframe: only vector with prediction values
     # TODO asserts, dataframe must have same features as dataset in fittedmodel
-    stopifnot(setequal(colnames(newdata), model$data.features)) # , "newdata must have same variables as specified in model"
+    stopifnot(setequal(colnames(newdata), model$data.features))
+    # , "newdata must have same variables as specified in model"
     data_n_df <- as.matrix(newdata)
     fittedVals <- xgboost:::predict.xgb.Booster(object = fittedModel, newdata = data_n_df)
     return(fittedVals)
-  } else if (class(newdata) == "Dataset") { # if Dataset: new dataframe with prediction (values from predict function) and truth (dataset)
+  } else if (class(newdata) == "Dataset") {
+    # if Dataset: new dataframe with prediction (values from predict function) and truth (dataset)
     data_n_target <- as.data.frame.Dataset(newdata[, newdata$target])
     data_n_ds <- as.matrix(newdata$data[, model$data.features]) # dataset with all features needed
 
-    fitted_ds_vals <- xgboost:::predict.xgb.Booster(object = fittedModel, newdata = data_n_ds) # as.matrix(newdata$data)
+    fitted_ds_vals <- xgboost:::predict.xgb.Booster(object = fittedModel, newdata = data_n_ds)
     fitted_ds <- data.frame(prediction = fitted_ds_vals, truth = data_n_target) # bind fitted vals and truth together
     return(fitted_ds)
   } else {
-    stop("Type of dataset not supported") # class(newdata)
+    stop("Type of dataset not supported") # ggf. class(newdata)
   }
-  # xgboost:::predict.xgb.Booster(object = fittedModel, newdata = as.matrix(data.frame(speed = 10)))
+  # possible run xgboost:::predict.xgb.Booster(object = fittedModel, newdata = as.matrix(data.frame(speed = 10)))
 }
