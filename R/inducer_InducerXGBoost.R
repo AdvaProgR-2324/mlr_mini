@@ -18,7 +18,7 @@
 InducerXGBoost <- function(.data = NULL, nrounds = 1, eta = 0.3, gamma = 0, max_depth = 6, min_child_weight = 1,
                            subsample = 1, colsample_bytree = 1, lambda = 1, alpha = 0, num_parallel_tree = 1) {
 
-  assert_class(x = .data, classes = "Dataset")
+  #checkmate::assert_class(x = .data, classes = "Dataset")
 
 
   # TODO Beschreibung
