@@ -4,7 +4,7 @@ A mini-package for Machine Learning in R.
 
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/AdvaProgR-2324/mlrmini/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/AdvaProgR-2324/mlrmini/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/AdvaProgR-2324/mlrmini/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/AdvaProgR-2324/mlrmini/actions/workflows/R-CMD-check.yaml) [![test-coverage](https://github.com/AdvaProgR-2324/mlrmini/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/AdvaProgR-2324/mlrmini/actions/workflows/test-coverage.yaml) [![lint](https://github.com/AdvaProgR-2324/mlrmini/actions/workflows/lint.yaml/badge.svg)](https://github.com/AdvaProgR-2324/mlrmini/actions/workflows/lint.yaml)
 <!-- badges: end -->
 ## What ChatGPT says this package is made for
 
