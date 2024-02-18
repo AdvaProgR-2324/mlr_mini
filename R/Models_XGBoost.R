@@ -31,16 +31,16 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
 
   model <- xgboost
   original_call <- match.call(expand.dots = FALSE)
-  form_Ind <- formals(.inducer)  # formals of ind
-  form_Ind$.data <- NULL  # remove .data arg
-  given_args <- original_call[-c(1, 2, 3)]  # delete fit... .inducer, .data
+  form_Ind <- formals(.inducer) # formals of ind
+  form_Ind$.data <- NULL # remove .data arg
+  given_args <- original_call[-c(1, 2, 3)] # delete fit... .inducer, .data
 
   # for loop will be skipped if empty
-  for (arg in names(form_Ind)) {  # first check the arguments of inducer, paste into model
+  for (arg in names(form_Ind)) { # first check the arguments of inducer, paste into model
     formals(model)[[arg]] <- form_Ind[[arg]]
   }
-  for (arg in names(given_args)) {  # secound check the arguments of fit fct, paste into model
-    if (formals(model)[[arg]] != given_args[[arg]]) {  # only switch if fit.. uses a different param setting as already in Inducer
+  for (arg in names(given_args)) { # secound check the arguments of fit fct, paste into model
+    if (formals(model)[[arg]] != given_args[[arg]]) { # only switch if fit.. uses a different param setting as already in Inducer
       formals(model)[[arg]] <- given_args[[arg]]
     }
   }
@@ -53,14 +53,15 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
   time_b <- Sys.time()
   fit_time <- as.numeric(time_b - time_a)
 
-  modelObj <- Model(inducer.name = "InducerXGBoost",
-                    inducer.configuration = as.list(configuration(.inducer)),  # also changed in Model()
-                    data.name = as.character(.data$name),
-                    data.target = .data$target,
-                    data.features = featureVars,  # change feature names automatic
-                    modelInfo = list(training.time.sec = fit_time),
-                    model.out = fittedModel,
-                    model.data = .data
+  modelObj <- Model(
+    inducer.name = "InducerXGBoost",
+    inducer.configuration = as.list(configuration(.inducer)), # also changed in Model()
+    data.name = as.character(.data$name),
+    data.target = .data$target,
+    data.features = featureVars, # change feature names automatic
+    modelInfo = list(training.time.sec = fit_time),
+    model.out = fittedModel,
+    model.data = .data
   )
   class(modelObj) <- c("ModelXGBoost", "ModelRegression", "Model")
   return(modelObj)
@@ -85,7 +86,6 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
 #' predict.ModelXGBoost(model = xgbfit, newdata = data.frame(speed = 10))
 #' predict.ModelXGBoost(model = xgbfit, newdata = cars.data[c(1, 2, 3, 4), ])
 predict.ModelXGBoost <- function(model, newdata, ...) {
-
   checkmate::assert_class(x = model, classes = "ModelXGBoost")
   stopifnot(".data muste be of class Dataset or data.frame" = class(newdata) %in% c("Dataset", "data.frame"))
 
@@ -94,23 +94,21 @@ predict.ModelXGBoost <- function(model, newdata, ...) {
   dataModel <- model$mode.data$data
 
   ## newdata into datamatrix
-  if (class(newdata) ==  "data.frame") {  # if dataframe: only vector with prediction values
+  if (class(newdata) == "data.frame") { # if dataframe: only vector with prediction values
     # TODO asserts, dataframe must have same features as dataset in fittedmodel
-    stopifnot(setequal(colnames(newdata), model$data.features))  # , "newdata must have same variables as specified in model"
-        data_n_df <- as.matrix(newdata)
+    stopifnot(setequal(colnames(newdata), model$data.features)) # , "newdata must have same variables as specified in model"
+    data_n_df <- as.matrix(newdata)
     fittedVals <- xgboost:::predict.xgb.Booster(object = fittedModel, newdata = data_n_df)
     return(fittedVals)
-
-  } else if (class(newdata) == "Dataset") {  # if Dataset: new dataframe with prediction (values from predict function) and truth (dataset)
+  } else if (class(newdata) == "Dataset") { # if Dataset: new dataframe with prediction (values from predict function) and truth (dataset)
     data_n_target <- as.data.frame.Dataset(newdata[, newdata$target])
-    data_n_ds <- as.matrix(newdata$data[, model$data.features])  # dataset with all features needed
+    data_n_ds <- as.matrix(newdata$data[, model$data.features]) # dataset with all features needed
 
-    fitted_ds_vals <- xgboost:::predict.xgb.Booster(object = fittedModel, newdata = data_n_ds)  # as.matrix(newdata$data)
-    fitted_ds <- data.frame(prediction = fitted_ds_vals, truth = data_n_target)  # bind fitted vals and truth together
+    fitted_ds_vals <- xgboost:::predict.xgb.Booster(object = fittedModel, newdata = data_n_ds) # as.matrix(newdata$data)
+    fitted_ds <- data.frame(prediction = fitted_ds_vals, truth = data_n_target) # bind fitted vals and truth together
     return(fitted_ds)
-
   } else {
-    stop("Type of dataset not supported")  # class(newdata)
+    stop("Type of dataset not supported") # class(newdata)
   }
   # xgboost:::predict.xgb.Booster(object = fittedModel, newdata = as.matrix(data.frame(speed = 10)))
 }

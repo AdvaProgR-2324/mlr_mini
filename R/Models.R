@@ -5,8 +5,8 @@
 #' @param data The data given in an Dataset object.
 #' @param inducer An Inducer object: The applied inducer
 Model <- function(inducer.name, inducer.configuration, data.name, data.target, data.features,
-                   fitted.values = NULL, coefficients = NULL, modelInfo = NULL, model.out, model.data) {
-  #TODO: further assertions for data.target -> rather in ModelRegression or ModelClassification
+                  fitted.values = NULL, coefficients = NULL, modelInfo = NULL, model.out, model.data) {
+  # TODO: further assertions for data.target -> rather in ModelRegression or ModelClassification
   # data.features and fitted.values
   assert_string(inducer.name)
   assert_list(inducer.configuration)
@@ -14,7 +14,7 @@ Model <- function(inducer.name, inducer.configuration, data.name, data.target, d
   # assert_numeric(coefficients)
   structure(list(
     inducer.name = inducer.name,
-    inducer.configuration = as.list(inducer.configuration),  # inducer config is given as pairlist, not list
+    inducer.configuration = as.list(inducer.configuration), # inducer config is given as pairlist, not list
     data.name = data.name,
     data.target = data.target,
     data.features = data.features,
@@ -23,8 +23,7 @@ Model <- function(inducer.name, inducer.configuration, data.name, data.target, d
     modelInfo = modelInfo,
     model.out = model.out,
     mode.data = model.data
-  ), class = "Model"
-  )
+  ), class = "Model")
 }
 
 
@@ -41,8 +40,7 @@ Model <- function(inducer.name, inducer.configuration, data.name, data.target, d
 modelObject.Model <- function(model, ...) {
   assert_class(x = model, classes = "Model")
 
-  model$model.out  # print model output
-
+  model$model.out # print model output
 }
 
 
@@ -144,15 +142,18 @@ configuration.Inducer <- function(.inducer, ...) {
   return(ind)
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
+HyperparameterLm <- list(
+  data = list(name = "data", arg.null = TRUE),
+  formula = list(name = "formula", type = "formula", arg.null = TRUE),
+  subset = list(name = "subset", type = "logical", arg.null = FALSE), # TODO: type checken!!
+  weights = list(name = "weights", type = "numeric", lower = 0, upper = Inf, arg.null = FALSE),
+  na.action = list(name = "na.action", type = "function", arg.null = FALSE), # TODO:type checken!!!
+  method = list(name = "method", type = "character", values = c("qr", "model.frame"), arg.null = FALSE),
+  model = list(name = "model", type = "logical", arg.null = FALSE),
+  x = list(name = "x", type = "logical", arg.null = FALSE),
+  y = list(name = "y", type = "logical", arg.null = FALSE),
+  qr = list(name = "qr", type = "logical", arg.null = FALSE),
+  singular.ok = list(name = "singular.ok", type = "logical", arg.null = FALSE),
+  contrasts = list(name = "contrasts", type = "list", arg.null = FALSE),
+  offset = list(name = "offset", type = "numeric", arg.null = FALSE)
+)

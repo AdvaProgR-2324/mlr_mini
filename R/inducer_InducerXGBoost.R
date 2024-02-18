@@ -28,8 +28,7 @@
 #' fittedInd
 InducerXGBoost <- function(.data = NULL, nrounds = 1, eta = 0.3, gamma = 0, max_depth = 6, min_child_weight = 1,
                            subsample = 1, colsample_bytree = 1, lambda = 1, alpha = 0, num_parallel_tree = 1) {
-
-  #checkmate::assert_class(x = .data, classes = "Dataset")
+  # checkmate::assert_class(x = .data, classes = "Dataset")
 
 
   # TODO Beschreibung
@@ -75,7 +74,7 @@ print.InducerXGBoost <- function(.inducer, ...) {
 
 
 
-hyperparameterXGBoost = list(
+hyperparameterXGBoost <- list(
   nrounds = list(name = "nrounds", type = "numeric", default = 1, lower = 1, upper = Inf),
   eta = list(name = "eta", type = "numeric", default = 0.3, lower = 0, upper = 1),
   gamma = list(name = "gamma", type = "numeric", default = 0, lower = 0, upper = Inf),
@@ -85,18 +84,5 @@ hyperparameterXGBoost = list(
   colsample_bytree = list(name = "colsample_bytree", type = "numeric", default = 1, lower = 0, upper = Inf),
   lambda = list(name = "lambda", type = "numeric", default = 1, lower = 0, upper = Inf),
   alpha = list(name = "alpha", type = "numeric", default = 0, lower = 0, upper = Inf),
-  num_parallel_tree = list(name = "num_parallel_tree", type = "numeric", default = 1, lower = 0, upper = Inf)  # lower right?
-
+  num_parallel_tree = list(name = "num_parallel_tree", type = "numeric", default = 1, lower = 0, upper = Inf) # lower right?
 )
-
-
-
-
-
-
-
-
-
-
-
-
