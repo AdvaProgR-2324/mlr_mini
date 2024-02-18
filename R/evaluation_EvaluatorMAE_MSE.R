@@ -1,13 +1,13 @@
-#' @title Evaluate predictions using the mean absolute error
+#' @title Evaluate Predictions using the Mean Absolute Error
 #' @description Compute the mean absolute error of the predictions of a model.
-#' @param .prediction A `Dataset` or `data.frame` object containing the predictions of a
-#' model. If a `Dataset` is handed over to the function, the columns should contain the predictions
-#' and the true values. If a data.frame is handed over, the data.frame should only contain one column which
-#' contains the predicted values
-#' @param .data If the predictions are handed over as a `data.frame`, the .data has to be a `data.frame`
-#' which contains the true values.
-#' @param .target If the predictions are handed over as a `data.frame`, .target has to be set and is the
-#' name of the variable that was predicted given as a `character` of length 1-
+#' @param .prediction A `data.frame` object containing the predictions of a model. The columns should contain
+#' the predictions and the true values. If only the predictions are handed over, the true values of the target
+#' variable have to be handed over in the `.data` argument and the name of the variable has to be handed over in `.target`.
+#' @param .data Optional argument, which has to be provided if only the predictions are handed over in `.prediction`,
+#' `.data` has to be a `data.frame` which contains the true values.
+#' @param .target If only the predictions are handed over in `.prediction`, `.target` has to be set and is the
+#' name of the target variable that was predicted, handed over as a `character` of length 1.
+#' @seealso For further Evaluators: [EvaluatorMSE()], [EvaluatorAIC()], [EvaluatorBIC()], [EvaluatorAccuracy()], [EvaluatorAUC()]
 #' @return The mean absolute error of the predictions.
 #' @export
 
@@ -36,8 +36,10 @@ EvaluatorMAE <- function(.prediction, .data, .target) {
 
 #' @title Print an EvaluatorMAE.
 #' @description Print an `EvaluatorMAE` object.
+#' @examples
 #' f <- EvaluatorAUC()
 #' f
+#' @seealso [EvaluatorMAE()]
 #' @export
 print.EvaluatorMAE <- function(.evaluator, ...) {
   cat("Evaluator: Mean Absolute Error\n")
@@ -45,20 +47,24 @@ print.EvaluatorMAE <- function(.evaluator, ...) {
   invisible(.evaluator)
 }
 
-#' @title Evaluate predictions using the mean squared error
-#' @description Compute the mean squared error of the predictions of a model.
-#' @param .prediction A `data.frame` object containing the predictions of a
-#' model.
-#' @param .data If the ground truth values are not contained in `.prediction` .data has to be a `data.frame`
-#' which contains the true values of the target variable.
-#' @param .target If the ground truth values are not contained in `.prediction` .target has to be set and is the
-#' name of the variable that was predicted given as a `character` of length 1.
+#' @title Evaluate predictions using the Mean Squared Error
+#' @description Compute the mean squared error of the predictions of a model. For binary classification this corresponds
+#' to the Brier-Score.
+#' @param .prediction A `data.frame` object containing the predictions of a model. The columns should contain
+#' the predictions and the true values. If only the predictions are handed over, the true values of the target
+#' variable have to be handed over in the `.data` and the name of the target variable in the `.target` argument.
+#' @param .data Optional argument, which has to be provided if only the predictions are handed over in `.prediction`,
+#' `.data` has to be a `data.frame` which contains the true values.
+#' @param .target If only the predictions are handed over in `.prediction`, `.target` has to be handed over as a `character`
+#' of length 1 being the name of the target variable.
+#' @examples
 #' x <- data.frame(var1 = c(1, 1, 1, 1, 0), target = c(1, 2, 3, 4, 5))
 #' predictions <- c(3)
 #' EvaluatorMSE(predictions, x, "target")
 #' predictions <- data.frame(prediction = c(1.3, 2.5, 2.6, 3.5, 4.5), truth = c(1, 2, 3, 4, 5))
 #' EvaluatorMSE(predictions)
-#' @return The mean absolute error of the predictions.
+#' @return The mean squared error of the predictions.
+#' @seealso For further Evaluators: [EvaluatorMAE()], [EvaluatorAIC()], [EvaluatorBIC()], [EvaluatorAccuracy()], [EvaluatorAUC()]
 #' @export
 
 EvaluatorMSE <- function(.prediction, .data, .target) {
@@ -87,6 +93,7 @@ EvaluatorMSE <- function(.prediction, .data, .target) {
 
 #' @title Print an EvaluatorMSE
 #' @description Print an `EvaluatorMSE` object.
+#' @seealso [EvaluatorMSE()]
 #' @export
 print.EvaluatorMSE <- function(.evaluator, ...) {
   cat("Evaluator: Mean Squared Error\n")

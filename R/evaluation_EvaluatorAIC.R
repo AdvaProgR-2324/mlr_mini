@@ -6,6 +6,8 @@
 #' mod_fit <- fit(InducerLm(), cars.ds, formula = as.formula("dist~speed"))
 #' EvaluatorAIC(mod_fit)
 #' @return The AIC value of the fitted model.
+#' @seealso [EvaluatorBIC()] to get the Bayesian information criterion (BIC), [EvaluatorMAE()] for computing the mean absolute error,
+#' [EvaluatorMSE()] for the mean-squared error.
 #' @export
 EvaluatorAIC <- function(.model) {
   class(EvaluatorAIC) <<- c("EvaluatorAIC", "Evaluator", "function")
@@ -34,6 +36,8 @@ print.EvaluatorAIC <- function(.evaluator, ...) {
 #' mod_fit <- fit(InducerLm(), cars.ds, formula = as.formula("dist~speed"))
 #' EvaluatorAIC(mod_fit)
 #' @return The BIC value of the fitted model.
+#' @seealso [EvaluatorAIC()] to get Akaike information criterion (AIC), [EvaluatorMAE()] for computing the mean absolute error,
+#' [EvaluatorMSE()] for the mean-squared error.
 #' @export
 EvaluatorBIC <- function(.model) {
   class(EvaluatorBIC) <<- c("EvaluatorBIC", "Evaluator", "function")

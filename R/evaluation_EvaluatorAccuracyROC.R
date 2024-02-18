@@ -1,6 +1,7 @@
-#' @title Compute Accuracy
+#' @title Compute Accuracy of a Classifier
 #' @description Evaluate the performance of a `ModelClassification` object on a binary classification problem
-#' using the Accuracy.
+#' using the Accuracy. The Accuracy is computed as the number of correctly classified observations divided by
+#' the total number of observations.
 #' @param .prediction A `data.frame` containing the predictions and the true values as columns or a
 #' numeric vector containing only the predictions. The true values have to be encoded by 0/1
 #' or by TRUE/FALSE. The predicted values have to be numeric and be in a range of 0 to 1.
@@ -8,6 +9,8 @@
 #' @param .target A character vector of length one, being the name of the target variable contained as column
 #' in the .dataset
 #' @param .threshold An optional argument for setting the threshold at which a prediction gets assigned to a class.
+#' @seealso [EvaluatorAUC()] for evaluating the AUC of a classifier, [EvaluatorMAE()] for computing the mean absolute error,
+#' [EvaluatorMSE()] for the mean-squared error (corresponding to the Brier-Score in binary classification).
 #' @examples
 #' x <- data.frame(var1 = c(1, 2, 3, 4, 5, 6, 7), target = c(1, 1, 1, 1, 0, 1, 0))
 #' predictions <- c(1)
@@ -15,7 +18,7 @@
 #' predictions <- data.frame(prediction = c(0.8, 0.2, 0.6, 0.8, 0.8), truth = c(1, 0, 1, 1, 1))
 #' EvaluatorAccuracy(predictions)
 #' EvaluatorAccuracy(.prediction = predictions, .threshold = 0.7)
-#' @export
+#'  @export
 EvaluatorAccuracy <- function(.prediction, .dataset, .target, .threshold = 0.5) {
   class(EvaluatorAccuracy) <<- c("EvaluatorAccuracy", "Evaluator", "function")
   if (missing(.prediction)) {
@@ -38,11 +41,14 @@ EvaluatorAccuracy <- function(.prediction, .dataset, .target, .threshold = 0.5) 
   return(correct_classif / n)
 }
 
-#' @title Print an EvaluatorAUC.
+#' @title Print an EvaluatorAUC
 #' @description Print an `EvaluatorAUC` object.
 #' @examples
-#' f <- EvaluatorAUC()
-#' f
+#' x <- data.frame(var1 = c(1, 2, 3, 4, 5, 6, 7), target = c(1, 1, 1, 1, 0, 1, 0))
+#' predictions <- c(1)
+#' EvaluatorAccuracy(predictions, x, "target")
+#' predictions <- data.frame(prediction = c(0.8, 0.2, 0.6, 0.8, 0.8), truth = c(1, 0, 1, 1, 1))
+#' @seealso [EvaluatorAccuracy()]
 #' @export
 print.EvaluatorAccuracy <- function(.evaluator, ...) {
   cat("Evaluator: Accuracy\n")
@@ -60,6 +66,8 @@ print.EvaluatorAccuracy <- function(.evaluator, ...) {
 #' a numeric vector.
 #' @param .target A character vector of length one, being the name of the target variable contained as column
 #' in the .dataset
+#' @seealso [EvaluatorAccuracy()] for evaluating the accuracy of a classifier, [EvaluatorMAE()] for computing the mean absolute error,
+#' [EvaluatorMSE()] for the mean-squared error (corresponding to the Brier-Score in binary classification).
 #' @examples
 #' x <- data.frame(var1 = c(1, 2, 3, 4, 5, 6, 7), target = c(1, 1, 1, 1, 0, 1, 0))
 #' predictions <- c(1)
@@ -94,8 +102,10 @@ EvaluatorAUC <- function(.prediction, .dataset, .target) {
 #' @title Print an EvaluatorAUC.
 #' @description Print an `EvaluatorAUC` object.
 #' @examples
-#' f <- EvaluatorAUC()
-#' f
+#' x <- data.frame(var1 = c(1, 2, 3, 4, 5, 6, 7), target = c(1, 1, 1, 1, 0, 1, 0))
+#' predictions <- c(1)
+#' EvaluatorAUC(predictions, x, "target")
+#' @seealso [EvaluatorAUC()]
 #' @export
 print.EvaluatorAUC <- function(.evaluator, ...) {
   cat("Evaluator: AUC\n")
