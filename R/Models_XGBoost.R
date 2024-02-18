@@ -4,6 +4,17 @@
 #' @description Fit a linear model on the provided data.
 #' @param .inducer A `InducerXGBoost` object
 #' @param .data The data to which the model should be fitted, provided as a `Dataset` object.
+#' @param nrounds number of rounds
+#' @param eta eta value
+#' @param gamma gamma
+#' @param subsample subsample paramater
+#' @param max_depth max depth paramater
+#' @param min_child_weight min child weight paramater
+#' @param subsample subsample paramater
+#' @param colsample_bytree colsample paramater
+#' @param lambda lambda paramater
+#' @param alpha alpha paramater
+#' @param num_parallel_tree number of parallel tree paramater
 #' @return An object of class `InducerXGBoost`.
 #' @export
 
@@ -58,6 +69,7 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
 #' @description Predict from the results of a xgboost model
 #' @param model A model of class `ModelXGBoost`
 #' @param newdata data of class `data.frame` or `Dataset`
+#' @param ... further arguments
 #' @return the fitted values. If the input is a data.frame the predicted values will be given back as a vector. If the input is dataset like used in model, then the result will be a dataframe with predictions and true values in dataset
 #' @return An object with the predictions of class `numeric` or `data.frame`
 #' @export

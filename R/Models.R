@@ -31,6 +31,7 @@ Model <- function(inducer.name, inducer.configuration, data.name, data.target, d
 #' @title modelObject: get the print out of a model
 #' @description print the usual output of a model
 #' @param model A `Model` object.
+#' @param ... further arguments
 #' @export
 modelObject.Model <- function(model, ...) {
   assert_class(x = model, classes = "Model")
@@ -41,6 +42,7 @@ modelObject.Model <- function(model, ...) {
 
 
 #' @title S3 method modelObject
+#' @param ... further arguments
 #' @export
 modelObject <- function(...) {
   UseMethod("modelObject")
@@ -53,6 +55,7 @@ modelObject <- function(...) {
 #' @title Printing Regression Models
 #' @description Print a regression model.
 #' @param model object of class `ModelRegression`
+#' @param ... further arguments
 #' @examples
 #' # example code
 #' @export
@@ -67,6 +70,7 @@ print.ModelRegression <- function(model, ...) {
 
 
 #' @title S3 method fit
+#' @param ... further arguments
 #' @export
 fit <- function(...) {
   UseMethod("fit")
@@ -74,6 +78,7 @@ fit <- function(...) {
 
 
 #' @title S3 method configuration
+#' @param ... further arguments
 #' @description
 #' @export
 configuration <- function(...) {
@@ -95,6 +100,8 @@ configuration.Inducer <- function(.inducer, ...) {
 
 #' @title S3 method configuration<- for class 'InducerLm'
 #' @description Change configuration of an `inducer` object
+#' @param .inducer an `Inducer` object
+#' @param value value for changing configuration
 #' @example
 #' inducer <- InducerLm()
 #' inducer
