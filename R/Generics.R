@@ -1,3 +1,10 @@
+#' @title S3 method metainfo
+#' @export
+metainfo <- function(...) {
+  UseMethod("metainfo")
+}
+
+
 #' @title S3 method fit
 #' @export
 configuration <- function(...) {
