@@ -5,12 +5,14 @@
 #' @param .prediction A `data.frame` containing the predictions and the true values as columns or a
 #' numeric vector containing only the predictions. The true values have to be encoded by 0/1
 #' or by TRUE/FALSE. The predicted values have to be numeric and be in a range of 0 to 1.
-#' @param .dataset An optional `Dataset` or `data.frame` object, that has to be provided if `.prediction` is a numeric vector.
+#' @param .dataset An optional `Dataset` or `data.frame` object, that has to be provided if `.prediction` is
+#' a numeric vector.
 #' @param .target A character vector of length one, being the name of the target variable contained as column
 #' in the .dataset
 #' @param .threshold An optional argument for setting the threshold at which a prediction gets assigned to a class.
-#' @seealso [EvaluatorAUC()] for evaluating the AUC of a classifier, [EvaluatorMAE()] for computing the mean absolute error,
-#' [EvaluatorMSE()] for the mean-squared error (corresponding to the Brier-Score in binary classification).
+#' @seealso [EvaluatorAUC()] for evaluating the AUC of a classifier, [EvaluatorMAE()] for computing the mean
+#' absolute error, [EvaluatorMSE()] for the mean-squared error (corresponding to the Brier-Score in binary
+#' classification).
 #' @examples
 #' x <- data.frame(var1 = c(1, 2, 3, 4, 5, 6, 7), target = c(1, 1, 1, 1, 0, 1, 0))
 #' predictions <- c(1)
@@ -18,13 +20,15 @@
 #' predictions <- data.frame(prediction = c(0.8, 0.2, 0.6, 0.8, 0.8), truth = c(1, 0, 1, 1, 1))
 #' EvaluatorAccuracy(predictions)
 #' EvaluatorAccuracy(.prediction = predictions, .threshold = 0.7)
-#'  @export
+#' @export
 EvaluatorAccuracy <- function(.prediction, .dataset, .target, .threshold = 0.5) {
-  class(EvaluatorAccuracy) <<- c("EvaluatorAccuracy", "Evaluator", "function")
   if (missing(.prediction)) {
-    return(EvaluatorAccuracy)
+    eval <- EvaluatorAccuracy
+    class(eval) <- c("EvaluatorAccuracy", "Evaluator", "function")
+    return(eval)
   }
-  stopifnot(".prediction must be a `Dataset` or a `data.frame`." = class(.prediction) %in% c("data.frame", "numeric"))
+  stopifnot(".prediction must be a `Dataset` or a `data.frame`." = class(.prediction) %in% c("data.frame",
+                                                                                             "numeric"))
   if (is.numeric(.prediction)) {
     stopifnot(".data must be a `Dataset` or a `data.frame`." = class(.dataset) %in% c("data.frame", "Dataset"))
     assert_character(.target, len = 1)
@@ -66,8 +70,9 @@ print.EvaluatorAccuracy <- function(.evaluator, ...) {
 #' a numeric vector.
 #' @param .target A character vector of length one, being the name of the target variable contained as column
 #' in the .dataset
-#' @seealso [EvaluatorAccuracy()] for evaluating the accuracy of a classifier, [EvaluatorMAE()] for computing the mean absolute error,
-#' [EvaluatorMSE()] for the mean-squared error (corresponding to the Brier-Score in binary classification).
+#' @seealso [EvaluatorAccuracy()] for evaluating the accuracy of a classifier, [EvaluatorMAE()] for computing the
+#' mean absolute error, [EvaluatorMSE()] for the mean-squared error (corresponding to the Brier-Score in binary
+#' classification).
 #' @examples
 #' x <- data.frame(var1 = c(1, 2, 3, 4, 5, 6, 7), target = c(1, 1, 1, 1, 0, 1, 0))
 #' predictions <- c(1)
@@ -78,11 +83,13 @@ print.EvaluatorAccuracy <- function(.evaluator, ...) {
 #' EvaluatorAUC(predictions)
 #' @export
 EvaluatorAUC <- function(.prediction, .dataset, .target) {
-  class(EvaluatorAUC) <<- c("EvaluatorAUC", "Evaluator", "function")
   if (missing(.prediction)) {
-    return(EvaluatorAUC)
+    eval <- EvaluatorAUC
+    class(eval) <- c("EvaluatorAUC", "Evaluator", "function")
+    return(eval)
   }
-  stopifnot(".prediction must be a `Dataset` or a `data.frame`." = class(.prediction) %in% c("data.frame", "numeric"))
+  stopifnot(".prediction must be a `Dataset` or a `data.frame`." = class(.prediction) %in% c("data.frame",
+                                                                                             "numeric"))
   if (is.numeric(.prediction)) {
     stopifnot(".data must be a `Dataset` or a `data.frame`." = class(.dataset) %in% c("data.frame", "Dataset"))
     assert_character(.target, len = 1)
@@ -104,7 +111,10 @@ EvaluatorAUC <- function(.prediction, .dataset, .target) {
 #' @examples
 #' x <- data.frame(var1 = c(1, 2, 3, 4, 5, 6, 7), target = c(1, 1, 1, 1, 0, 1, 0))
 #' predictions <- c(1)
-#' EvaluatorAUC(predictions, x, "target")
+#' evaluation <- EvaluatorAUC(predictions, x, "target")
+#' print(evaluation)
+#' # or simply
+#' evaluation
 #' @seealso [EvaluatorAUC()]
 #' @export
 print.EvaluatorAUC <- function(.evaluator, ...) {
