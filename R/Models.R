@@ -33,6 +33,11 @@ Model <- function(inducer.name, inducer.configuration, data.name, data.target, d
 #' @param model A `Model` object.
 #' @param ... further arguments
 #' @export
+#' @examples
+#' inducer <- InducerXGBoost()
+#' cars.data <- Dataset(data = cars, target = "dist")
+#' fittedmod <- fit.InducerXGBoost(.inducer = inducer, .data = cars.data)
+#' modelObject.Model(fittedmod)
 modelObject.Model <- function(model, ...) {
   assert_class(x = model, classes = "Model")
 
@@ -56,9 +61,12 @@ modelObject <- function(...) {
 #' @description Print a regression model.
 #' @param model object of class `ModelRegression`
 #' @param ... further arguments
-#' @examples
-#' # example code
 #' @export
+#' @examples
+#' inducer <- InducerXGBoost()
+#' cars.data <- Dataset(data = cars, target = "dist")
+#' fittedmod <- fit.InducerXGBoost(.inducer = inducer, .data = cars.data)
+#' print.ModelRegression(fittedmod)
 print.ModelRegression <- function(model, ...) {
   # assert_class(model, "ModelRegression") not needed as print method for the ModelRegression class
   cat('Regression Model: "', model$inducer.name, '" fitted on "', model$data.name, '" dataset.\n', sep = "")
@@ -81,6 +89,9 @@ fit <- function(...) {
 #' @param ... further arguments
 #' @description
 #' @export
+#' @examples
+#' inducer <- InducerXGBoost()
+#' configuration(inducer)
 configuration <- function(...) {
   UseMethod("configuration")
 }
@@ -88,11 +99,12 @@ configuration <- function(...) {
 
 #' @title S3 method configuration for class 'InducerLm'
 #' @description Get the configuration of an `inducer` object
-#' @example
-#' inducer <- InducerLm()
-#' inducer
-#' configuration(inducer)
+#' @param .inducer an Inducer object
+#' @param ... further arguments
 #' @export
+#' @examples
+#' inducer <- InducerXGBoost()
+#' configuration(inducer)
 configuration.Inducer <- function(.inducer, ...) {
   return(formals(.inducer))
 }
