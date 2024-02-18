@@ -7,6 +7,17 @@
 #' @description If .data is empty an `InducerXGBoost` object will be created. If .data is a `Dataset` object a xgboost model will be fitted
 #' @seealso [fit.InducerXGBoost()]
 #' @param .data Data object of class `Dataset`.
+#' @param nrounds number of rounds
+#' @param eta eta value
+#' @param gamma gamma
+#' @param subsample subsample paramater
+#' @param max_depth max depth paramater
+#' @param min_child_weight min child weight paramater
+#' @param subsample subsample paramater
+#' @param colsample_bytree colsample paramater
+#' @param lambda lambda paramater
+#' @param alpha alpha paramater
+#' @param num_parallel_tree number of parallel tree paramater
 #' @return A `InducerXGBoost` object
 #' @export
 #' @example
