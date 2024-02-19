@@ -4,6 +4,8 @@
 #' @param target The target variable of a dataset
 #' @param feature Feature variable of a dataset
 #' @param type Regression or Classification
+#' @param name name
+#' @param features features
 #'
 #' TO-DO
 #' @return prints out the neccessary information

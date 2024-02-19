@@ -16,7 +16,11 @@ metainfo.Dataset(
 \arguments{
 \item{data}{A dataset}
 
-\item{type}{Regression or Classification
+\item{type}{Regression or Classification}
+
+\item{name}{name}
+
+\item{features}{features
 
 TO-DO}
 
