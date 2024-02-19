@@ -113,7 +113,7 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #'
 #'
 #' @export
-as.data.frame.Dataset <- function(x) {
+as.data.frame.Dataset <- function(x, ...) {
   checkmate::assert_class(x, "Dataset")
   as.data.frame(x$data)
 }
