@@ -15,12 +15,9 @@
 #' @return An object of class 'Dataset' with attributes 'data' containing the actual data as a data.frame,
 #'     'target' with the name of the target covariable, 'type' which is either 'classification' or 'regression'
 #'  and 'name'.
-<<<<<<< HEAD
-=======
 #'
 #' @examples
 #' cars.data <- Dataset(cars, target = "dist")
->>>>>>> 5ddd44db144442bd668ded53739de13e20a8de74
 #'
 #' @export
 Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute(data), 20)[[1]])) {
@@ -108,21 +105,12 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
     j <- unique(j)
   }
   # check for target covariate
-<<<<<<< HEAD
-  if (!to_subset$target %in% arg_col) stop(sprintf('Cannot remove target column "%s"', to_subset$target))
-  subsetted <- to_subset$data[arg_row, arg_col, with = FALSE]
-  to_subset$data <- subsetted
-  to_subset
-}
-#' @title Create a data.frame object from a Dataset.
-=======
   if (!x$target %in% j) stop(sprintf('Cannot remove target column "%s"', x$target))
   subsetted <- x$data[i, j, with = FALSE]
   x$data <- subsetted
   x
 }
 #' @title Create a data.frame object from a `Dataset` object
->>>>>>> 5ddd44db144442bd668ded53739de13e20a8de74
 #'
 #' @description
 #' This function returns the actual data of a Dataset as a data.frame.
