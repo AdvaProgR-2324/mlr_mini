@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{x}{A Dataset object.}
+
+\item{...}{Optional arguments}
 }
 \value{
 A data.frame with the actual data of the original Dataset.
