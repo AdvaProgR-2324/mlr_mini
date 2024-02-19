@@ -29,10 +29,10 @@ EvaluatorAIC <- function(.model) {
 #' evaluation <- EvaluatorAIC(mod_fit)
 #' print(evaluation)
 #' @export
-print.EvaluatorAIC <- function(.evaluator, ...) {
+print.EvaluatorAIC <- function(x, ...) {
   cat("Evaluator: AIC\n")
   cat("Configuration: ()")
-  invisible(.evaluator)
+  invisible(x)
 }
 
 #' @title Evaluate performance through BIC
@@ -65,8 +65,8 @@ EvaluatorBIC <- function(.model) {
 #' evaluation <- EvaluatorBIC(mod_fit)
 #' print(evaluation)
 #' @export
-print.EvaluatorBIC <- function(.evaluator, ...) {
+print.EvaluatorBIC <- function(x, ...) {
   cat("Evaluator: BIC\n")
   cat("Configuration: ()")
-  invisible(.evaluator)
+  invisible(x)
 }

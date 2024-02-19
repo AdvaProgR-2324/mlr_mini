@@ -20,15 +20,15 @@ Evaluator <- function(.function, .name, .configuration = list(), .value = numeri
 
 #' @title Print an Evaluator
 #' @description Print method for an `Evaluator` object.
-#' @param .evaluator The Evaluator which should be printed.
+#' @param x The Evaluator which should be printed.
 #' @param ... optional arguments of the print function.
 #' @export
-print.Evaluator <- function(.evaluator, ...) {
-  cat("Evaluator:", .evaluator$name, "\n")
-  if (length(.evaluator$.configuration) == 0) {
+print.Evaluator <- function(x, ...) {
+  cat("Evaluator:", x$name, "\n")
+  if (length(x$.configuration) == 0) {
     cat("Configuration: () \n")
   } else {
-    cat("Configuration:", .evaluator$.configuration, "\n")
+    cat("Configuration:", x$.configuration, "\n")
   }
-  invisible(.evaluator)
+  invisible(x)
 }

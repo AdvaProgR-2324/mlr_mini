@@ -50,14 +50,14 @@ EvaluatorAccuracy <- function(.prediction, .dataset, .target, .threshold = 0.5) 
 #' @examples
 #' x <- data.frame(var1 = c(1, 2, 3, 4, 5, 6, 7), target = c(1, 1, 1, 1, 0, 1, 0))
 #' predictions <- c(1)
-#' EvaluatorAccuracy(predictions, x, "target")
-#' predictions <- data.frame(prediction = c(0.8, 0.2, 0.6, 0.8, 0.8), truth = c(1, 0, 1, 1, 1))
+#' evaluation <- EvaluatorAccuracy(predictions, x, "target")
+#' print(evaluation)
 #' @seealso [EvaluatorAccuracy()]
 #' @export
-print.EvaluatorAccuracy <- function(.evaluator, ...) {
+print.EvaluatorAccuracy <- function(x, ...) {
   cat("Evaluator: Accuracy\n")
   cat("Configuration: ()\n")
-  invisible(.evaluator)
+  invisible(x)
 }
 
 #' @title Compute Area Under The Curve
@@ -117,8 +117,8 @@ EvaluatorAUC <- function(.prediction, .dataset, .target) {
 #' evaluation
 #' @seealso [EvaluatorAUC()]
 #' @export
-print.EvaluatorAUC <- function(.evaluator, ...) {
+print.EvaluatorAUC <- function(x, ...) {
   cat("Evaluator: AUC\n")
   cat("Configuration: ()")
-  invisible(.evaluator)
+  invisible(x)
 }

@@ -53,10 +53,10 @@ EvaluatorMAE <- function(.prediction, .data, .target) {
 #' print(evaluation)
 #' @seealso [EvaluatorMAE()]
 #' @export
-print.EvaluatorMAE <- function(.evaluator, ...) {
+print.EvaluatorMAE <- function(x, ...) {
   cat("Evaluator: Mean Absolute Error\n")
   cat("Configuration: () \n")
-  invisible(.evaluator)
+  invisible(x)
 }
 
 #' @title Evaluate predictions using the Mean Squared Error
@@ -116,8 +116,8 @@ EvaluatorMSE <- function(.prediction, .data, .target) {
 #' evaluation <- EvaluatorMSE(predictions, x, "target")
 #' print(evaluation)
 #' @export
-print.EvaluatorMSE <- function(.evaluator, ...) {
+print.EvaluatorMSE <- function(x, ...) {
   cat("Evaluator: Mean Squared Error\n")
   cat("Configuration: () \n")
-  invisible(.evaluator)
+  invisible(x)
 }
