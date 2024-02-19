@@ -76,7 +76,7 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' If column names are not specified, it defaults to using all columns. The function checks if the provided
 #' column names exist in the dataset and whether they include the target variable, which cannot be removed.
 #'
-#' @param to_subset A  Dataset object.
+#' @param x A  Dataset object.
 #' @param i row indices or nothing.
 #' @param j covariate names or nothing.
 #' @param ... Other arguments passed to function
@@ -87,28 +87,28 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' cars.data <- Dataset(cars, target = "dist")
 #' cars.data[c(1, 2, 3), "dist"]
 #' @export
-`[.Dataset` <- function(to_subset, i, j = NULL, ...) {
-  checkmate::assert_class(to_subset, "Dataset")
+`[.Dataset` <- function(x, i, j = NULL, ...) {
+  checkmate::assert_class(x, "Dataset")
   checkmate::assert(is.null(j) | is.character(j))
   # check or set subsetting args
   if (missing(i)) {
-    i <- seq_len(nrow(to_subset$data))
+    i <- seq_len(nrow(x$data))
   } else {
     i <- unique(i)
     checkmate::assert_integerish(i)
   }
   if (is.null(j)) {
-    j <- colnames(to_subset$data)
+    j <- colnames(x$data)
   } else {
     checkmate::assert_character(j)
-    checkmate::assert(all(j %in% names(to_subset$data)))
+    checkmate::assert(all(j %in% names(x$data)))
     j <- unique(j)
   }
   # check for target covariate
-  if (!to_subset$target %in% j) stop(sprintf('Cannot remove target column "%s"', to_subset$target))
-  subsetted <- to_subset$data[i, j, with = FALSE]
-  to_subset$data <- subsetted
-  to_subset
+  if (!x$target %in% j) stop(sprintf('Cannot remove target column "%s"', x$target))
+  subsetted <- x$data[i, j, with = FALSE]
+  x$data <- subsetted
+  x
 }
 #' @title Create a data.frame object from a `Dataset` object
 #'
@@ -117,6 +117,7 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' Additional information associated with a Dataset are neglected.
 #'
 #' @param x A Dataset object.
+#' @param ... Additional arguments
 #'
 #' @return A data.frame with the actual data of the original Dataset.
 #'

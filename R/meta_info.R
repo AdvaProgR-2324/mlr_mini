@@ -1,9 +1,11 @@
 #' Print the meta Information of a dataset
 #'
 #' @param data A dataset
-#' @param target The target variable of a dataset
-#' @param feature Feature variable of a dataset
+#' @param targets The target variable of a dataset
 #' @param type Regression or Classification
+#' @param name name
+#' @param features features
+#' @param ... optional arguments
 #'
 #' TO-DO
 #' @return prints out the neccessary information
