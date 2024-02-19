@@ -72,21 +72,7 @@ print.InducerLm <- function(x, ...) {
 
 
 
-## TODO wennfit.InducerLm fertig dann in Models_modelLm.R verschieben
-#  fit.InducerLm(.inducer = InducerLm(), .data = cars_ds)
-
-# model <- fit.InducerLm(.inducer = InducerLm(), .data = cars_ds)
-# newdata <- cars_ds[c(1, 2, 3, 4), ]
-# newdata <- data.frame(speed = 10)
-
-
-
-
-
-
-
-
-HyperparameterLm = list(
+HyperparameterLm <- list(
   data = list(name = "data", arg.null = TRUE),
   formula = list(name = "formula", type = "formula", arg.null = TRUE),
   subset = list(name = "subset", type = "logical", arg.null = FALSE), # TODO: type checken!!
