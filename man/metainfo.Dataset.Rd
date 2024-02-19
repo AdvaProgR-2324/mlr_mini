@@ -16,6 +16,8 @@ metainfo.Dataset(
 \arguments{
 \item{data}{A dataset}
 
+\item{targets}{The target variable of a dataset}
+
 \item{type}{Regression or Classification}
 
 \item{name}{name}
@@ -23,10 +25,6 @@ metainfo.Dataset(
 \item{features}{features
 
 TO-DO}
-
-\item{target}{The target variable of a dataset}
-
-\item{feature}{Feature variable of a dataset}
 }
 \value{
 prints out the neccessary information
