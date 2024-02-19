@@ -53,7 +53,7 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
   # estimate model
   featureVars <- setdiff(colnames(.data$data), .data$target)
   time_a <- Sys.time()
-  fittedModel <- model(data = as.matrix(subset(data_df, select = featureVars)), label = data_df[,.data$target])
+  fittedModel <- model(data = as.matrix(subset(data_df, select = featureVars)), label = data_df[, .data$target])
   # capture.output, otherwise always prints [1]	train-rmse:37.257189
   time_b <- Sys.time()
   fit_time <- as.numeric(time_b - time_a)
@@ -110,7 +110,8 @@ predict.ModelXGBoost <- function(model, newdata, ...) {
   } else if ("Dataset" %in% class(newdata)) {
     # if Dataset: new dataframe with prediction (values from predict function) and truth (dataset)
     data_n_target <- as.data.frame(newdata[, newdata$target])
-    data_n_ds <- as.matrix(subset(as.data.frame(newdata), select = model$data.features))  # dataset with all features needed
+    data_n_ds <- as.matrix(subset(as.data.frame(newdata),
+                                  select = model$data.features))  # dataset with all features needed
 
     fitted_ds_vals <- xgboost:::predict.xgb.Booster(object = fittedModel, newdata = data_n_ds)
     fitted_ds <- data.frame(prediction = fitted_ds_vals, truth = data_n_target) # bind fitted vals and truth together
@@ -120,4 +121,3 @@ predict.ModelXGBoost <- function(model, newdata, ...) {
   }
   # possible run xgboost:::predict.xgb.Booster(object = fittedModel, newdata = as.matrix(data.frame(speed = 10)))
 }
-
