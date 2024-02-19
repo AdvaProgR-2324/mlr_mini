@@ -15,3 +15,8 @@
 Prints the first and last two rows of \code{data} along with an informative text
 on the target and task.
 }
+\examples{
+cars.data <- Dataset(cars, target = "dist")
+print(cars.data)
+
+}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/datasets.R
 \name{Dataset}
 \alias{Dataset}
-\title{Wrap a named \code{matrix} or a named \code{data.frame} in a \code{Dataset} object}
+\title{Create a \code{Dataset} object}
 \usage{
 Dataset(
   data,
@@ -31,4 +31,8 @@ The user needs to specify the target covariable/columnname as a string.
 Optionally the \code{type} can be set to either \code{regression} or \code{classification}.
 If this is not provided the target will be automatically inferred from
 the type in matrix or data.frame.
+}
+\examples{
+cars.data <- Dataset(cars, target = "dist")
+
 }
