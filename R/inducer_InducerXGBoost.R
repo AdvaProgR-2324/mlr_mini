@@ -86,4 +86,4 @@ hyperparameterXGBoost <- list(
   lambda = list(name = "lambda", type = "numeric", default = 1, lower = 0, upper = Inf),
   alpha = list(name = "alpha", type = "numeric", default = 0, lower = 0, upper = Inf),
   num_parallel_tree = list(name = "num_parallel_tree", type = "numeric", default = 1, lower = 0, upper = Inf)
-)  # lower right for num_parallel_tree
+) # lower right for num_parallel_tree
