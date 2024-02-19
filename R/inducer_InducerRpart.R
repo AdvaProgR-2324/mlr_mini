@@ -1,7 +1,3 @@
-#### InducerRpart ####
-
-
-
 #' @title Function to create an object of class `InducerRpart`
 #' @description If .data is empty an `InducerRpart` object will be created. If .data is
 #' a `Dataset` object a rpart model will be fitted.

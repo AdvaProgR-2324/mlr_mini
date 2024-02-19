@@ -1,6 +1,3 @@
-### Models for rpart
-
-
 #' @title Fit a Model using `InducerRpart`
 #' @description Fit a rpart model on the provided data.
 #' @param .inducer An `InducerRpart` object. The Inducer which should be used for the fitting.
