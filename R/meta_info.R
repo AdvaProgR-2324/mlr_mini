@@ -12,8 +12,7 @@
 metainfo.Dataset <- function(data, targets = data$target, type = data$type,
                              name = as.name(deparse(substitute(data), 20)[[1]]),
                              features = data$features, ...) {
-  # data$features <- setdiff(data$target, data$feature) # Exclude the target column
-
+  
   x <- structure(list(name = as.character(data$name),
                       targets = data$target,
                       class(targets),
