@@ -8,9 +8,9 @@ Model <- function(inducer.name, inducer.configuration, data.name, data.target, d
                   fitted.values = NULL, coefficients = NULL, modelInfo = NULL, model.out, model.data) {
   # TODO: further assertions for data.target -> rather in ModelRegression or ModelClassification
   # data.features and fitted.values
-  assert_string(inducer.name)
-  assert_list(inducer.configuration)
-  assert_character(data.name)
+  checkmate::assert_string(inducer.name)
+  checkmate::assert_list(inducer.configuration)
+  checkmate::assert_character(data.name)
 
   structure(list(
     inducer.name = inducer.name,
@@ -38,7 +38,7 @@ Model <- function(inducer.name, inducer.configuration, data.name, data.target, d
 #' fittedmod <- fit.InducerXGBoost(.inducer = inducer, .data = cars.data)
 #' modelObject.Model(fittedmod)
 modelObject.Model <- function(model, ...) {
-  assert_class(x = model, classes = "Model")
+  checkmate::assert_class(x = model, classes = "Model")
 
   model$model.out # print model output
 }
@@ -138,7 +138,7 @@ configuration.Inducer <- function(.inducer, ...) {
         stopifnot("Parameter cannot be NULL." = HyperparameterLm[[name]][["arg.null"]])
       } else {
         print(name)
-        assert_class(value[[name]], HyperparameterLm[[name]][["type"]])
+        checkmate::assert_class(value[[name]], HyperparameterLm[[name]][["type"]])
       }
     }
     # for-Loop:
