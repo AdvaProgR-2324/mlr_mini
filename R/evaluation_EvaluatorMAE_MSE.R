@@ -29,11 +29,11 @@ EvaluatorMAE <- function(.prediction, .data, .target) {
                                                                                                "numeric"))
     if (!missing(.data)) {
       stopifnot(".data must be a `Dataset` or a `data.frame`." = class(.data) %in% c("Dataset", "data.frame"))
-      if (class(.data) == "data.frame") {
+      if (is.data.frame(.data)) {
         assert_character(.target, len = 1)
       }
     }
-    if (class(.prediction) == "data.frame") {
+    if (is.data.frame(.prediction)) {
       mae <- mean(abs(.prediction$prediction - .prediction$truth))
     } else {
       mae <- mean(abs(.prediction - .data[, .target]))
@@ -91,11 +91,11 @@ EvaluatorMSE <- function(.prediction, .data, .target) {
                                                                                                "numeric"))
     if (!missing(.data)) {
       stopifnot(".data must be a `Dataset` or a `data.frame`." = class(.data) %in% c("Dataset", "data.frame"))
-      if (class(.data) == "data.frame") {
+      if (is.data.frame(.data)) {
         assert_character(.target, len = 1)
       }
     }
-    if (class(.prediction) == "data.frame") {
+    if (is.data.frame(.prediction)) {
       mse <- mean((.prediction$prediction - .prediction$truth)^2)
     } else {
       mse <- mean((.prediction - .data[, .target])^2)

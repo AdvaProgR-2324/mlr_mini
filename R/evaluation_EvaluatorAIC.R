@@ -17,7 +17,7 @@ EvaluatorAIC <- function(.model) {
     return(eval)
   } else {
     assert_class(.model, c("ModelLm", "ModelRegression", "Model"))
-    return(AIC(.model$model.out))
+    return(stats::AIC(.model$model.out))
   }
 }
 
@@ -53,7 +53,7 @@ EvaluatorBIC <- function(.model) {
     return(eval)
   } else {
     assert_class(.model, c("ModelLm", "ModelRegression", "Model"))
-    return(BIC(.model$model.out))
+    return(stats::BIC(.model$model.out))
   }
 }
 
