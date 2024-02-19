@@ -3,12 +3,23 @@
 
 
 #' @title Function to create an object of class `InducerRpart`
-#' @description If .data is empty an `InducerRpart` object will be created. If .data is a `Dataset` object a rpart model will be fitted
+#' @description If .data is empty an `InducerRpart` object will be created. If .data is a `Dataset` object a rpart model will be fitted.
 #' @seealso [fit.InducerRpart()]
-#' @param .data data object of class `Dataset`.
+#' @param .data data object of class `Dataset`
+#' @param formula a formula, with a response but no interaction terms. If this is a data frame, it is taken as the model frame
+#' @param weights optional case weights.
+#' @param subset optional expression saying that only a subset of the rows of the data should be used in the fit.
+#' @param na.action the default action deletes all observations for which y is missing, but keeps those in which one or more predictors are missing.
+#' @param method one of "anova", "poisson", "class" or "exp". If method is missing then the routine tries to make an intelligent guess
+#' @param model if logical: keep a copy of the model frame in the result? If the input value for model is a model frame
+#' @param x keep a copy of the x matrix in the result.
+#' @param y keep a copy of the dependent variable in the result. If missing and model is supplied this defaults to FALSE.
+#' @param parms optional parameters for the splitting function.
+#' @param control a list of options that control details of the rpart algorithm
+#' @param cost a vector of non-negative costs, one for each variable in the model. Defaults to one for all variables
 #' @return a `InducerRpart` object
 #' @export
-#' @example
+#' @examples
 #' inducer <- InducerRpart()
 #' inducer
 #' cars.data <- Dataset(data = cars, target = "dist")
@@ -17,7 +28,9 @@
 InducerRpart <- function(.data = NULL, formula, weights, subset, na.action = na.rpart, method,
                          model = FALSE, x = FALSE, y = TRUE, parms, control, cost) {  # ggf. ... ?
 
-  assert_class(x = .data, classes = "Dataset")
+  if (!is.null(.data)) {  # Dataset assert
+    assert_class(x = .data, classes = "Dataset")
+  }
 
 
   if (is.null(.data)) {
@@ -45,18 +58,18 @@ InducerRpart <- function(.data = NULL, formula, weights, subset, na.action = na.
 
 #' @title S3 method print for class `InducerRpart`
 #' @description Print an `InducerRpart` object.
-#' @param .inducer object of class `InducerRpart`
+#' @param x object of class `InducerRpart`
 #' @param ... optional arguments to `print` methods.
 #' @seealso [InducerRpart()]
 #' @export
 #' @example
 #' inducer <- InducerRpart()
 #' inducer
-print.InducerRpart <- function(.inducer, ...) {
-  assert_class(x = .inducer, classes = "InducerRpart")
+print.InducerRpart <- function(x, ...) {
+  assert_class(x = x, classes = "InducerRpart")
   cat("Inducer: rpart\n", sep = "")
-  cat("Configuration: ", paste(names(formals(.inducer))[-1], "=", as.vector(formals(.inducer))[-1], collapse = ", "))
-  invisible(.inducer)
+  cat("Configuration: ", paste(names(formals(x))[-1], "=", as.vector(formals(x))[-1], collapse = ", "))
+  invisible(x)
 }
 
 
@@ -66,6 +79,18 @@ print.InducerRpart <- function(.inducer, ...) {
 #' @param .inducer An `InducerRpart` object. The Inducer which should be used for the fitting.
 #' @param data The data to which the model should be fitted, provided as a `Dataset` object.
 #' @param formula An optional parameter setting the `formula` argument of an `InducerRpart` object.
+#' @param weights optional case weights.
+#' @param subset optional expression saying that only a subset of the rows of the data should be used in the fit.
+#' @param na.action the default action deletes all observations for which y is missing, but keeps those in which one or more predictors are missing.
+#' @param method one of "anova", "poisson", "class" or "exp". If method is missing then the routine tries to make an intelligent guess
+#' @param model if logical: keep a copy of the model frame in the result? If the input value for model is a model frame
+#' @param x keep a copy of the x matrix in the result.
+#' @param y keep a copy of the dependent variable in the result. If missing and model is supplied this defaults to FALSE.
+#' @param parms optional parameters for the splitting function.
+#' @param control a list of options that control details of the rpart algorithm
+#' @param cost a vector of non-negative costs, one for each variable in the model. Defaults to one for all variables
+
+
 #' @return An object of class `InducerRpart`.
 #' @export
 #' @examples
@@ -73,10 +98,10 @@ print.InducerRpart <- function(.inducer, ...) {
 #' inducer <- InducerRpart()
 #' lmfit <- fit.InducerRpart(.inducer = inducer, .data = cars.data)
 fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.action = na.rpart, method,
-                             model = FALSE, x = FALSE, y = TRUE, parms, control, cost) {
+                             model = FALSE, x = FALSE, y = TRUE, parms, control, cost, ...) {
 
-  assert_class(x = .inducer, classes = "InducerRpart")
-  assert_class(x = .data, classes = "Dataset")
+  checkmate::assert_class(x = .inducer, classes = "InducerRpart")
+  stopifnot(".data muste be of class Dataset or data.frame" = class(.data)[2] %in% c("Dataset", "data.frame"))
 
   model <- rpart
   original_call <- match.call(expand.dots = FALSE)
@@ -103,7 +128,7 @@ fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.actio
     form <- paste0(targetvar, " ~ ", paste(covar, collapse = " + "))  # paste formula
 
     time_a <- Sys.time()
-    fitted_model <- model(data = .data$data, formula = form)
+    fitted_model <- model(data = dataF, formula = form)
     time_b <- Sys.time()
     fit_time <- as.numeric(time_b - time_a)
 
@@ -113,7 +138,7 @@ fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.actio
     formals(model)$formula <- ""
 
     time_a <- Sys.time()
-    fitted_model <- model(data = .data$data, formula = form)
+    fitted_model <- model(data = dataF, formula = form)
     time_b <- Sys.time()
     fit_time <- as.numeric(time_b - time_a)
 
@@ -134,10 +159,7 @@ fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.actio
 
   class(modelObj) <- c("ModelRpart", "ModelRegression", "Model")  # TODO stimmen die Models?
   return(modelObj)
-
-  # fit.InducerRpart(.inducer = InducerRpart(), .data = cars_ds, x = T)
-
-
+  # possible run: fit.InducerRpart(.inducer = InducerRpart(), .data = cars_ds, x = T)
 }
 
 
@@ -156,21 +178,26 @@ fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.actio
 #' predict.ModelRpart(model = rpartfit, newdata = data.frame(speed = 10))
 #' predict.ModelRpart(model = rpartfit, newdata = cars.data[c(1, 2, 3, 4), ])
 predict.ModelRpart <- function(model, newdata, ...) {
-  assert_class(x = model, classes = "ModelRpart")
-  stopifnot(".data muste be of class Dataset or data.frame" = class(newdata) %in% c("Dataset", "data.frame"))
+
+  checkmate::assert_class(x = model, classes = "ModelRpart")
+  if (length(class(newdata)) > 1) {
+    stopifnot(".data muste be of class Dataset or data.frame" = c("Dataset") %in% class(newdata))
+  } else {
+    stopifnot(".data muste be of class Dataset or data.frame" = c("data.frame") == class(newdata))
+  }
 
   fittedModel <- model$model.out
   dataModel <- model$mode.data$data
 
 
   ## newdata into datamatrix
-  if (class(newdata) ==  "data.frame") {  # if dataframe: only vector with prediction values
+  if ("data.frame" %in% class(newdata)) {  # if dataframe: only vector with prediction values
     stopifnot(setequal(colnames(newdata), model$data.features))  # , "newdata must have same variables as specified in model"
 
     fittedVals <- as.numeric(predict(model$model.out, newdata = newdata))
     return(fittedVals)
 
-  } else if (class(newdata) == "Dataset") {  # if Dataset: new dataframe with prediction (values from predict function) and truth (dataset)
+  } else if ("Dataset" %in% class(newdata)) {  # if Dataset: new dataframe with prediction (values from predict function) and truth (dataset)
     data_n_ds <- subset(newdata$data, select = model$data.features)  # only take features
     fitted_ds_vals <- as.numeric(predict(object = fittedModel, newdata = data_n_ds))
 
@@ -180,7 +207,6 @@ predict.ModelRpart <- function(model, newdata, ...) {
   } else {
     stop("Type of dataset not supported")  # class(newdata)
   }
-
-  # predict.ModelRpart(model = InducerRpart(.data = cars_ds), newdata = cars_ds[c(1, 2, 3, 4, 20), ])
+  # possible run: predict.ModelRpart(model = InducerRpart(.data = cars_ds), newdata = cars_ds[c(1, 2, 3, 4, 20), ])
 }
 
