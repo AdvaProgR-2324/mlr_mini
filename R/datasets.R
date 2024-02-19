@@ -18,7 +18,7 @@
 #'
 #' @examples
 #' cars.data <- Dataset(cars, target = "dist")
-#' 
+#'
 #' @export
 Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute(data), 20)[[1]])) {
   # checks
@@ -69,7 +69,7 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
   print(x$data, topn = 2)
   invisible(x)
 }
-#' @title Subset a Dataset Object
+#' @title Subset a `Dataset` Object
 #'
 #' @description
 #' This function subsets a custom dataset object based on specified row indices and optional column names.
@@ -84,8 +84,8 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' @return A object of type 'Dataset.
 #'
 #' @examples
-#'  cars.data <- Dataset(cars, target = "dist")
-#'  cars.data[c(1,2,3), "dist"]
+#' cars.data <- Dataset(cars, target = "dist")
+#' cars.data[c(1, 2, 3), "dist"]
 #' @export
 `[.Dataset` <- function(to_subset, i, j = NULL, ...) {
   checkmate::assert_class(to_subset, "Dataset")
@@ -110,7 +110,7 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
   to_subset$data <- subsetted
   to_subset
 }
-#' @title Create a data.frame object from a Dataset.
+#' @title Create a data.frame object from a `Dataset` object
 #'
 #' @description
 #' This function returns the actual data of a Dataset as a data.frame.
@@ -123,7 +123,7 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' @examples
 #' cars.data <- Dataset(cars, target = "dist")
 #' as.data.frame(cars.data)
-#' 
+#'
 #' @export
 as.data.frame.Dataset <- function(x, ...) {
   checkmate::assert_class(x, "Dataset")
