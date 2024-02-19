@@ -93,7 +93,11 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
 #' predict.ModelXGBoost(model = xgbfit, newdata = cars.data[c(1, 2, 3, 4), ])
 predict.ModelXGBoost <- function(model, newdata, ...) {
   checkmate::assert_class(x = model, classes = "ModelXGBoost")
-  stopifnot(".data muste be of class Dataset or data.frame" = class(newdata)[2] %in% c("Dataset", "data.frame"))
+  if (length(class(newdata)) > 1) {
+    stopifnot(".data muste be of class Dataset or data.frame" = c("Dataset") %in% class(newdata))
+  } else {
+    stopifnot(".data muste be of class Dataset or data.frame" = c("data.frame") ==  class(newdata))
+  }
 
 
   fittedModel <- model$model.out
@@ -105,7 +109,8 @@ predict.ModelXGBoost <- function(model, newdata, ...) {
     stopifnot(setequal(colnames(newdata), model$data.features))
     # , "newdata must have same variables as specified in model"
     data_n_df <- as.matrix(newdata)
-    fittedVals <- xgboost:::predict.xgb.Booster(object = fittedModel, newdata = data_n_df)
+    fittedVals <- predict(object = fittedModel, newdata = data_n_df)
+    # old version  fittedVals <- xgboost:::predict.xgb.Booster(object = fittedModel, newdata = data_n_df)
     return(fittedVals)
   } else if ("Dataset" %in% class(newdata)) {
     # if Dataset: new dataframe with prediction (values from predict function) and truth (dataset)
@@ -113,7 +118,8 @@ predict.ModelXGBoost <- function(model, newdata, ...) {
     data_n_ds <- as.matrix(subset(as.data.frame(newdata),
                                   select = model$data.features))  # dataset with all features needed
 
-    fitted_ds_vals <- xgboost:::predict.xgb.Booster(object = fittedModel, newdata = data_n_ds)
+    # old version fitted_ds_vals <- xgboost:::predict.xgb.Booster(object = fittedModel, newdata = data_n_ds)
+    fitted_ds_vals <- predict(object = fittedModel, newdata = data_n_ds)
     fitted_ds <- data.frame(prediction = fitted_ds_vals, truth = data_n_target) # bind fitted vals and truth together
     return(fitted_ds)
   } else {
