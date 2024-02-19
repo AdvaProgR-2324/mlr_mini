@@ -32,11 +32,11 @@
 #' cars.data <- Dataset(data = cars, target = "dist")
 #' fittedInd <- InducerRpart(.data = cars.data)
 #' fittedInd
-InducerRpart <- function(.data = NULL, formula, weights, subset, na.action = na.rpart, method,
+InducerRpart <- function(.data = NULL, formula, weights, subset, na.action = "na.rpart", method,  #
                          model = FALSE, x = FALSE, y = TRUE, parms, control, cost) { # ggf. ... ?
 
   if (!is.null(.data)) { # Dataset assert
-    assert_class(x = .data, classes = "Dataset")
+    checkmate::assert_class(x = .data, classes = "Dataset")
   }
 
 
@@ -73,7 +73,7 @@ InducerRpart <- function(.data = NULL, formula, weights, subset, na.action = na.
 #' inducer <- InducerRpart()
 #' inducer
 print.InducerRpart <- function(x, ...) {
-  assert_class(x = x, classes = "InducerRpart")
+  checkmate::assert_class(x = x, classes = "InducerRpart")
   cat("Inducer: rpart\n", sep = "")
   cat("Configuration: ", paste(names(formals(x))[-1], "=", as.vector(formals(x))[-1], collapse = ", "))
   invisible(x)
@@ -107,7 +107,7 @@ print.InducerRpart <- function(x, ...) {
 #' cars.data <- Dataset(data = cars, target = "dist")
 #' inducer <- InducerRpart()
 #' lmfit <- fit.InducerRpart(.inducer = inducer, .data = cars.data)
-fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.action = na.rpart, method,
+fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.action = "na.rpart", method,
                              model = FALSE, x = FALSE, y = TRUE, parms, control, cost, ...) {
   checkmate::assert_class(x = .inducer, classes = "InducerRpart")
   stopifnot(".data muste be of class Dataset or data.frame" = class(.data)[2] %in% c("Dataset", "data.frame"))

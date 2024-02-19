@@ -31,7 +31,7 @@ InducerLm <- function(.data = NULL, formula, subset, weights, na.action, method 
                       x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE, offset) { # ggf. contrasts = NULL,
   # assert
   if (!is.null(.data)) {
-    assert_class(x = .data, classes = "Dataset")
+    checkmate::assert_class(x = .data, classes = "Dataset")
   }
 
   if (is.null(.data)) {
