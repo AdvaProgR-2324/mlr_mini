@@ -31,7 +31,7 @@ EvaluatorAccuracy <- function(.prediction, .dataset, .target, .threshold = 0.5) 
                                                                                              "numeric"))
   if (is.numeric(.prediction)) {
     stopifnot(".data must be a `Dataset` or a `data.frame`." = class(.dataset) %in% c("data.frame", "Dataset"))
-    assert_character(.target, len = 1)
+    checkmate::assert_character(.target, len = 1)
     all(.dataset[, .target] == 0 | .dataset[, .target] == 1)
     all(.prediction >= 0 | .prediction <= 1)
     prediction <- as.numeric(.prediction >= .threshold)
@@ -92,7 +92,7 @@ EvaluatorAUC <- function(.prediction, .dataset, .target) {
                                                                                              "numeric"))
   if (is.numeric(.prediction)) {
     stopifnot(".data must be a `Dataset` or a `data.frame`." = class(.dataset) %in% c("data.frame", "Dataset"))
-    assert_character(.target, len = 1)
+    checkmate::assert_character(.target, len = 1)
     all(.dataset[, .target] == 0 | .dataset[, .target] == 1)
     all(.prediction >= 0 | .prediction <= 1)
     prediction <- .prediction

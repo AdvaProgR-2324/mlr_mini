@@ -30,7 +30,7 @@ EvaluatorMAE <- function(.prediction, .data, .target) {
     if (!missing(.data)) {
       stopifnot(".data must be a `Dataset` or a `data.frame`." = class(.data) %in% c("Dataset", "data.frame"))
       if (is.data.frame(.data)) {
-        assert_character(.target, len = 1)
+        checkmate::assert_character(.target, len = 1)
       }
     }
     if (is.data.frame(.prediction)) {
@@ -93,7 +93,7 @@ EvaluatorMSE <- function(.prediction, .data, .target) {
     if (!missing(.data)) {
       stopifnot(".data must be a `Dataset` or a `data.frame`." = class(.data) %in% c("Dataset", "data.frame"))
       if (is.data.frame(.data)) {
-        assert_character(.target, len = 1)
+        checkmate::assert_character(.target, len = 1)
       }
     }
     if (is.data.frame(.prediction)) {

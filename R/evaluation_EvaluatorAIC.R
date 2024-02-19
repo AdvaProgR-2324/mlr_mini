@@ -16,7 +16,7 @@ EvaluatorAIC <- function(.model) {
     class(eval) <- c("EvaluatorAIC", "Evaluator", "function")
     return(eval)
   } else {
-    assert_class(.model, c("ModelLm", "ModelRegression", "Model"))
+    checkmate::assert_class(.model, c("ModelLm", "ModelRegression", "Model"))
     return(stats::AIC(.model$model.out))
   }
 }
@@ -52,7 +52,7 @@ EvaluatorBIC <- function(.model) {
     class(eval) <- c("EvaluatorBIC", "Evaluator", "function")
     return(eval)
   } else {
-    assert_class(.model, c("ModelLm", "ModelRegression", "Model"))
+    checkmate::assert_class(.model, c("ModelLm", "ModelRegression", "Model"))
     return(stats::BIC(.model$model.out))
   }
 }

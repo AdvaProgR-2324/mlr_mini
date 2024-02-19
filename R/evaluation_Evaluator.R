@@ -5,9 +5,9 @@
 #' @param .value The value of the evaluation measure being used.
 #' @return An `Evaluator` object.
 Evaluator <- function(.function, .name, .configuration = list(), .value = numeric(0), ...) {
-  assert_class(.name, "character")
-  assert_class(.configuration, "list")
-  assert_class(.value, "numeric")
+  checkmate::assert_class(.name, "character")
+  checkmate::assert_class(.configuration, "list")
+  checkmate::assert_class(.value, "numeric")
   structure(
     list(
       name = .name,
