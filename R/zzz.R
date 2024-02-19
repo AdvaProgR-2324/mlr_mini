@@ -1,4 +1,4 @@
 #' @import checkmate
 #' @importFrom datasets cars
-#' @importFrom xgboost predict.xgb.Booster
+#' @importFrom xgboost xgboost
 "_PACKAGE"

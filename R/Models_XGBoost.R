@@ -33,7 +33,7 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
   stopifnot(".data muste be of class Dataset or data.frame" = class(.data)[2] %in% c("Dataset", "data.frame"))
 
   data_df <- as.data.frame(.data$data)
-  model <- xgboost::xgboost
+  model <- xgboost
   original_call <- match.call(expand.dots = FALSE)
   form_Ind <- formals(.inducer) # formals of ind
   form_Ind$.data <- NULL # remove .data arg
