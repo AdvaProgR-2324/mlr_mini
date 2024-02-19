@@ -116,7 +116,8 @@ predict.ModelXGBoost <- function(model, newdata, ...) {
     # if Dataset: new dataframe with prediction (values from predict function) and truth (dataset)
     data_n_target <- as.data.frame(newdata[, newdata$target])
     data_n_ds <- as.matrix(subset(as.data.frame(newdata),
-                                  select = model$data.features))  # dataset with all features needed
+      select = model$data.features
+    )) # dataset with all features needed
 
     # old version fitted_ds_vals <- xgboost:::predict.xgb.Booster(object = fittedModel, newdata = data_n_ds)
     fitted_ds_vals <- predict(object = fittedModel, newdata = data_n_ds)
