@@ -19,7 +19,4 @@ metainfo.Dataset <- function(data, targets = data$target,  type = data$type,  na
  
 }
 
-metainfo.Dataset(cars.data)
-cars.data
-
 
