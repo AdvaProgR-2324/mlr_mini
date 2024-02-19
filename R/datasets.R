@@ -108,12 +108,12 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' Additional information associated with a Dataset are neglected.
 #'
 #' @param x A Dataset object.
-#' @param ... Optional arguments
+#'
 #' @return A data.frame with the actual data of the original Dataset.
 #'
 #'
 #' @export
-as.data.frame.Dataset <- function(x, ...) {
+as.data.frame.Dataset <- function(x) {
   checkmate::assert_class(x, "Dataset")
   as.data.frame(x$data)
 }
