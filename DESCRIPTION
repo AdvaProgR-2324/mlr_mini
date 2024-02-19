@@ -5,7 +5,7 @@ Authors@R: c(
     person(given = "Fake", family = "Name", role = c("aut", "cre"), email = "teru.mlrmini@gmail.com")
   )
 Description: A package  for machine learning in R.
-License: MIT + file LICENSE
+License: GPL (>= 3)
 URL: https://github.com/AdvaProgR-2324/mlrmini, https://advaprogr-2324.github.io/mlrmini/
 BugReports: https://github.com/AdvaProgR-2324/mlrmini/issues
 ByteCompile: true
