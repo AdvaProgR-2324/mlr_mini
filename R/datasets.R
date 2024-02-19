@@ -1,4 +1,4 @@
-#' @title Wrap a named `matrix` or a named `data.frame` in a `Dataset` object
+#' @title Create a `Dataset` object
 #'
 #' @description
 #' From a given named `matrix` or a named `data.frame` a `Dataset` is created.
@@ -15,6 +15,12 @@
 #' @return An object of class 'Dataset' with attributes 'data' containing the actual data as a data.frame,
 #'     'target' with the name of the target covariable, 'type' which is either 'classification' or 'regression'
 #'  and 'name'.
+<<<<<<< HEAD
+=======
+#'
+#' @examples
+#' cars.data <- Dataset(cars, target = "dist")
+>>>>>>> 5ddd44db144442bd668ded53739de13e20a8de74
 #'
 #' @export
 Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute(data), 20)[[1]])) {
@@ -52,6 +58,10 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
 #' @param x an object of class 'Dataset'
 #' @param ... other arguments passed to function
 #'
+#' @examples
+#' cars.data <- Dataset(cars, target = "dist")
+#' print(cars.data)
+#'
 #' @export
 `print.Dataset` <- function(x, ...) {
   checkmate::assertClass(x, "Dataset")
@@ -62,58 +72,73 @@ Dataset <- function(data, target, type = NULL, name = as.name(deparse(substitute
   print(x$data, topn = 2)
   invisible(x)
 }
-#' @title Subset a Dataset Object
+#' @title Subset a `Dataset` Object
 #'
 #' @description
 #' This function subsets a custom dataset object based on specified row indices and optional column names.
 #' If column names are not specified, it defaults to using all columns. The function checks if the provided
 #' column names exist in the dataset and whether they include the target variable, which cannot be removed.
 #'
-#' @param to_subset A  Dataset object.
-#' @param arg_row row indices or nothing.
-#' @param arg_col covariate names or nothing.
+#' @param x A  Dataset object.
+#' @param i row indices or nothing.
+#' @param j covariate names or nothing.
 #' @param ... Other arguments passed to function
 #'
 #' @return A object of type 'Dataset.
 #'
-#'
+#' @examples
+#' cars.data <- Dataset(cars, target = "dist")
+#' cars.data[c(1, 2, 3), "dist"]
 #' @export
-`[.Dataset` <- function(to_subset, arg_row, arg_col = NULL, ...) {
-  checkmate::assert_class(to_subset, "Dataset")
-  checkmate::assert(is.null(arg_col) | is.character(arg_col))
+`[.Dataset` <- function(x, i, j = NULL, ...) {
+  checkmate::assert_class(x, "Dataset")
+  checkmate::assert(is.null(j) | is.character(j))
   # check or set subsetting args
-  if (missing(arg_row)) {
-    arg_row <- seq_len(nrow(to_subset$data))
+  if (missing(i)) {
+    i <- seq_len(nrow(x$data))
   } else {
-    arg_row <- unique(arg_row)
-    checkmate::assert_integerish(arg_row)
+    i <- unique(i)
+    checkmate::assert_integerish(i)
   }
-  if (is.null(arg_col)) {
-    arg_col <- colnames(to_subset$data)
+  if (is.null(j)) {
+    j <- colnames(x$data)
   } else {
-    checkmate::assert_character(arg_col)
-    checkmate::assert(all(arg_col %in% names(to_subset$data)))
-    arg_col <- unique(arg_col)
+    checkmate::assert_character(j)
+    checkmate::assert(all(j %in% names(x$data)))
+    j <- unique(j)
   }
   # check for target covariate
+<<<<<<< HEAD
   if (!to_subset$target %in% arg_col) stop(sprintf('Cannot remove target column "%s"', to_subset$target))
   subsetted <- to_subset$data[arg_row, arg_col, with = FALSE]
   to_subset$data <- subsetted
   to_subset
 }
 #' @title Create a data.frame object from a Dataset.
+=======
+  if (!x$target %in% j) stop(sprintf('Cannot remove target column "%s"', x$target))
+  subsetted <- x$data[i, j, with = FALSE]
+  x$data <- subsetted
+  x
+}
+#' @title Create a data.frame object from a `Dataset` object
+>>>>>>> 5ddd44db144442bd668ded53739de13e20a8de74
 #'
 #' @description
 #' This function returns the actual data of a Dataset as a data.frame.
 #' Additional information associated with a Dataset are neglected.
 #'
 #' @param x A Dataset object.
+#' @param ... Additional arguments
 #'
 #' @return A data.frame with the actual data of the original Dataset.
 #'
+#' @examples
+#' cars.data <- Dataset(cars, target = "dist")
+#' as.data.frame(cars.data)
 #'
 #' @export
-as.data.frame.Dataset <- function(x) {
+as.data.frame.Dataset <- function(x, ...) {
   checkmate::assert_class(x, "Dataset")
   as.data.frame(x$data)
 }
