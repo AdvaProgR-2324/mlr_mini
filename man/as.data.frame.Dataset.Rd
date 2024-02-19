@@ -4,7 +4,7 @@
 \alias{as.data.frame.Dataset}
 \title{Create a data.frame object from a \code{Dataset} object}
 \usage{
-\method{as.data.frame}{Dataset}(x)
+\method{as.data.frame}{Dataset}(x, ...)
 }
 \arguments{
 \item{x}{A Dataset object.}
