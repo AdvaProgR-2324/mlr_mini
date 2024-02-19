@@ -11,7 +11,6 @@
 #' @param nrounds number of rounds
 #' @param eta eta value
 #' @param gamma gamma
-#' @param subsample subsample paramater
 #' @param max_depth max depth paramater
 #' @param min_child_weight min child weight paramater
 #' @param subsample subsample paramater
@@ -21,7 +20,7 @@
 #' @param num_parallel_tree number of parallel tree paramater
 #' @return A `InducerXGBoost` object
 #' @export
-#' @example
+#' @examples
 #' inducer <- InducerXGBoost()
 #' inducer
 #' cars.data <- Dataset(data = cars, target = "dist")
@@ -63,7 +62,7 @@ InducerXGBoost <- function(.data = NULL, nrounds = 1, eta = 0.3, gamma = 0, max_
 #' @param ... optional arguments to `print` methods.
 #' @seealso [InducerXGBoost()]
 #' @export
-#' @example
+#' @examples
 #' inducer <- InducerXGBoost()
 #' print.InducerXGBoost(inducer)
 print.InducerXGBoost <- function(.inducer, ...) {

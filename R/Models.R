@@ -45,8 +45,14 @@ modelObject.Model <- function(model, ...) {
 
 
 #' @title S3 method modelObject
+#' @description get model object
 #' @param ... further arguments
 #' @export
+#' @examples
+#' inducer <- InducerXGBoost()
+#' cars.data <- Dataset(data = cars, target = "dist")
+#' fittedmod <- fit.InducerXGBoost(.inducer = inducer, .data = cars.data)
+#' modelObject.Model(fittedmod)
 modelObject <- function(...) {
   UseMethod("modelObject")
 }
@@ -76,6 +82,7 @@ print.ModelRegression <- function(model, ...) {
 
 
 #' @title S3 method fit
+#' @description fit a model.
 #' @param ... further arguments
 #' @export
 fit <- function(...) {
@@ -84,8 +91,8 @@ fit <- function(...) {
 
 
 #' @title S3 method configuration
+#' @description get configuration of an object
 #' @param ... further arguments
-#' @description
 #' @export
 #' @examples
 #' inducer <- InducerXGBoost()
@@ -95,7 +102,7 @@ configuration <- function(...) {
 }
 
 
-#' @title S3 method configuration for class 'InducerLm'
+#' @title S3 method configuration for class `inducer`
 #' @description Get the configuration of an `inducer` object
 #' @param .inducer an Inducer object
 #' @param ... further arguments
@@ -112,11 +119,11 @@ configuration.Inducer <- function(.inducer, ...) {
 #' @description Change configuration of an `inducer` object
 #' @param .inducer an `Inducer` object
 #' @param value value for changing configuration
+#' @export
 #' @example
 #' inducer <- InducerLm()
 #' inducer
 #' configuration(inducer)$x <- FALSE
-#' @export
 `configuration<-` <- function(.inducer, value) {
   ind <- .inducer
   names_inducer_config <- names(formals(ind))
