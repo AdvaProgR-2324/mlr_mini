@@ -30,8 +30,9 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
                                num_parallel_tree = 1, ...) {
   # TODO: formals(model) <- formals(.inducer) how to solve that error???
   checkmate::assert_class(x = .inducer, classes = "InducerXGBoost")
-  stopifnot(".data muste be of class Dataset or data.frame" = class(.data) %in% c("Dataset", "data.frame"))
+  stopifnot(".data muste be of class Dataset or data.frame" = class(.data)[2] %in% c("Dataset", "data.frame"))
 
+  data_df <- as.data.frame(.data$data)
   model <- xgboost::xgboost
   original_call <- match.call(expand.dots = FALSE)
   form_Ind <- formals(.inducer) # formals of ind
@@ -52,7 +53,7 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
   # estimate model
   featureVars <- setdiff(colnames(.data$data), .data$target)
   time_a <- Sys.time()
-  fittedModel <- capture.output(model(data = as.matrix(.data$data[, featureVars]), label = .data$data[, .data$target]))
+  fittedModel <- model(data = as.matrix(subset(data_df, select = featureVars)), label = data_df[,.data$target])
   # capture.output, otherwise always prints [1]	train-rmse:37.257189
   time_b <- Sys.time()
   fit_time <- as.numeric(time_b - time_a)
@@ -87,29 +88,29 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
 #' @examples
 #' cars.data <- Dataset(data = cars, target = "dist")
 #' inducer <- InducerXGBoost()
-#' xgbfit <- InducerXGBoost(.inducer = inducer, .data = cars.data)
+#' xgbfit <- fit.InducerXGBoost(.inducer = inducer, .data = cars.data)
 #' predict.ModelXGBoost(model = xgbfit, newdata = data.frame(speed = 10))
 #' predict.ModelXGBoost(model = xgbfit, newdata = cars.data[c(1, 2, 3, 4), ])
 predict.ModelXGBoost <- function(model, newdata, ...) {
   checkmate::assert_class(x = model, classes = "ModelXGBoost")
-  stopifnot(".data muste be of class Dataset or data.frame" = class(newdata) %in% c("Dataset", "data.frame"))
+  stopifnot(".data muste be of class Dataset or data.frame" = class(newdata)[2] %in% c("Dataset", "data.frame"))
 
 
   fittedModel <- model$model.out
   # not necessary dataModel <- model$mode.data$data
 
   ## newdata into datamatrix
-  if (class(newdata) == "data.frame") { # if dataframe: only vector with prediction values
+  if ("data.frame" %in% class(newdata)) { # if dataframe: only vector with prediction values
     # TODO asserts, dataframe must have same features as dataset in fittedmodel
     stopifnot(setequal(colnames(newdata), model$data.features))
     # , "newdata must have same variables as specified in model"
     data_n_df <- as.matrix(newdata)
     fittedVals <- xgboost:::predict.xgb.Booster(object = fittedModel, newdata = data_n_df)
     return(fittedVals)
-  } else if (class(newdata) == "Dataset") {
+  } else if ("Dataset" %in% class(newdata)) {
     # if Dataset: new dataframe with prediction (values from predict function) and truth (dataset)
-    data_n_target <- as.data.frame.Dataset(newdata[, newdata$target])
-    data_n_ds <- as.matrix(newdata$data[, model$data.features]) # dataset with all features needed
+    data_n_target <- as.data.frame(newdata[, newdata$target])
+    data_n_ds <- as.matrix(subset(as.data.frame(newdata), select = model$data.features))  # dataset with all features needed
 
     fitted_ds_vals <- xgboost:::predict.xgb.Booster(object = fittedModel, newdata = data_n_ds)
     fitted_ds <- data.frame(prediction = fitted_ds_vals, truth = data_n_target) # bind fitted vals and truth together
@@ -119,3 +120,4 @@ predict.ModelXGBoost <- function(model, newdata, ...) {
   }
   # possible run xgboost:::predict.xgb.Booster(object = fittedModel, newdata = as.matrix(data.frame(speed = 10)))
 }
+

@@ -58,17 +58,17 @@ InducerXGBoost <- function(.data = NULL, nrounds = 1, eta = 0.3, gamma = 0, max_
 
 #' @title S3 method print for class 'InducerXGBoost'
 #' @description Print an `InducerXGBoost` object.
-#' @param .inducer object of class `InducerXGBoost`.
+#' @param x object of class `InducerXGBoost`.
 #' @param ... optional arguments to `print` methods.
 #' @seealso [InducerXGBoost()]
 #' @export
 #' @examples
 #' inducer <- InducerXGBoost()
 #' print.InducerXGBoost(inducer)
-print.InducerXGBoost <- function(.inducer, ...) {
+print.InducerXGBoost <- function(x, ...) {
   cat("Inducer: XGBoost\n", sep = "")
-  cat("Configuration: ", paste(names(formals(.inducer))[-1], "=", as.vector(formals(.inducer))[-1], collapse = ", "))
-  invisible(.inducer)
+  cat("Configuration: ", paste(names(formals(x))[-1], "=", as.vector(formals(x))[-1], collapse = ", "))
+  invisible(x)
 }
 
 

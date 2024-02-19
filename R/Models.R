@@ -63,7 +63,7 @@ modelObject <- function(...) {
 
 #' @title Printing Regression Models
 #' @description Print a regression model.
-#' @param model object of class `ModelRegression`
+#' @param x object of class `ModelRegression`
 #' @param ... further arguments
 #' @export
 #' @examples
@@ -71,10 +71,11 @@ modelObject <- function(...) {
 #' cars.data <- Dataset(data = cars, target = "dist")
 #' fittedmod <- fit.InducerXGBoost(.inducer = inducer, .data = cars.data)
 #' print.ModelRegression(fittedmod)
-print.ModelRegression <- function(model, ...) {
-  # assert_class(model, "ModelRegression") not needed as print method for the ModelRegression class
-  cat('Regression Model: "', model$inducer.name, '" fitted on "', model$data.name, '" dataset.\n', sep = "")
-  invisible(model)
+print.ModelRegression <- function(x, ...) {
+  # assert_class(x, "ModelRegression") not needed as print method for the ModelRegression class
+  # make model to x for Generics
+  cat('Regression Model: "', x$inducer.name, '" fitted on "', x$data.name, '" dataset.\n', sep = "")
+  invisible(x)
 }
 
 
