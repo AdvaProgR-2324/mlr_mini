@@ -22,7 +22,9 @@ metainfo.Dataset(
 
 \item{name}{name}
 
-\item{features}{features
+\item{features}{features}
+
+\item{...}{optional arguments
 
 TO-DO}
 }

@@ -5,6 +5,7 @@
 #' @param type Regression or Classification
 #' @param name name
 #' @param features features
+#' @param ... optional arguments
 #'
 #' TO-DO
 #' @return prints out the neccessary information
