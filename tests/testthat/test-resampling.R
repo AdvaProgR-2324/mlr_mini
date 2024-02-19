@@ -15,7 +15,7 @@ test_that("Test register_resampling_strategy", {
 
 test_that("Test SplitCV", {
   splt <- Split()
-  cv5 <- splt$cv(folds  = 5)
+  cv5 <- splt$cv(folds = 5)
   cars.data <- Dataset(cars, target = "dist")
   cars.split <- cv5(cars.data)
   testthat::expect_s3_class(cars.split, "SplitInstanceCV")
