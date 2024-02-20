@@ -23,6 +23,5 @@ Imports:
   testthat
 Suggests:
   rmarkdown,
-  knitr,
-  testthat
+  knitr
 RoxygenNote: 7.3.1
