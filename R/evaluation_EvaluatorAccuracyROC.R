@@ -47,7 +47,7 @@ EvaluatorAccuracy <- function(.prediction, .dataset, .target, .threshold = 0.5) 
 
 #' @title Print an EvaluatorAccuracy
 #' @description Print an `EvaluatorAccuracy` object.
-#' #' @param x An `EvaluatorAccuracy` object which should be printed.
+#' @param x An `EvaluatorAccuracy` object which should be printed.
 #' @param ... Optional arguments for the print function.
 #' @examples
 #' x <- data.frame(var1 = c(1, 2, 3, 4, 5, 6, 7), target = c(1, 1, 1, 1, 0, 1, 0))
