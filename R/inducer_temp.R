@@ -1,20 +1,17 @@
 
 
-
-indEnv <- function() {
-  ind <- list2env(list(xgbooost = InducerXGBoost,
-                       rpart = InducerRpart,
-                       lm = InducerLm
-                       ),
-                  parent = emptyenv())
-  return(ind)
-
-}
+# add Environment for inducers
+ind <- list2env(list(xgbooost = InducerXGBoost,
+                     rpart = InducerRpart,
+                     lm = InducerLm), 
+                parent = emptyenv())
 
 
-ind <- indEnv()
-
-
+#' @title Add new inducer to environment
+#' @description Add new inducer to environment
+#' @param inducer An object of class Inducer.
+#' @return nothing, but environment with inducers
+#' @export
 inducer2Env <- function(.inducer) {
   checkmate::assert_class(.inducer, classes = "Inducer")
   if (class(.inducer)[1] == "function") {
