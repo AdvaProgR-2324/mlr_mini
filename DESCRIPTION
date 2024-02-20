@@ -18,7 +18,9 @@ Imports:
   data.table,
   ranger,
   rpart,
-  xgboost
+  xgboost,
+  pROC,
+  testthat
 Suggests:
   rmarkdown,
   knitr,
