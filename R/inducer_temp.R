@@ -33,8 +33,8 @@ inducer2Env <- function(.inducer) {
 
 #' @title Get the Hyperparameters of an inducer
 #' @description Get the Hyperparameters of an inducer.
-#' @param inducer An object of class Inducer.
-#' @value a datatable containing the name, the type and the range of the hyperparameters of an Inducer object.
+#' @param .inducer An object of class Inducer.
+#' @param ... Optional arguments.
 #' @export
 hyperparameters <- function(.inducer, ...) {
   assert_class(.inducer, c("Inducer", "function"))
