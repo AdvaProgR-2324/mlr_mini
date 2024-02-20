@@ -3,7 +3,7 @@
 **mlrmini**
 A mini-package for Machine Learning in R.
 
-Package wesite: [mlrmini](https://github.com/mlr-org/mlr)  %% advaprogr-2324.github.io Seite einfügen TODO
+Package website: [mlrmini]([https://github.com/mlr-org/mlr](https://advaprogr-2324.github.io/mlrmini/))
 
 
 <!-- badges: start -->
