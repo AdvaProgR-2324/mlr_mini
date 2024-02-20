@@ -37,6 +37,6 @@ modelObject <- function(x, ...) {
 
 #' @title S3 method modelInfo
 #' @export
-modelInfo <- function(...) {
+modelInfo <- function(x, ...) {
   UseMethod("modelInfo")
 }
