@@ -14,7 +14,7 @@ test_that("Test class of EvaluatorBIC", {
   expect_equal(class(.eval), c("EvaluatorBIC", "Evaluator", "function"))
 })
 
-test_that("Test output of EvaluatorBIC on ModelLm fitted on cars.ds", {  # fails
+test_that("Test output of EvaluatorBIC on ModelLm fitted on cars.ds", {
   cars.ds <- Dataset(data = datasets::cars, target = "dist")
   mod_fit <- fit(InducerLm(), cars.ds, formula = as.formula("dist~speed"))
   expect_equal(EvaluatorBIC(mod_fit), stats::AIC(stats::lm(dist ~ speed, cars)))
