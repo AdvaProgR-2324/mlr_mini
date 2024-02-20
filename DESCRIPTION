@@ -2,7 +2,7 @@ Package: mlrmini
 Title: mlrmini
 Version: 0.0.1
 Authors@R: c(
-    person(given = "Stella", family = "Akouete", role = c("aut", "cre"), email = "s.akoute@campus.lmu.de"),
+    person(given = "Stella", family = "Akouete", role = c("aut", "cre"), email = "s.akouete@campus.lmu.de"),
     person(given = "Sven", family = "Morlock", role = "aut", email = "svenmauricemorlock@yahoo.com"),
     person(given = "Teresa", family = "Rupprecht", role = "aut", email = "teresa.rupprecht@campus.lmu.de"),
     person(given = "Felix", family = "Schweikl", role = "aut", email = "f.schweikl@campus.lmu.de")
