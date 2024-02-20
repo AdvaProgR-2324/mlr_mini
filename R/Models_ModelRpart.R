@@ -29,7 +29,7 @@ fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.actio
   checkmate::assert_class(x = .inducer, classes = "InducerRpart")
   stopifnot(".data muste be of class Dataset or data.frame" = class(.data)[2] %in% c("Dataset", "data.frame"))
 
-  model <- rpart
+  model <- rpart  # no lint
   original_call <- match.call(expand.dots = FALSE)
   form_Ind <- formals(.inducer) # formals of ind
   form_Ind$.data <- NULL # remove .data arg
