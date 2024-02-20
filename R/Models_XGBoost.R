@@ -28,7 +28,7 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
                                max_depth = 6, min_child_weight = 1, subsample = 1,
                                colsample_bytree = 1, lambda = 1, alpha = 0,
                                num_parallel_tree = 1, ...) {
-  # TODO: formals(model) <- formals(.inducer) how to solve that error???
+  # TODO: formals(model) <- formals(.inducer) how to solve that error??? - no error anymore I think
   checkmate::assert_class(x = .inducer, classes = "InducerXGBoost")
   stopifnot(".data muste be of class Dataset or data.frame" = class(.data)[2] %in% c("Dataset", "data.frame"))
 
@@ -89,10 +89,10 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
 #' cars.data <- Dataset(data = cars, target = "dist")
 #' inducer <- InducerXGBoost()
 #' xgbfit <- fit.InducerXGBoost(.inducer = inducer, .data = cars.data)
-#' predict.ModelXGBoost(model = xgbfit, newdata = data.frame(speed = 10))
-#' predict.ModelXGBoost(model = xgbfit, newdata = cars.data[c(1, 2, 3, 4), ])
-predict.ModelXGBoost <- function(model, newdata, ...) {
-  checkmate::assert_class(x = model, classes = "ModelXGBoost")
+#' predict.ModelXGBoost(object = xgbfit, newdata = data.frame(speed = 10))
+#' predict.ModelXGBoost(object = xgbfit, newdata = cars.data[c(1, 2, 3, 4), ])
+predict.ModelXGBoost <- function(object, newdata, ...) {
+  checkmate::assert_class(x = object, classes = "ModelXGBoost")
   if (length(class(newdata)) > 1) {
     stopifnot(".data muste be of class Dataset or data.frame" = c("Dataset") %in% class(newdata))
   } else {
@@ -100,13 +100,13 @@ predict.ModelXGBoost <- function(model, newdata, ...) {
   }
 
 
-  fittedModel <- model$model.out
+  fittedModel <- object$model.out
   # not necessary dataModel <- model$mode.data$data
 
   ## newdata into datamatrix
   if ("data.frame" %in% class(newdata)) { # if dataframe: only vector with prediction values
     # TODO asserts, dataframe must have same features as dataset in fittedmodel
-    stopifnot(setequal(colnames(newdata), model$data.features))
+    stopifnot(setequal(colnames(newdata), object$data.features))
     # , "newdata must have same variables as specified in model"
     data_n_df <- as.matrix(newdata)
     fittedVals <- predict(object = fittedModel, newdata = data_n_df)
@@ -116,7 +116,7 @@ predict.ModelXGBoost <- function(model, newdata, ...) {
     # if Dataset: new dataframe with prediction (values from predict function) and truth (dataset)
     data_n_target <- as.data.frame(newdata[, newdata$target])
     data_n_ds <- as.matrix(subset(as.data.frame(newdata),
-      select = model$data.features
+      select = object$data.features
     )) # dataset with all features needed
 
     # old version fitted_ds_vals <- xgboost:::predict.xgb.Booster(object = fittedModel, newdata = data_n_ds)

@@ -27,8 +27,10 @@ EvaluatorAccuracy <- function(.prediction, .dataset, .target, .threshold = 0.5) 
     class(eval) <- c("EvaluatorAccuracy", "Evaluator", "function")
     return(eval)
   }
-  stopifnot(".prediction must be a `Dataset` or a `data.frame`." = class(.prediction) %in% c("data.frame",
-                                                                                             "numeric"))
+  stopifnot(".prediction must be a `Dataset` or a `data.frame`." = class(.prediction) %in% c(
+    "data.frame",
+    "numeric"
+  ))
   if (is.numeric(.prediction)) {
     stopifnot(".data must be a `Dataset` or a `data.frame`." = class(.dataset) %in% c("data.frame", "Dataset"))
     checkmate::assert_character(.target, len = 1)
@@ -45,8 +47,10 @@ EvaluatorAccuracy <- function(.prediction, .dataset, .target, .threshold = 0.5) 
   return(correct_classif / n)
 }
 
-#' @title Print an EvaluatorAUC
-#' @description Print an `EvaluatorAUC` object.
+#' @title Print an EvaluatorAccuracy
+#' @description Print an `EvaluatorAccuracy` object.
+#' @param x An `EvaluatorAccuracy` object which should be printed.
+#' @param ... Optional arguments for the print function.
 #' @examples
 #' x <- data.frame(var1 = c(1, 2, 3, 4, 5, 6, 7), target = c(1, 1, 1, 1, 0, 1, 0))
 #' predictions <- c(1)
@@ -88,8 +92,10 @@ EvaluatorAUC <- function(.prediction, .dataset, .target) {
     class(eval) <- c("EvaluatorAUC", "Evaluator", "function")
     return(eval)
   }
-  stopifnot(".prediction must be a `Dataset` or a `data.frame`." = class(.prediction) %in% c("data.frame",
-                                                                                             "numeric"))
+  stopifnot(".prediction must be a `Dataset` or a `data.frame`." = class(.prediction) %in% c(
+    "data.frame",
+    "numeric"
+  ))
   if (is.numeric(.prediction)) {
     stopifnot(".data must be a `Dataset` or a `data.frame`." = class(.dataset) %in% c("data.frame", "Dataset"))
     checkmate::assert_character(.target, len = 1)
@@ -103,12 +109,13 @@ EvaluatorAUC <- function(.prediction, .dataset, .target) {
   }
   pred_data <- data.frame(truth = truth, prediction = prediction)
   return(auc(roc(pred_data, "truth", "prediction", quiet = TRUE))) # nolint
-
 }
 
 
 #' @title Print an EvaluatorAUC.
 #' @description Print an `EvaluatorAUC` object.
+#' @param x An `EvaluatorAUC` object which should be printed.
+#' @param ... Optional arguments for the print function
 #' @examples
 #' x <- data.frame(var1 = c(1, 2, 3, 4, 5, 6, 7), target = c(1, 1, 1, 1, 0, 1, 0))
 #' predictions <- c(1)

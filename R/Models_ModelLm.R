@@ -16,6 +16,7 @@
 #' @param singular.ok logical. If FALSE (the default in S but not in R) a singular fit is an error
 #' @param offset this can be used to specify an a priori known component to be included in the
 #' linear predictor during fitting.
+#' @param ... further arguments
 #' @return An object of class `ModelLm`.
 #' @export
 #' @examples
@@ -97,28 +98,28 @@ fit.InducerLm <- function(.inducer, .data, formula, subset, weights, na.action, 
 #' cars.data <- Dataset(data = cars, target = "dist")
 #' inducer <- InducerLm()
 #' lmfit <- fit.InducerLm(.inducer = inducer, .data = cars.data)
-#' predict.ModelLm(model = lmfit, newdata = data.frame(speed = 10))
-#' predict.ModelLm(model = lmfit, newdata = cars.data[c(1, 2, 3, 4), ])
-predict.ModelLm <- function(model, newdata, ...) {
+#' predict.ModelLm(object = lmfit, newdata = data.frame(speed = 10))
+#' predict.ModelLm(object = lmfit, newdata = cars.data[c(1, 2, 3, 4), ])
+predict.ModelLm <- function(object, newdata, ...) {
   # TODO check if dataset Name of newdata is equal to the dataset name of model obj
 
-  checkmate::assert_class(x = model, classes = "ModelLm")
+  checkmate::assert_class(x = object, classes = "ModelLm")
   if (length(class(newdata)) > 1) {
     stopifnot(".data muste be of class Dataset or data.frame" = c("Dataset") %in% class(newdata))
   } else {
     stopifnot(".data muste be of class Dataset or data.frame" = c("data.frame") == class(newdata))
   }
 
-  fittedModel <- model$model.out
-  # not in use dataModel <- model$mode.data$data
+  fittedModel <- object$model.out
+  # not in use dataModel <- object$mode.data$data
 
   if ("data.frame" %in% class(newdata)) { # if dataframe: only vector with prediction values
-    stopifnot(setequal(colnames(newdata), model$data.features)) # newdata must have same variables as spec in model
+    stopifnot(setequal(colnames(newdata), object$data.features)) # newdata must have same variables as spec in model
     fittedVals <- as.numeric(predict.lm(object = fittedModel, newdata = newdata))
     return(fittedVals)
   } else if ("Dataset" %in% class(newdata)) {
     # if Dataset: new dataframe with prediction (values from predict function) and truth (dataset)
-    data_n_ds <- subset(newdata$data, select = model$data.features) # only take features
+    data_n_ds <- subset(newdata$data, select = object$data.features) # only take features
     fitted_ds_vals <- as.numeric(predict.lm(object = fittedModel, newdata = data_n_ds))
     # bind fitted vals and truth together
     fitted_ds <- data.frame(prediction = fitted_ds_vals, truth = newdata$data[, newdata$target])

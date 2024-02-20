@@ -1,9 +1,6 @@
 #' @import checkmate
 #' @import testthat
-#' @importFrom datasets cars
-#' @importFrom stats lm
 #' @importFrom xgboost xgboost
-#' @importFrom rpart rpart
-#' @importFrom pROC auc
-#' @importFrom pROC roc
+#' @importFrom rpart rpart na.part
+#' @importFrom pROC auc roc
 "_PACKAGE"
