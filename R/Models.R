@@ -125,14 +125,13 @@ configuration.Inducer <- function(.inducer, ...) {
   # First: check if value exists for given inducer
   stopifnot("Invalid variable name for given Inducer." = all(names_value %in% names_inducer_config))
 
-  if (all(names_value %in% names_inducer_config)) {  # if names different --> wrong input 
+  if (all(names_value %in% names_inducer_config)) {  # nolint  
+    # nolint if names different, wrong input 
     for (name in names(value)) {
-      if(!identical(value[[name]], ind_formals[[name]])) {  # if values different change them
-        
+      if (!identical(value[[name]], ind_formals[[name]])) {  # if values different change them
         # TODO check first if value[[name]] is null, if TRUE check in list of hyperparm if it is allowed to be null
         # TODO check if value is numeric and if it is in range of hyperparam
-        # TODO check if type of hyperparm is correct
-        # after that add to formals 
+        # TODO check if type of hyperparm is correct # after that add to formals
         # error 1  stopifnot("Parameter cannot be NULL." = HyperparameterLm[[name]][["arg.null"]])
         # error 2  checkmate::assert_class(value[[name]], HyperparameterLm[[name]][["type"]])
         ind_formals[[name]] <- value[[name]]  # change formals of inducer
