@@ -1,4 +1,4 @@
-#' @title A SplitCV object
+#' @title Create a SplitCV object
 #'
 #' @description
 #' A `Split` object implementing the resampling strategy of K-Fold CV.
@@ -10,16 +10,11 @@
 SplitCV <- function(folds, repeats = 1) {
   checkmate::assertInt(folds, lower = 2)
   checkmate::assertInt(repeats, lower = 1)
+  
   splitcv <- function(.data) {
     checkmate::assertClass(.data, "Dataset")
-
-    n <- nrow(.data$data)
-    n_train <- ceiling(n / folds)
-    result <- list()
-    for (repetition in seq(repeats)) {
-      indices <- sample(seq(n))
-      result[[repetition]] <- list(training = indices[1:n_train], validation = indices[-(1:n_train)])
-    }
+    
+    result <- set_cv_idx(folds = folds, repeats = repeats, n = nrow(.data$data))
     class(result) <- c("SplitInstanceCV", "SplitInstance")
     result_env <- list2env(as.list(environment(splitcv), all.names = TRUE), parent = emptyenv())
     assign("name", .data$name, envir = result_env)
@@ -27,6 +22,7 @@ SplitCV <- function(folds, repeats = 1) {
     environment(result) <- result_env
     result
   }
+  
   hyperparameters <- list(folds = folds, repeats = repeats)
   env <- list2env(list(
     hyperparameters = hyperparameters,
@@ -53,27 +49,6 @@ Split <- function() {
   ))
   structure(env, class = "Split")
 }
-
-#' @title Register a resampling strategy.
-#'
-#' @description
-#' This function just does some basic checks an binds the given name to a
-#' given function in the environment of a concrete `Split` object.
-#'
-#' @param splt An object of class `Split`.
-#' @param func A function implementing a resampling strategy.
-#' @param name A string of the symbol used for binding.
-#'
-#' @export
-register_resampling_strategy <- function(splt, func, name) {
-  checkmate::assertClass(splt, "Split")
-  checkmate::assertString(name)
-  checkmate::assertFunction(func)
-  assign(name, func, splt)
-  invisible(splt)
-}
-
-
 #' @title Printing a SplitInstanceCV
 #'
 #' @description
@@ -88,7 +63,74 @@ print.SplitInstanceCV <- function(x, ...) {
   hyperparameters <- get("hyperparameters", envir = environment(x))
   name <- get("name", envir = environment(x))
   dim <- get("dim", envir = environment(x))
-  cat(paste0('CV Split Instance of the "', name, '" dataset', "(", dim[1], ") rows"))
+  cat(paste0('CV Split Instance of the "', name, '" dataset', "(", dim[1], ") rows.\n"))
   cat(paste0("configuration: ", paste0(names(hyperparameters), " = ", hyperparameters, collapse = ", ")))
   invisible(x)
+}
+#' @title Create a ResamplePrediction
+#'
+#' @description
+#' This function creates a `ResamplePrediction` object that contains
+#' information on resampling procedure applied to given parameters.
+#'
+#' @param .data A `Dataset` object.
+#' @param ind An `inducer` instance.
+#' @param splt A `SplitInstance` object.
+#'
+#' @export
+resample <- function(.data, ind, splt) {
+  checkmate::assert(inherits(.data, "Dataset"))
+  checkmate::assert(inherits(ind, "Inducer"))
+  checkmate::assert(inherits(splt, "Split"))
+  
+  data.split <- splt(.data)
+  result <- list()
+  for (subtask in seq_along(length(data.split))) {
+    # get train and validation data
+    data_train_idx <- data.split[[subtask]]$training
+    data_validate_idx <- data.split[[subtask]]$validation
+    data_train <- .data[data_train_idx]
+    data_validate <- .data[data_validate_idx]
+    # fit model and predict
+    model <- ind(data_train)
+    prediction <- predict(model, data_validate)
+    result[[subtask]] <- list(
+      predictions = prediction,
+      model = model,
+      task = .data$type
+    )
+  }
+  structure(list(result), class = "ResamplePrediction")
+}
+
+
+
+#' @title Set indices for k-fold CV with repetitions
+#'
+#' @description
+#' Internal function to set the indices for resampling.
+#'
+#' @param folds Integer number of foldls.
+#' @param repeats Interger number of repetitions.
+#' @param n Integer for number of observations.
+#'
+#' @returns A list of training validation indices
+#'
+set_cv_idx <- function(folds, repeats, n) {
+  checkmate::assertIntegerish(folds)
+  checkmate::assertIntegerish(repeats)
+  
+  result <- list()
+  for (repetition in seq(repeats)) {
+    idx_sample <- sample(seq(n))
+    idx_bins <- sort(cut(idx_sample, breaks = folds, labels = FALSE))
+    for (fold in seq(folds)) {
+      idx <- (repetition - 1) * folds + fold
+      result[[idx]] <- list(
+        "training" = idx_sample[idx_bins == fold],
+        "validation" = idx_sample[idx_bins != fold]
+      )
+    }
+  }
+  result
 }
