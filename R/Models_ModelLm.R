@@ -16,6 +16,7 @@
 #' @param singular.ok logical. If FALSE (the default in S but not in R) a singular fit is an error
 #' @param offset this can be used to specify an a priori known component to be included in the
 #' linear predictor during fitting.
+#' @param ... further arguments
 #' @return An object of class `ModelLm`.
 #' @export
 #' @examples
