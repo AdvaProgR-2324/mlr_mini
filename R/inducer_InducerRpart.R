@@ -28,7 +28,7 @@
 #' cars.data <- Dataset(data = cars, target = "dist")
 #' fittedInd <- InducerRpart(.data = cars.data)
 #' fittedInd
-InducerRpart <- function(.data = NULL, formula, weights, subset, na.action = "na.rpart", method,  #
+InducerRpart <- function(.data = NULL, formula, weights, subset, na.action = "na.rpart", method, #
                          model = FALSE, x = FALSE, y = TRUE, parms, control, cost) { # ggf. ... ?
 
   if (!is.null(.data)) { # Dataset assert
