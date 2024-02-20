@@ -50,6 +50,8 @@ for fitting the model.}
 
 \item{offset}{this can be used to specify an a priori known component to be included in the
 linear predictor during fitting.}
+
+\item{...}{further arguments}
 }
 \value{
 An object of class \code{ModelLm}.

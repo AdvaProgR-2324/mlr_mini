@@ -4,14 +4,14 @@
 \alias{predict.ModelLm}
 \title{Predict values for \code{fit.InducerLm}}
 \usage{
-\method{predict}{ModelLm}(model, newdata, ...)
+\method{predict}{ModelLm}(object, newdata, ...)
 }
 \arguments{
-\item{model}{a linear model of class \code{ModelLm}}
-
 \item{newdata}{data of class \code{data.frame} or \code{Dataset}}
 
 \item{...}{additional arguments}
+
+\item{model}{a linear model of class \code{ModelLm}}
 }
 \value{
 An object with the predictions of class \code{numeric} or \code{data.frame}
@@ -23,8 +23,8 @@ Predict from the results of a linear model
 cars.data <- Dataset(data = cars, target = "dist")
 inducer <- InducerLm()
 lmfit <- fit.InducerLm(.inducer = inducer, .data = cars.data)
-predict.ModelLm(model = lmfit, newdata = data.frame(speed = 10))
-predict.ModelLm(model = lmfit, newdata = cars.data[c(1, 2, 3, 4), ])
+predict.ModelLm(object = lmfit, newdata = data.frame(speed = 10))
+predict.ModelLm(object = lmfit, newdata = cars.data[c(1, 2, 3, 4), ])
 }
 \seealso{
 \code{\link[=fit.InducerLm]{fit.InducerLm()}}

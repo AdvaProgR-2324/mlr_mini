@@ -6,13 +6,11 @@
 \usage{
 \method{print}{EvaluatorAIC}(x, ...)
 }
-
 \arguments{
 \item{x}{An \code{EvaluatorAIC} object which should be printed.}
 
 \item{...}{Optional arguments for the print function}
 }
-
 \description{
 Print an \code{EvaluatorAIC} object.
 }

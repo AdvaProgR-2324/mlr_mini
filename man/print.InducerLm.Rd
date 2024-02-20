@@ -14,6 +14,10 @@
 \description{
 Print an \code{InducerLm} object.
 }
+\examples{
+inducer <- InducerLm()
+inducer
+}
 \seealso{
 \code{\link[=InducerLm]{InducerLm()}}
 }

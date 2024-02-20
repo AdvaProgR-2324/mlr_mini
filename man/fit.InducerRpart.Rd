@@ -49,6 +49,8 @@ If missing and model is supplied this defaults to FALSE.}
 
 \item{cost}{a vector of non-negative costs, one for each variable in the model. Defaults to one for all variables}
 
+\item{...}{further arguments}
+
 \item{data}{The data to which the model should be fitted, provided as a \code{Dataset} object.}
 }
 \value{

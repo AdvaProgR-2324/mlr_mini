@@ -4,9 +4,7 @@
 \alias{Evaluator}
 \title{Build an Evaluator}
 \usage{
-
 Evaluator(.name, .configuration = list(), .value = numeric(0), ...)
-
 }
 \arguments{
 \item{.name}{The name of the Evaluator provided as a string.}

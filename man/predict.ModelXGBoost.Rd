@@ -4,14 +4,14 @@
 \alias{predict.ModelXGBoost}
 \title{Predict values for \code{fit.InducerXGBoost}}
 \usage{
-\method{predict}{ModelXGBoost}(model, newdata, ...)
+\method{predict}{ModelXGBoost}(object, newdata, ...)
 }
 \arguments{
-\item{model}{A model of class \code{ModelXGBoost}}
-
 \item{newdata}{data of class \code{data.frame} or \code{Dataset}}
 
 \item{...}{further arguments}
+
+\item{model}{A model of class \code{ModelXGBoost}}
 }
 \value{
 the fitted values. If the input is a data.frame the predicted values will be given back as a vector of
@@ -25,6 +25,6 @@ Predict from the results of a xgboost model
 cars.data <- Dataset(data = cars, target = "dist")
 inducer <- InducerXGBoost()
 xgbfit <- fit.InducerXGBoost(.inducer = inducer, .data = cars.data)
-predict.ModelXGBoost(model = xgbfit, newdata = data.frame(speed = 10))
-predict.ModelXGBoost(model = xgbfit, newdata = cars.data[c(1, 2, 3, 4), ])
+predict.ModelXGBoost(object = xgbfit, newdata = data.frame(speed = 10))
+predict.ModelXGBoost(object = xgbfit, newdata = cars.data[c(1, 2, 3, 4), ])
 }

@@ -4,14 +4,14 @@
 \alias{predict.ModelRpart}
 \title{Predict values for \code{fit.InducerRpart}}
 \usage{
-\method{predict}{ModelRpart}(model, newdata, ...)
+\method{predict}{ModelRpart}(object, newdata, ...)
 }
 \arguments{
-\item{model}{a linear model of class \code{ModelRpart}}
-
 \item{newdata}{data of class \code{data.frame} or \code{Dataset}}
 
 \item{...}{additional arguments}
+
+\item{model}{a linear model of class \code{ModelRpart}}
 }
 \value{
 An object with the predictions of class \code{numeric} or \code{data.frame}
@@ -23,8 +23,8 @@ Predict from the results of a rpart model
 cars.data <- Dataset(data = cars, target = "dist")
 inducer <- InducerLm()
 rpartfit <- fit.InducerRpart(.inducer = inducer, .data = cars.data)
-predict.ModelRpart(model = rpartfit, newdata = data.frame(speed = 10))
-predict.ModelRpart(model = rpartfit, newdata = cars.data[c(1, 2, 3, 4), ])
+predict.ModelRpart(object = rpartfit, newdata = data.frame(speed = 10))
+predict.ModelRpart(object = rpartfit, newdata = cars.data[c(1, 2, 3, 4), ])
 }
 \seealso{
 \code{\link[=fit.InducerRpart]{fit.InducerRpart()}}

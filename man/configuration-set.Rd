@@ -14,9 +14,8 @@ configuration(.inducer) <- value
 \description{
 Change configuration of an \code{inducer} object
 }
-
 \examples{
 inducer <- InducerLm()
 inducer
-configuration(inducer)$x <- FALSE
+configuration(inducer)$x <- TRUE
 }
