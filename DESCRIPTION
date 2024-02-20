@@ -15,7 +15,10 @@ Config/testthat/parallel: true
 Roxygen: list(markdown = TRUE)
 Imports:
   checkmate,
-  data.table
+  data.table,
+  ranger,
+  rpart,
+  xgboost
 Suggests:
   rmarkdown,
   knitr,
