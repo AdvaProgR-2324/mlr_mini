@@ -24,7 +24,7 @@ EvaluatorAIC <- function(.model) {
 #' @title Print an EvaluatorAIC
 #' @description Print an `EvaluatorAIC` object.
 #' @examples
-#' cars.ds <- Dataset(data = dataset::cars, target = "dist")
+#' cars.ds <- Dataset(data = cars, target = "dist")
 #' mod_fit <- fit(InducerLm(), cars.ds, formula = as.formula("dist~speed"))
 #' evaluation <- EvaluatorAIC(mod_fit)
 #' print(evaluation)
@@ -39,7 +39,7 @@ print.EvaluatorAIC <- function(x, ...) {
 #' @description Evaluate the performance of a `ModelLm` using the Bayesian information criterion.
 #' @param .model A `ModelLm` object for which the performance should be measured.
 #' @examples
-#' cars.ds <- Dataset(data = dataset::cars, target = "dist")
+#' cars.ds <- Dataset(data = cars, target = "dist")
 #' mod_fit <- fit(InducerLm(), cars.ds, formula = as.formula("dist~speed"))
 #' EvaluatorBIC(mod_fit)
 #' @return The BIC value of the fitted model.
@@ -60,7 +60,7 @@ EvaluatorBIC <- function(.model) {
 #' @title Print an EvaluatorBIC
 #' @description Print an `EvaluatorBIC` object.
 #' @examples
-#' cars.ds <- Dataset(data = dataset::cars, target = "dist")
+#' cars.ds <- Dataset(data = cars, target = "dist")
 #' mod_fit <- fit(InducerLm(), cars.ds, formula = as.formula("dist~speed"))
 #' evaluation <- EvaluatorBIC(mod_fit)
 #' print(evaluation)
