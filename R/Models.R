@@ -58,35 +58,6 @@ modelInfo.Model <- function(model, ...) {
   model$modelInfo
 }
 
-#' @title S3 method modelInfo
-#' @description get model info
-#' @param ... further arguments
-#' @export
-#' @examples
-#' inducer <- InducerXGBoost()
-#' cars.data <- Dataset(data = cars, target = "dist")
-#' fittedmod <- fit.InducerXGBoost(.inducer = inducer, .data = cars.data)
-#' modelInfo.Model(fittedmod)
-modelInfo <- function(...) {
-  UseMethod("modelInfo")
-}
-
-
-#' @title S3 method modelObject
-#' @description get model object
-#' @param ... further arguments
-#' @export
-#' @examples
-#' inducer <- InducerXGBoost()
-#' cars.data <- Dataset(data = cars, target = "dist")
-#' fittedmod <- fit.InducerXGBoost(.inducer = inducer, .data = cars.data)
-#' modelObject.Model(fittedmod)
-modelObject <- function(...) {
-  UseMethod("modelObject")
-}
-
-
-
 
 
 #' @title Printing Regression Models
@@ -106,29 +77,6 @@ print.ModelRegression <- function(x, ...) {
   invisible(x)
 }
 
-
-
-
-
-#' @title S3 method fit
-#' @description fit a model.
-#' @param ... further arguments
-#' @export
-fit <- function(...) {
-  UseMethod("fit")
-}
-
-
-#' @title S3 method configuration
-#' @description get configuration of an object
-#' @param ... further arguments
-#' @export
-#' @examples
-#' inducer <- InducerXGBoost()
-#' configuration(inducer)
-configuration <- function(...) {
-  UseMethod("configuration")
-}
 
 
 #' @title S3 method configuration for class `inducer`

@@ -34,3 +34,9 @@ predict <- function(x, ...) {
 modelObject <- function(x, ...) {
   UseMethod("modelObject")
 }
+
+#' @title S3 method modelInfo
+#' @export
+modelInfo <- function(...) {
+  UseMethod("modelInfo")
+}
