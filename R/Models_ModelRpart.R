@@ -101,30 +101,30 @@ fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.actio
 #' cars.data <- Dataset(data = cars, target = "dist")
 #' inducer <- InducerLm()
 #' rpartfit <- fit.InducerRpart(.inducer = inducer, .data = cars.data)
-#' predict.ModelRpart(model = rpartfit, newdata = data.frame(speed = 10))
-#' predict.ModelRpart(model = rpartfit, newdata = cars.data[c(1, 2, 3, 4), ])
-predict.ModelRpart <- function(model, newdata, ...) {
-  checkmate::assert_class(x = model, classes = "ModelRpart")
+#' predict.ModelRpart(object = rpartfit, newdata = data.frame(speed = 10))
+#' predict.ModelRpart(object = rpartfit, newdata = cars.data[c(1, 2, 3, 4), ])
+predict.ModelRpart <- function(object, newdata, ...) {
+  checkmate::assert_class(x = object, classes = "ModelRpart")
   if (length(class(newdata)) > 1) {
     stopifnot(".data muste be of class Dataset or data.frame" = c("Dataset") %in% class(newdata))
   } else {
     stopifnot(".data muste be of class Dataset or data.frame" = c("data.frame") == class(newdata))
   }
 
-  fittedModel <- model$model.out
-  # not in use dataModel <- model$mode.data$data
+  fittedModel <- object$model.out
+  # not in use dataModel <- object$mode.data$data
 
 
   ## newdata into datamatrix
   if ("data.frame" %in% class(newdata)) { # if dataframe: only vector with prediction values
     # "newdata must have same variables as specified in model"
-    stopifnot(setequal(colnames(newdata), model$data.features))
+    stopifnot(setequal(colnames(newdata), object$data.features))
 
-    fittedVals <- as.numeric(predict(model$model.out, newdata = newdata))
+    fittedVals <- as.numeric(predict(object$model.out, newdata = newdata))
     return(fittedVals)
   } else if ("Dataset" %in% class(newdata)) { # if Dataset: new dataframe with prediction
     # (values from predict function) and truth (dataset)
-    data_n_ds <- subset(newdata$data, select = model$data.features) # only take features
+    data_n_ds <- subset(newdata$data, select = object$data.features) # only take features
     fitted_ds_vals <- as.numeric(predict(object = fittedModel, newdata = data_n_ds))
     # bind fitted vals and truth together
     fitted_ds <- data.frame(prediction = fitted_ds_vals, truth = newdata$data[, newdata$target])
@@ -132,5 +132,5 @@ predict.ModelRpart <- function(model, newdata, ...) {
   } else {
     stop("Type of dataset not supported") #  also class(newdata)
   }
-  # possible run: predict.ModelRpart(model = InducerRpart(.data = cars_ds), newdata = cars_ds[c(1, 2, 3, 4, 20), ])
+  # possible run: predict.ModelRpart(object = InducerRpart(.data = cars_ds), newdata = cars_ds[c(1, 2, 3, 4, 20), ])
 }
