@@ -22,7 +22,6 @@ Imports:
   pROC,
   ranger,
   rpart,
-  testthat,
   xgboost
 Suggests:
   rmarkdown,
