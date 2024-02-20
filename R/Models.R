@@ -95,14 +95,14 @@ print.ModelRegression <- function(x, ...) {
 
 #' @title S3 method configuration for class `inducer`
 #' @description Get the configuration of an `inducer` object
-#' @param .inducer an Inducer object
+#' @param x an Inducer object
 #' @param ... further arguments
 #' @export
 #' @examples
 #' inducer <- InducerXGBoost()
 #' configuration(inducer)
-configuration.Inducer <- function(.inducer, ...) {
-  return(formals(.inducer))
+configuration.Inducer <- function(x, ...) {
+  return(formals(x))
 }
 
 
