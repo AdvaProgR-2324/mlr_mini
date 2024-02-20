@@ -43,20 +43,21 @@ modelObject.Model <- function(model, ...) {
   model$model.out # print model output
 }
 
-#' @title modelInfo: print out info of a model
-#' @description print the model info of a model
-#' @param model A `Model` object.
+
+#' @title S3 method modelObject
+#' @description get model object
 #' @param ... further arguments
 #' @export
 #' @examples
 #' inducer <- InducerXGBoost()
 #' cars.data <- Dataset(data = cars, target = "dist")
 #' fittedmod <- fit.InducerXGBoost(.inducer = inducer, .data = cars.data)
-#' modelInfo.Model(fittedmod)
-modelInfo.Model <- function(model, ...) {
-  checkmate::assert_class(x = model, classes = "Model")
-  model$modelInfo
+#' modelObject.Model(fittedmod)
+modelObject <- function(...) {
+  UseMethod("modelObject")
 }
+
+
 
 
 
@@ -77,6 +78,29 @@ print.ModelRegression <- function(x, ...) {
   invisible(x)
 }
 
+
+
+
+
+#' @title S3 method fit
+#' @description fit a model.
+#' @param ... further arguments
+#' @export
+fit <- function(...) {
+  UseMethod("fit")
+}
+
+
+#' @title S3 method configuration
+#' @description get configuration of an object
+#' @param ... further arguments
+#' @export
+#' @examples
+#' inducer <- InducerXGBoost()
+#' configuration(inducer)
+configuration <- function(...) {
+  UseMethod("configuration")
+}
 
 
 #' @title S3 method configuration for class `inducer`

@@ -58,8 +58,7 @@ fit.InducerLm <- function(.inducer, .data, formula, subset, weights, na.action, 
   } else { # formula given in args
 
     time_a <- Sys.time()
-    # formula needs to be specified directly?
-    fitted_model <- model(formula = formals(model)$formula, data = as.data.frame(.data$data))
+    fitted_model <- model(data = as.data.frame(.data$data))
     time_b <- Sys.time()
     fit_time <- as.numeric(time_b - time_a)
 
