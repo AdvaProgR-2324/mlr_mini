@@ -2,12 +2,14 @@
 % Please edit documentation in R/datasets.R
 \name{as.data.frame.Dataset}
 \alias{as.data.frame.Dataset}
-\title{Create a data.frame object from a Dataset.}
+\title{Create a data.frame object from a \code{Dataset} object}
 \usage{
-\method{as.data.frame}{Dataset}(x)
+\method{as.data.frame}{Dataset}(x, ...)
 }
 \arguments{
 \item{x}{A Dataset object.}
+
+\item{...}{Additional arguments}
 }
 \value{
 A data.frame with the actual data of the original Dataset.
@@ -15,4 +17,9 @@ A data.frame with the actual data of the original Dataset.
 \description{
 This function returns the actual data of a Dataset as a data.frame.
 Additional information associated with a Dataset are neglected.
+}
+\examples{
+cars.data <- Dataset(cars, target = "dist")
+as.data.frame(cars.data)
+
 }

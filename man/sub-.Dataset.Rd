@@ -2,16 +2,16 @@
 % Please edit documentation in R/datasets.R
 \name{[.Dataset}
 \alias{[.Dataset}
-\title{Subset a Dataset Object}
+\title{Subset a \code{Dataset} Object}
 \usage{
-\method{[}{Dataset}(to_subset, arg_row, arg_col = NULL, ...)
+\method{[}{Dataset}(x, i, j = NULL, ...)
 }
 \arguments{
-\item{to_subset}{A  Dataset object.}
+\item{x}{A  Dataset object.}
 
-\item{arg_row}{row indices or nothing.}
+\item{i}{row indices or nothing.}
 
-\item{arg_col}{covariate names or nothing.}
+\item{j}{covariate names or nothing.}
 
 \item{...}{Other arguments passed to function}
 }
@@ -22,4 +22,8 @@ A object of type 'Dataset.
 This function subsets a custom dataset object based on specified row indices and optional column names.
 If column names are not specified, it defaults to using all columns. The function checks if the provided
 column names exist in the dataset and whether they include the target variable, which cannot be removed.
+}
+\examples{
+cars.data <- Dataset(cars, target = "dist")
+cars.data[c(1, 2, 3), "dist"]
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/resampling.R
 \name{SplitCV}
 \alias{SplitCV}
-\title{A SplitCV object}
+\title{Create a SplitCV object}
 \usage{
 SplitCV(folds, repeats = 1)
 }
