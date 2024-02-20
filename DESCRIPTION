@@ -19,8 +19,10 @@ Roxygen: list(markdown = TRUE)
 Imports:
   checkmate,
   data.table,
+  pROC,
   ranger,
   rpart,
+  testthat,
   xgboost
 Suggests:
   rmarkdown,
