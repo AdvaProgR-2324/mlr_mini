@@ -58,7 +58,7 @@ With mlrmini, let the learning begin!
 
 ## Example
 
-### defnining an Inducer
+### defining an Inducer
 ``` r
 library(mlrmini)
 inducerxgb <- InducerXGBoost(nrounds = 4)
