@@ -11,7 +11,7 @@ metainfo <- function(x, ...) {
 
 #' @title S3 method configuration
 #' @description `configuration` gets the configuration of a given object.
-#' @param x An object for which the configuration should be returned
+#' @param x An object for which the configuration should be returned.
 #' @param ... Optional arguments passed to or from other methods.
 #' @return The configuration of the object.
 #' @export
@@ -20,8 +20,8 @@ configuration <- function(x, ...) {
 }
 
 #' @title S3 method hyperparameters
-#' @description `configuration` gets the configuration of a given object.
-#' @param x An object for which the configuration should be returned
+#' @description `hyperparameters` gets the possible hyperparameter values of an object.
+#' @param x An object for which the hyperparameters should be returned.
 #' @param ... Optional arguments passed to or from other methods.
 #' @return The configuration of the object.
 #' @export
@@ -31,11 +31,11 @@ hyperparameters <- function(x, ...) {
 
 #' @title S3 method fit
 #' @description `fit` fits a model on given data.
-#' @param x An inducer which should be used for the model fitting.
+#' @param .inducer An inducer which should be used for the model fitting.
 #' @param ... Optional arguments passed to or from other methods.
 #' @return A fitted model.
 #' @export
-fit <- function(x, ...) {
+fit <- function(.inducer, ...) {
   UseMethod("fit")
 }
 
