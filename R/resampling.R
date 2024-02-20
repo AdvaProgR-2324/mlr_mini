@@ -14,7 +14,7 @@ SplitCV <- function(folds, repeats = 1) {
   splitcv <- function(.data) {
     checkmate::assertClass(.data, "Dataset")
 
-    result <- set_cv_idx(folds = folds, repeats = repeats)
+    result <- set_cv_idx(folds = folds, repeats = repeats, n = nrow(.data$data))
     class(result) <- c("SplitInstanceCV", "SplitInstance")
     result_env <- list2env(as.list(environment(splitcv), all.names = TRUE), parent = emptyenv())
     assign("name", .data$name, envir = result_env)
@@ -85,7 +85,7 @@ resample <- function(.data, ind, splt) {
 
   data.split <- splt(.data)
   result <- list()
-  for (subtask in seq(length(data.split))) {
+  for (subtask in seq_along(length(data.split))) {
     # get train and validation data
     data_train_idx <- data.split[[subtask]]$training
     data_validate_idx <- data.split[[subtask]]$validation
@@ -95,8 +95,8 @@ resample <- function(.data, ind, splt) {
     model <- ind(data_train)
     prediction <- predict(model, data_validate)
     result[[subtask]] <- list(
-      predictions = predictions,
-      modl = model,
+      predictions = prediction,
+      model = model,
       task = .data$type
     )
   }
@@ -112,10 +112,11 @@ resample <- function(.data, ind, splt) {
 #'
 #' @param folds Integer number of folds.
 #' @param repeats Interger number of repetitions.
+#' @param n Integer for number of observations.
 #'
 #' @returns A list of training validation indices
 #'
-set_cv_idx <- function(folds, repeats) {
+set_cv_idx <- function(folds, repeats, n) {
   checkmate::assertIntegerish(folds)
   checkmate::assertIntegerish(repeats)
 
