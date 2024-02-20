@@ -67,4 +67,3 @@ test_that("Test class of EvaluatorAccuracy", {
   .eval <- EvaluatorAccuracy()
   expect_equal(class(.eval), c("EvaluatorAccuracy", "Evaluator", "function"))
 })
-
