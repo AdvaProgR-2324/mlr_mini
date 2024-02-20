@@ -2,12 +2,18 @@
 #' @title Create a Model object
 #' @description
 #' Create a Model object given a dataset and an inducer.
-#' @param data The data given in an Dataset object.
-#' @param inducer An Inducer object: The applied inducer
+#' @param inducer.name The name of the inducer
+#' @param inducer.configuration The configuration of the Inducer
+#' @param data.name The name of the Dataset used in the model.
+#' @param data.target The name of the target variable.
+#' @param data.features The name of the features.
+#' @param fitted.values The fitted values by the model.
+#' @param coefficients The coefficients of the model
+#' @param modelInfo The Info of the model.
+#' @param model.out The model output.
+#' @param model.data The data of the model.
 Model <- function(inducer.name, inducer.configuration, data.name, data.target, data.features,
                   fitted.values = NULL, coefficients = NULL, modelInfo = NULL, model.out, model.data) {
-  # TODO: further assertions for data.target -> rather in ModelRegression or ModelClassification
-  # data.features and fitted.values
   checkmate::assert_string(inducer.name)
   checkmate::assert_list(inducer.configuration)
   checkmate::assert_character(data.name)
@@ -41,21 +47,6 @@ modelObject.Model <- function(model, ...) {
   checkmate::assert_class(x = model, classes = "Model")
 
   model$model.out # print model output
-}
-
-
-
-#' @title S3 method modelObject
-#' @description get model object
-#' @param ... further arguments
-#' @export
-#' @examples
-#' inducer <- InducerXGBoost()
-#' cars.data <- Dataset(data = cars, target = "dist")
-#' fittedmod <- fit.InducerXGBoost(.inducer = inducer, .data = cars.data)
-#' modelObject.Model(fittedmod)
-modelObject <- function(...) {
-  UseMethod("modelObject")
 }
 
 

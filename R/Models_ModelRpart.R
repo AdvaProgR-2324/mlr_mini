@@ -1,7 +1,7 @@
 #' @title Fit a Model using `InducerRpart`
 #' @description Fit a rpart model on the provided data.
 #' @param .inducer An `InducerRpart` object. The Inducer which should be used for the fitting.
-#' @param data The data to which the model should be fitted, provided as a `Dataset` object.
+#' @param .data The data to which the model should be fitted, provided as a `Dataset` object.
 #' @param formula An optional parameter setting the `formula` argument of an `InducerRpart` object.
 #' @param weights optional case weights.
 #' @param subset optional expression saying that only a subset of the rows of the data should be used in the fit.
