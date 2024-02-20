@@ -16,8 +16,6 @@
 #' @param parms optional parameters for the splitting function.
 #' @param control a list of options that control details of the rpart algorithm
 #' @param cost a vector of non-negative costs, one for each variable in the model. Defaults to one for all variables
-
-
 #' @return An object of class `InducerRpart`.
 #' @export
 #' @examples
