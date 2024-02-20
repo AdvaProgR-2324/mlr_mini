@@ -7,11 +7,11 @@
 \method{predict}{ModelLm}(object, newdata, ...)
 }
 \arguments{
+\item{object}{a linear model of class \code{ModelLm}}
+
 \item{newdata}{data of class \code{data.frame} or \code{Dataset}}
 
 \item{...}{additional arguments}
-
-\item{model}{a linear model of class \code{ModelLm}}
 }
 \value{
 An object with the predictions of class \code{numeric} or \code{data.frame}

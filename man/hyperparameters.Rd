@@ -4,16 +4,14 @@
 \alias{hyperparameters}
 \title{S3 method hyperparameters}
 \usage{
-hyperparameters(.inducer, ...)
+hyperparameters(x, ...)
 
-hyperparameters(.inducer, ...)
+hyperparameters(x, ...)
 }
 \arguments{
-\item{.inducer}{An object of class Inducer.}
+\item{x}{An object of class Inducer.}
 
 \item{...}{Optional arguments.}
-
-\item{x}{An object for which the hyperparameters should be returned.}
 }
 \value{
 The configuration of the object.

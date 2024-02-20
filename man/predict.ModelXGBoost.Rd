@@ -7,11 +7,11 @@
 \method{predict}{ModelXGBoost}(object, newdata, ...)
 }
 \arguments{
+\item{object}{A model of class \code{ModelXGBoost}}
+
 \item{newdata}{data of class \code{data.frame} or \code{Dataset}}
 
 \item{...}{further arguments}
-
-\item{model}{A model of class \code{ModelXGBoost}}
 }
 \value{
 the fitted values. If the input is a data.frame the predicted values will be given back as a vector of

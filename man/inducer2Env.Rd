@@ -7,7 +7,7 @@
 inducer2Env(.inducer)
 }
 \arguments{
-\item{inducer}{An object of class Inducer.}
+\item{.inducer}{An object of class Inducer.}
 }
 \value{
 nothing, but environment with inducers
