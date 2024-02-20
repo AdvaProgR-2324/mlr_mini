@@ -10,10 +10,10 @@
 SplitCV <- function(folds, repeats = 1) {
   checkmate::assertInt(folds, lower = 2)
   checkmate::assertInt(repeats, lower = 1)
-  
+
   splitcv <- function(.data) {
     checkmate::assertClass(.data, "Dataset")
-    
+
     result <- set_cv_idx(folds = folds, repeats = repeats)
     class(result) <- c("SplitInstanceCV", "SplitInstance")
     result_env <- list2env(as.list(environment(splitcv), all.names = TRUE), parent = emptyenv())
@@ -22,7 +22,7 @@ SplitCV <- function(folds, repeats = 1) {
     environment(result) <- result_env
     result
   }
-  
+
   hyperparameters <- list(folds = folds, repeats = repeats)
   env <- list2env(list(
     hyperparameters = hyperparameters,
@@ -68,21 +68,21 @@ print.SplitInstanceCV <- function(x, ...) {
   invisible(x)
 }
 #' @title Create a ResamplePrediction
-#' 
+#'
 #' @description
 #' This function creates a `ResamplePrediction` object that contains
 #' information on resampling procedure applied to given parameters.
-#' 
+#'
 #' @param .data A `Dataset` object.
 #' @param ind An `inducer` instance.
 #' @param splt A `SplitInstance` object.
-#' 
+#'
 #' @export
 resample <- function(.data, ind, splt) {
   checkmate::assert(inherits(.data, "Dataset"))
   checkmate::assert(inherits(ind, "Inducer"))
   checkmate::assert(inherits(splt, "Split"))
-  
+
   data.split <- splt(.data)
   result <- list()
   for (subtask in seq(length(data.split))) {
@@ -94,10 +94,11 @@ resample <- function(.data, ind, splt) {
     # fit model and predict
     model <- ind(data_train)
     prediction <- predict(model, data_validate)
-    result[[subtask]] <- list(predictions = predictions,
-                              modl = model,
-                              task = .data$type)
-    
+    result[[subtask]] <- list(
+      predictions = predictions,
+      modl = model,
+      task = .data$type
+    )
   }
   structure(list(result), class = "ResamplePrediction")
 }
@@ -108,7 +109,7 @@ resample <- function(.data, ind, splt) {
 #'
 #' @description
 #' Internal function to set the indices for resampling.
-#' 
+#'
 #' @param folds Integer number of folds.
 #' @param repeats Interger number of repetitions.
 #'
@@ -117,15 +118,17 @@ resample <- function(.data, ind, splt) {
 set_cv_idx <- function(folds, repeats) {
   checkmate::assertIntegerish(folds)
   checkmate::assertIntegerish(repeats)
-  
+
   result <- list()
   for (repetition in seq(repeats)) {
     idx_sample <- sample(seq(n))
-    idx_bins <- sort(cut(idx_sample, breaks = folds, labels = FALSE)) 
+    idx_bins <- sort(cut(idx_sample, breaks = folds, labels = FALSE))
     for (fold in seq(folds)) {
       idx <- (repetition - 1) * folds + fold
-      result[[idx]] <- list("training" = idx_sample[idx_bins == fold],
-                            "validation" = idx_sample[idx_bins != fold])
+      result[[idx]] <- list(
+        "training" = idx_sample[idx_bins == fold],
+        "validation" = idx_sample[idx_bins != fold]
+      )
     }
   }
   result
