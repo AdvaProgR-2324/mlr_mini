@@ -2,6 +2,7 @@
 #' @description If .data is empty an `InducerRpart` object will be created. If .data is
 #' a `Dataset` object a rpart model will be fitted.
 #' @seealso [fit.InducerRpart()]
+#' 
 #' @param .data data object of class `Dataset`
 #' @param formula a formula, with a response but no interaction terms. If this is a
 #' data frame, it is taken as the model frame
