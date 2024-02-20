@@ -22,9 +22,9 @@ Imports:
   pROC,
   ranger,
   rpart,
+  testthat,
   xgboost
 Suggests:
   rmarkdown,
-  knitr,
-  testthat
+  knitr
 RoxygenNote: 7.3.1
