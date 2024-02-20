@@ -1,8 +1,6 @@
 #' Hyperparameter
 #' This function return the name, type and range of hyperparameters
-#' @return An object of class 'Dataset' with attributes 'data' containing the actual data as a data.frame,
-#' 'target' with the name of the target covariable, 'type' which is either 'classification' or 'regression'
-#' and 'name'.
+#' @returnThis function return the name, type and range of hyperparameters
 #' @examples
 #' # hyperparameter(
 #' # learning_rate = c(0.001, 0.01, 0.1),
