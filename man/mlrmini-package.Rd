@@ -18,6 +18,15 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Fake Name \email{teru.mlrmini@gmail.com}
+
+\strong{Maintainer}: Stella Akouete \email{s.akouete@campus.lmu.de}
+
+Authors:
+\itemize{
+  \item Sven Morlock \email{svenmauricemorlock@yahoo.com}
+  \item Teresa Rupprecht \email{teresa.rupprecht@campus.lmu.de}
+  \item Felix Schweikl \email{f.schweikl@campus.lmu.de}
+}
+
 
 }

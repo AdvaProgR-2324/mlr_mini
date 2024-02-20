@@ -11,7 +11,8 @@ fit(...)
 \arguments{
 \item{...}{further arguments}
 
-\item{x}{An inducer which should be used for the model fitting.}
+\item{.inducer}{An inducer which should be used for the model fitting.}
+
 }
 \value{
 A fitted model.

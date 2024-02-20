@@ -6,6 +6,13 @@
 \usage{
 \method{print}{EvaluatorAUC}(x, ...)
 }
+
+\arguments{
+\item{x}{An \code{EvaluatorAUC} object which should be printed.}
+
+\item{...}{Optional arguments for the print function}
+}
+
 \description{
 Print an \code{EvaluatorAUC} object.
 }

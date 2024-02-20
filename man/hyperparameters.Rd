@@ -7,7 +7,9 @@
 hyperparameters(x, ...)
 }
 \arguments{
-\item{x}{An object for which the configuration should be returned}
+
+\item{x}{An object for which the hyperparameters should be returned.}
+
 
 \item{...}{Optional arguments passed to or from other methods.}
 }
@@ -15,5 +17,5 @@ hyperparameters(x, ...)
 The configuration of the object.
 }
 \description{
-\code{configuration} gets the configuration of a given object.
+\code{hyperparameters} gets the possible hyperparameter values of an object.
 }

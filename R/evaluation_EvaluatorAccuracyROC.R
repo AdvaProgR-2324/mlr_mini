@@ -47,8 +47,10 @@ EvaluatorAccuracy <- function(.prediction, .dataset, .target, .threshold = 0.5) 
   return(correct_classif / n)
 }
 
-#' @title Print an EvaluatorAUC
-#' @description Print an `EvaluatorAUC` object.
+#' @title Print an EvaluatorAccuracy
+#' @description Print an `EvaluatorAccuracy` object.
+#' @param x An `EvaluatorAccuracy` object which should be printed.
+#' @param ... Optional arguments for the print function.
 #' @examples
 #' x <- data.frame(var1 = c(1, 2, 3, 4, 5, 6, 7), target = c(1, 1, 1, 1, 0, 1, 0))
 #' predictions <- c(1)
@@ -112,6 +114,8 @@ EvaluatorAUC <- function(.prediction, .dataset, .target) {
 
 #' @title Print an EvaluatorAUC.
 #' @description Print an `EvaluatorAUC` object.
+#' @param x An `EvaluatorAUC` object which should be printed.
+#' @param ... Optional arguments for the print function
 #' @examples
 #' x <- data.frame(var1 = c(1, 2, 3, 4, 5, 6, 7), target = c(1, 1, 1, 1, 0, 1, 0))
 #' predictions <- c(1)
