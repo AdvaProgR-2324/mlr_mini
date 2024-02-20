@@ -2,7 +2,7 @@
 #' @description Evaluate the performance of a `ModelLm` using the Akaike information criterion.
 #' @param .model A `ModelLm` object for which the performance should be measured.
 #' @examples
-#' cars.ds <- Dataset(data = dataset::cars, target = "dist")
+#' cars.ds <- Dataset(data = cars, target = "dist")
 #' mod_fit <- fit(InducerLm(), cars.ds, formula = as.formula("dist~speed"))
 #' EvaluatorAIC(mod_fit)
 #' @return The AIC value of the fitted model.
