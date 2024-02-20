@@ -7,7 +7,9 @@
 hyperparameters(x, ...)
 }
 \arguments{
+
 \item{x}{An object for which the hyperparameters should be returned.}
+
 
 \item{...}{Optional arguments passed to or from other methods.}
 }

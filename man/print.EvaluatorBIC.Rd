@@ -6,11 +6,13 @@
 \usage{
 \method{print}{EvaluatorBIC}(x, ...)
 }
+
 \arguments{
 \item{x}{An \code{EvaluatorBIC} object which should be printed.}
 
 \item{...}{Optional arguments for the print function}
 }
+
 \description{
 Print an \code{EvaluatorBIC} object.
 }
