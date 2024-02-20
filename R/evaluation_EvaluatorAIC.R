@@ -23,6 +23,8 @@ EvaluatorAIC <- function(.model) {
 
 #' @title Print an EvaluatorAIC
 #' @description Print an `EvaluatorAIC` object.
+#' @param x An `EvaluatorAIC` object which should be printed.
+#' @param ... Optional arguments for the print function
 #' @examples
 #' cars.ds <- Dataset(data = dataset::cars, target = "dist")
 #' mod_fit <- fit(InducerLm(), cars.ds, formula = as.formula("dist~speed"))
@@ -59,6 +61,8 @@ EvaluatorBIC <- function(.model) {
 
 #' @title Print an EvaluatorBIC
 #' @description Print an `EvaluatorBIC` object.
+#' @param x An `EvaluatorBIC` object which should be printed.
+#' @param ... Optional arguments for the print function
 #' @examples
 #' cars.ds <- Dataset(data = dataset::cars, target = "dist")
 #' mod_fit <- fit(InducerLm(), cars.ds, formula = as.formula("dist~speed"))

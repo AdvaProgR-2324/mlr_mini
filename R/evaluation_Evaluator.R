@@ -4,7 +4,7 @@
 #' @param .configuration Optional argument for setting the configuration. The configuration has to be a named list.
 #' @param .value The value of the evaluation measure being used.
 #' @return An `Evaluator` object.
-Evaluator <- function(.function, .name, .configuration = list(), .value = numeric(0), ...) {
+Evaluator <- function(.name, .configuration = list(), .value = numeric(0), ...) {
   checkmate::assert_class(.name, "character")
   checkmate::assert_class(.configuration, "list")
   checkmate::assert_class(.value, "numeric")

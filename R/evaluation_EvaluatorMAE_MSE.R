@@ -47,6 +47,8 @@ EvaluatorMAE <- function(.prediction, .data, .target) {
 
 #' @title Print an EvaluatorMAE.
 #' @description Print an `EvaluatorMAE` object.
+#' @param x An `EvaluatorMAE` object which should be printed.
+#' @param ... Optional arguments for the print function
 #' @examples
 #' x <- data.frame(var1 = c(1, 1, 1, 1, 0), target = c(1, 2, 3, 4, 5))
 #' predictions <- c(3)
@@ -110,6 +112,8 @@ EvaluatorMSE <- function(.prediction, .data, .target) {
 
 #' @title Print an EvaluatorMSE
 #' @description Print an `EvaluatorMSE` object.
+#' @param x An `EvaluatorMSE` object which should be printed.
+#' @param ... Optional arguments for the print function
 #' @seealso [EvaluatorMSE()]
 #' @examples
 #' x <- data.frame(var1 = c(1, 1, 1, 1, 0), target = c(1, 2, 3, 4, 5))
