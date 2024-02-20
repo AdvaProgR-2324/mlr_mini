@@ -3,7 +3,7 @@
 **mlrmini**
 A mini-package for Machine Learning in R.
 
-Package website: [mlrmini]([https://github.com/mlr-org/mlr](https://advaprogr-2324.github.io/mlrmini/))
+Package website: [mlrmini](https://advaprogr-2324.github.io/mlrmini/)
 
 
 <!-- badges: start -->
