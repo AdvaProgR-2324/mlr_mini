@@ -3,5 +3,6 @@
 #' @importFrom datasets cars
 #' @importFrom xgboost xgboost
 #' @importFrom rpart rpart
-#' @import pROC
+#' @importFrom pROC auc
+#' @importFrom pROC roc
 "_PACKAGE"

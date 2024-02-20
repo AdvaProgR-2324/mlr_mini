@@ -102,7 +102,9 @@ EvaluatorAUC <- function(.prediction, .dataset, .target) {
     truth <- .prediction$truth
   }
   pred_data <- data.frame(truth = truth, prediction = prediction)
-  return(pROC::auc(pROC::roc(pred_data, "truth", "prediction", quiet = TRUE)))
+  ## davor: return(pROC::auc(pROC::roc(pred_data, "truth", "prediction", quiet = TRUE)))
+  return(auc(roc(pred_data, "truth", "prediction", quiet = TRUE)))
+
 }
 
 
