@@ -136,7 +136,7 @@ configuration.Inducer <- function(.inducer, ...) {
 #' @param .inducer an `Inducer` object
 #' @param value value for changing configuration
 #' @export
-#' @example
+#' @examples
 #' inducer <- InducerLm()
 #' inducer
 #' configuration(inducer)$x <- FALSE

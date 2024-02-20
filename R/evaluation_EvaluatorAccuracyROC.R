@@ -27,8 +27,10 @@ EvaluatorAccuracy <- function(.prediction, .dataset, .target, .threshold = 0.5) 
     class(eval) <- c("EvaluatorAccuracy", "Evaluator", "function")
     return(eval)
   }
-  stopifnot(".prediction must be a `Dataset` or a `data.frame`." = class(.prediction) %in% c("data.frame",
-                                                                                             "numeric"))
+  stopifnot(".prediction must be a `Dataset` or a `data.frame`." = class(.prediction) %in% c(
+    "data.frame",
+    "numeric"
+  ))
   if (is.numeric(.prediction)) {
     stopifnot(".data must be a `Dataset` or a `data.frame`." = class(.dataset) %in% c("data.frame", "Dataset"))
     checkmate::assert_character(.target, len = 1)
@@ -79,7 +81,7 @@ print.EvaluatorAccuracy <- function(x, ...) {
 #' EvaluatorAUC(predictions, x, "target")
 #' predictions <- data.frame(prediction = c(0.8, 0.2, 0.6, 0.8, 0.8), truth = c(1, 0, 1, 1, 1))
 #' EvaluatorAUC(predictions)
-#' predictions <- data.frame(prediction = c(0.8, 0.2, 0.6, 0.8, 0.8), truth = c(T, F, T, T, T))
+#' predictions <- data.frame(prediction = c(0.8, 0.2, 0.6, 0.8, 0.8), truth = c(TRUE, FALSE, TRUE, TRUE, TRUE))
 #' EvaluatorAUC(predictions)
 #' @export
 EvaluatorAUC <- function(.prediction, .dataset, .target) {
@@ -88,8 +90,10 @@ EvaluatorAUC <- function(.prediction, .dataset, .target) {
     class(eval) <- c("EvaluatorAUC", "Evaluator", "function")
     return(eval)
   }
-  stopifnot(".prediction must be a `Dataset` or a `data.frame`." = class(.prediction) %in% c("data.frame",
-                                                                                             "numeric"))
+  stopifnot(".prediction must be a `Dataset` or a `data.frame`." = class(.prediction) %in% c(
+    "data.frame",
+    "numeric"
+  ))
   if (is.numeric(.prediction)) {
     stopifnot(".data must be a `Dataset` or a `data.frame`." = class(.dataset) %in% c("data.frame", "Dataset"))
     checkmate::assert_character(.target, len = 1)
@@ -103,7 +107,6 @@ EvaluatorAUC <- function(.prediction, .dataset, .target) {
   }
   pred_data <- data.frame(truth = truth, prediction = prediction)
   return(auc(roc(pred_data, "truth", "prediction", quiet = TRUE))) # nolint
-
 }
 
 

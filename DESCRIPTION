@@ -18,9 +18,10 @@ Imports:
   data.table,
   ranger,
   rpart,
-  xgboost
+  xgboost,
+  pROC,
+  testthat
 Suggests:
   rmarkdown,
-  knitr,
-  testthat
+  knitr
 RoxygenNote: 7.3.1
