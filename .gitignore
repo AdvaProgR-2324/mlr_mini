@@ -11,8 +11,6 @@ vignettes/*.html
 /inst/doc/*
 !/inst/doc/*.html
 /doc/
-/docs/
 /data/
 *.rds
 *.Rproj
-docs

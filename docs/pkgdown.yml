@@ -1,0 +1,9 @@
+pandoc: 3.1.1
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles: {}
+last_built: 2024-02-20T22:56Z
+urls:
+  reference: https://advaprogr-2324.github.io/mlrmini/reference
+  article: https://advaprogr-2324.github.io/mlrmini/articles
+
