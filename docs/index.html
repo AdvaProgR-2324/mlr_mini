@@ -60,9 +60,31 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><p><strong>mlrmini</strong> A mini-package for Machine Learning in R.</p>
+  <main id="main" class="col-md-9"><div class="section level1">
+<div class="page-header"><h1 id="mlrmini">mlrmini<a class="anchor" aria-label="anchor" href="#mlrmini"></a>
+</h1></div>
+<p><strong>mlrmini</strong> A mini-package for Machine Learning in R.</p>
+<p>Package website: <a href="https://advaprogr-2324.github.io/mlrmini/">mlrmini</a></p>
 <!-- badges: start -->
 
+<div class="section level2">
+<h2 id="short-description">Short description<a class="anchor" aria-label="anchor" href="#short-description"></a>
+</h2>
+<p>mlrmini is a package developed to provide a simpler and consistent way for using machine learning algorithms in R. It allows therefore simplified evaluation and optimization of algorithms and is oriented on the mlr package. Currently it supports learners like xgboost, linear models and rpart</p>
+</div>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>Install the last release from CRAN:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"mlrmini"</span><span class="op">)</span></span></code></pre></div>
+<p>Install the development version from GitHub:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"AdvaProgR-2324/mlrmini"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="what-chatgpt-says-this-package-is-made-for">What ChatGPT says this package is made for<a class="anchor" aria-label="anchor" href="#what-chatgpt-says-this-package-is-made-for"></a>
+</h2>
 <p>In the realm of data, where patterns hide,<br>
 A tool emerges, mlrmini, with knowledge as its guide.</p>
 <p>With features rich and functions grand,<br>
@@ -79,12 +101,40 @@ mlrmini reigns, its excellence to sustain.</p>
 Mini but mighty, enhancing what’s due.</p>
 <p>So into the world of data, let’s venture and spin,<br>
 With mlrmini, let the learning begin!</p>
-<div class="section level2">
-<h2 id="a-package-description-made-by-the-authors">A package description made by the authors<a class="anchor" aria-label="anchor" href="#a-package-description-made-by-the-authors"></a>
-</h2>
-<p>mlrmini is a package developed to provide a simpler and consistent way for using machine learning algorithms in R. It allows therefore simplified evaluation and optimization of algorithms and is oriented on the mlr package.</p>
 </div>
-
+<div class="section level2">
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h2>
+<div class="section level3">
+<h3 id="defining-an-inducer">defining an Inducer<a class="anchor" aria-label="anchor" href="#defining-an-inducer"></a>
+</h3>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/AdvaProgR-2324/mlrmini" class="external-link">mlrmini</a></span><span class="op">)</span></span>
+<span><span class="va">inducerxgb</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/InducerXGBoost.html">InducerXGBoost</a></span><span class="op">(</span>nrounds <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="fitting-a-model">fitting a model<a class="anchor" aria-label="anchor" href="#fitting-a-model"></a>
+</h3>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cars.data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/Dataset.html">Dataset</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">cars</span>, target <span class="op">=</span> <span class="st">"dist"</span><span class="op">)</span></span>
+<span><span class="va">fitxgb</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fit.html">fit</a></span><span class="op">(</span><span class="va">inducerxgb</span>, .data <span class="op">=</span> <span class="va">cars.data</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="reviewing-the-results">reviewing the results<a class="anchor" aria-label="anchor" href="#reviewing-the-results"></a>
+</h3>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/modelObject.html">modelObject</a></span><span class="op">(</span><span class="va">fitxgb</span><span class="op">)</span></span>
+<span><span class="va">fitxgb</span><span class="op">$</span><span class="va">modelInfo</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="evaluate-the-performance-of-the-model">evaluate the performance of the model<a class="anchor" aria-label="anchor" href="#evaluate-the-performance-of-the-model"></a>
+</h3>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/predict.html">predict</a></span><span class="op">(</span><span class="va">model.xgb</span>, newdata <span class="op">=</span> <span class="va">cars.data</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/EvaluatorMSE.html">EvaluatorMSE</a></span><span class="op">(</span><span class="va">predictions</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+</div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
@@ -112,7 +162,10 @@ With mlrmini, let the learning begin!</p>
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Fake Name <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Stella Akouete <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Sven Morlock <br><small class="roles"> Author </small>  </li>
+<li>Teresa Rupprecht <br><small class="roles"> Author </small>  </li>
+<li>Felix Schweikl <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 
@@ -131,7 +184,7 @@ With mlrmini, let the learning begin!</p>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Fake Name.</p>
+<p>Developed by Stella Akouete, Sven Morlock, Teresa Rupprecht, Felix Schweikl.</p>
 </div>
 
 <div class="pkgdown-footer-right">
