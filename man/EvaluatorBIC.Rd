@@ -16,7 +16,7 @@ The BIC value of the fitted model.
 Evaluate the performance of a \code{ModelLm} using the Bayesian information criterion.
 }
 \examples{
-cars.ds <- Dataset(data = dataset::cars, target = "dist")
+cars.ds <- Dataset(data = cars, target = "dist")
 mod_fit <- fit(InducerLm(), cars.ds, formula = as.formula("dist~speed"))
 EvaluatorBIC(mod_fit)
 }

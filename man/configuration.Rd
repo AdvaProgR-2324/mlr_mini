@@ -11,7 +11,7 @@ configuration(...)
 \arguments{
 \item{...}{further arguments}
 
-\item{x}{An object for which the configuration should be returned}
+\item{x}{An object for which the configuration should be returned.}
 }
 \value{
 The configuration of the object.

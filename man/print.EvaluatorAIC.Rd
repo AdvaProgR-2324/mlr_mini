@@ -15,7 +15,7 @@
 Print an \code{EvaluatorAIC} object.
 }
 \examples{
-cars.ds <- Dataset(data = dataset::cars, target = "dist")
+cars.ds <- Dataset(data = cars, target = "dist")
 mod_fit <- fit(InducerLm(), cars.ds, formula = as.formula("dist~speed"))
 evaluation <- EvaluatorAIC(mod_fit)
 print(evaluation)

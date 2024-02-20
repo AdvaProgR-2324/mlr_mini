@@ -15,7 +15,7 @@
 Print an \code{EvaluatorBIC} object.
 }
 \examples{
-cars.ds <- Dataset(data = dataset::cars, target = "dist")
+cars.ds <- Dataset(data = cars, target = "dist")
 mod_fit <- fit(InducerLm(), cars.ds, formula = as.formula("dist~speed"))
 evaluation <- EvaluatorBIC(mod_fit)
 print(evaluation)
