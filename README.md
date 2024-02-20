@@ -58,7 +58,7 @@ With mlrmini, let the learning begin!
 
 ## Example
 
-### defnining an Inducer
+### defining an Inducer
 ``` r
 library(mlrmini)
 inducerxgb <- InducerXGBoost(nrounds = 4)
@@ -77,8 +77,11 @@ modelObject(fitxgb)
 fitxgb$modelInfo
 ```
 
+### evaluate the performance of the model
 
-
-
+```r
+predictions <- predict(model.xgb, newdata = cars.data)
+EvaluatorMSE(predictions)
+```
 
 

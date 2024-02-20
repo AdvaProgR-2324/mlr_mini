@@ -4,7 +4,7 @@
 \alias{metainfo.Dataset}
 \title{Print the meta Information of a dataset}
 \usage{
-metainfo.Dataset(
+\method{metainfo}{Dataset}(
   data,
   targets = data$target,
   type = data$type,

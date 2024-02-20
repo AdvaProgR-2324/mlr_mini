@@ -3,6 +3,7 @@
 #' a LM model will be fitted
 #' @seealso [fit.InducerLm()]
 #' @param .data data object of class `Dataset`.
+#' @param formula a formula that should be used for the linear model.
 #' @param subset An optional argument. A vector specifying a subset of observations that should be used
 #' for fitting the model.
 #' @param weights An optional argument. A vector of weights that should be used for fitting the model.
@@ -20,13 +21,6 @@
 #' @examples
 #' cars.data <- Dataset(data = cars, target = "dist")
 #' inducer <- InducerLm()
-#' @export
-#' @example
-#' inducer <- InducerLm()
-#' inducer
-#' cars.data <- Dataset(data = cars, target = "dist")
-#' fittedInd <- InducerLm(.data = cars.data)
-#' fittedInd
 InducerLm <- function(.data = NULL, formula, subset, weights, na.action, method = "qr", model = TRUE,
                       x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE, offset) { # ggf. contrasts = NULL,
   # assert
@@ -63,7 +57,7 @@ InducerLm <- function(.data = NULL, formula, subset, weights, na.action, method 
 #' @param ... optional arguments to `print` methods.
 #' @seealso [InducerLm()]
 #' @export
-#' @example
+#' @examples
 #' inducer <- InducerLm()
 #' inducer
 print.InducerLm <- function(x, ...) {

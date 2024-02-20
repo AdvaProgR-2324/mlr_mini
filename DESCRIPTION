@@ -2,7 +2,10 @@ Package: mlrmini
 Title: mlrmini
 Version: 0.0.1
 Authors@R: c(
-    person(given = "Fake", family = "Name", role = c("aut", "cre"), email = "teru.mlrmini@gmail.com")
+    person(given = "Stella", family = "Akouete", role = c("aut", "cre"), email = "s.akouete@campus.lmu.de"),
+    person(given = "Sven", family = "Morlock", role = "aut", email = "svenmauricemorlock@yahoo.com"),
+    person(given = "Teresa", family = "Rupprecht", role = "aut", email = "teresa.rupprecht@campus.lmu.de"),
+    person(given = "Felix", family = "Schweikl", role = "aut", email = "f.schweikl@campus.lmu.de")
   )
 Description: A package  for machine learning in R.
 License: GPL (>= 3)
@@ -16,11 +19,14 @@ Roxygen: list(markdown = TRUE)
 Imports:
   checkmate,
   data.table,
+  pROC,
   ranger,
   rpart,
+  testthat,
   xgboost
 Suggests:
   rmarkdown,
   knitr,
   testthat
+  knitr
 RoxygenNote: 7.3.1
