@@ -32,8 +32,6 @@ InducerXGBoost <- function(.data = NULL, nrounds = 1, eta = 0.3, gamma = 0, max_
     checkmate::assert_class(x = .data, classes = "Dataset")
   }
 
-  # TODO Beschreibung
-
   if (is.null(.data)) {
     ind <- InducerXGBoost
     original_call <- match.call(expand.dots = FALSE)
