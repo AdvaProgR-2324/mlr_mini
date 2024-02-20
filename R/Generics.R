@@ -1,10 +1,9 @@
 #' @title S3 method metainfo
 #' @description Get the information about an object.
-#' @param x An object used to select a method.
 #' @param ... Optional arguments passed to or from other methods.
 #' @return The metainfo of the object.
 #' @export
-metainfo <- function(x, ...) {
+metainfo <- function(...) {
   UseMethod("metainfo")
 }
 
@@ -41,11 +40,11 @@ fit <- function(.inducer, ...) {
 
 #' @title S3 method predict
 #' @description `predict` predicts the value of the response variable using a fitted model.
-#' @param x A fitted model which should be used for predicting on new data.
+#' @param object A fitted model which should be used for predicting on new data.
 #' @param ... Optional arguments passed to or from other methods.
 #' @return A fitted model.
 #' @export
-predict <- function(x, ...) {
+predict <- function(object, ...) {
   UseMethod("predict")
 }
 
@@ -60,10 +59,10 @@ modelObject <- function(x, ...) {
 
 #' @title S3 method modelInfo
 #' @description Get additional information about a `Model` object.
-#' @param x The model about which the information should be obtained.
+#' @param model The model about which the information should be obtained.
 #' @param ... Optional arguments passed to or from other methods.
 #' @return The information about the provided `Model` object.
 #' @export
-modelInfo <- function(x, ...) {
+modelInfo <- function(model, ...) {
   UseMethod("modelInfo")
 }
