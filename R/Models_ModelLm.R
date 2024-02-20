@@ -101,7 +101,6 @@ fit.InducerLm <- function(.inducer, .data, formula, subset, weights, na.action, 
 #' predict.ModelLm(object = lmfit, newdata = data.frame(speed = 10))
 #' predict.ModelLm(object = lmfit, newdata = cars.data[c(1, 2, 3, 4), ])
 predict.ModelLm <- function(object, newdata, ...) {
-
   checkmate::assert_class(x = object, classes = "ModelLm")
   if (length(class(newdata)) > 1) {
     stopifnot(".data muste be of class Dataset or data.frame" = c("Dataset") %in% class(newdata))

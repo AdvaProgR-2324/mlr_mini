@@ -27,10 +27,9 @@ hp <- function(...) {
   )
   class(info) <- "hp"
   return(info)
-  
+
   # Convert data.table to data frame
   info <- as.data.frame(info)
-  
 }
 
 
