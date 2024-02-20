@@ -31,11 +31,11 @@ hyperparameters <- function(x, ...) {
 
 #' @title S3 method fit
 #' @description `fit` fits a model on given data.
-#' @param x An inducer which should be used for the model fitting.
+#' @param .inducer An inducer which should be used for the model fitting.
 #' @param ... Optional arguments passed to or from other methods.
 #' @return A fitted model.
 #' @export
-fit <- function(x, ...) {
+fit <- function(.inducer, ...) {
   UseMethod("fit")
 }
 
