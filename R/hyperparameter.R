@@ -1,15 +1,15 @@
 #' Hyperparameter
 #' This function return the name, type and range of hyperparameters
 #' @returnThis function return the name, type and range of hyperparameters
+#' @param ... optional arguments
 #' @examples
-#' # hpx <- hp(x = p_num(0, 1), y = p_int(1, Inf), z = p_fct(letters))
-# hpx
+#' # hpx <- hp(x = p_num(0, 1), y = p_int(1, Inf), z = p_fct(letters)) hpx
 #> name type range
 #> 1: x num [0, 1]
 #> 2: y int [1, Inf]
 #> 3: z fct {"a", "b", "c", ...}
 #' @export
-hyperparameter <- function(...) {
+hp <- function(...) {
   args <- list(...)
   names <- names(args)
   types <- sapply(args, class)

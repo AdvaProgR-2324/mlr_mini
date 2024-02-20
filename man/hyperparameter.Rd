@@ -7,22 +7,10 @@ This function return the name, type and range of hyperparameters}
 \usage{
 hyperparameter(...)
 }
-\value{
-An object of class 'Dataset' with attributes 'data' containing the actual data as a data.frame,
-'target' with the name of the target covariable, 'type' which is either 'classification' or 'regression'
-and 'name'.
-}
 \description{
 Hyperparameter
 This function return the name, type and range of hyperparameters
 }
 \examples{
-# hyperparameter(
-# learning_rate = c(0.001, 0.01, 0.1),
-# batch_size = c(1, Inf),
-# optimizer = c("adam", "sgd", "rmsprop"),  z = factor(letters))
-
-# expected ouptut:
-# name      type range
-# z      factor
+# hpx <- hp(x = p_num(0, 1), y = p_int(1, Inf), z = p_fct(letters))
 }
