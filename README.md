@@ -77,8 +77,11 @@ modelObject(fitxgb)
 fitxgb$modelInfo
 ```
 
+### evaluate the performance of the model
 
-
-
+```r
+predictions <- predict(model.xgb, newdata = cars.data)
+EvaluatorMSE(predictions)
+```
 
 
