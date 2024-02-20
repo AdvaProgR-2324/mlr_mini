@@ -32,8 +32,10 @@ test_that("Test output of EvaluatorMAE using constant prediction", {
 })
 
 test_that("Test output of EvaluatorMAE with logical values for the response", {
-  x <- data.frame(var1 = c(1, 2, 3, 4, 5, 6, 7),
-                  target = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE))
+  x <- data.frame(
+    var1 = c(1, 2, 3, 4, 5, 6, 7),
+    target = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE)
+  )
   y <- data.frame(var1 = c(1, 2, 3, 4, 5, 6, 7), target = c(1, 1, 1, 1, 0, 1, 0))
   predictions <- c(1)
   expect_equal(EvaluatorMAE(predictions, x, "target"), EvaluatorMAE(predictions, x, "target"))
@@ -51,8 +53,10 @@ test_that("Test output of EvaluatorMSE on a constant model", {
 })
 
 test_that("Test output of EvaluatorMSE with logical values for the response", {
-  x <- data.frame(var1 = c(1, 2, 3, 4, 5, 6, 7),
-                  target = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE))
+  x <- data.frame(
+    var1 = c(1, 2, 3, 4, 5, 6, 7),
+    target = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE)
+  )
   y <- data.frame(var1 = c(1, 2, 3, 4, 5, 6, 7), target = c(1, 1, 1, 1, 0, 1, 0))
   predictions <- c(1)
   expect_equal(EvaluatorMSE(predictions, x, "target"), EvaluatorMSE(predictions, x, "target"))
