@@ -89,7 +89,7 @@ fit.InducerLm <- function(.inducer, .data, formula, subset, weights, na.action, 
 #' @title Predict values for `fit.InducerLm`
 #' @description Predict from the results of a linear model
 #' @seealso [fit.InducerLm()]
-#' @param model a linear model of class `ModelLm`
+#' @param object a linear model of class `ModelLm`
 #' @param newdata data of class `data.frame` or `Dataset`
 #' @param ... additional arguments
 #' @return An object with the predictions of class `numeric` or `data.frame`
@@ -101,7 +101,6 @@ fit.InducerLm <- function(.inducer, .data, formula, subset, weights, na.action, 
 #' predict.ModelLm(object = lmfit, newdata = data.frame(speed = 10))
 #' predict.ModelLm(object = lmfit, newdata = cars.data[c(1, 2, 3, 4), ])
 predict.ModelLm <- function(object, newdata, ...) {
-  # TODO check if dataset Name of newdata is equal to the dataset name of model obj
 
   checkmate::assert_class(x = object, classes = "ModelLm")
   if (length(class(newdata)) > 1) {
@@ -111,7 +110,6 @@ predict.ModelLm <- function(object, newdata, ...) {
   }
 
   fittedModel <- object$model.out
-  # not in use dataModel <- object$mode.data$data
 
   if ("data.frame" %in% class(newdata)) { # if dataframe: only vector with prediction values
     stopifnot(setequal(colnames(newdata), object$data.features)) # newdata must have same variables as spec in model

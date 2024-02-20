@@ -1,7 +1,7 @@
 #' @title Fit a Model using `InducerRpart`
 #' @description Fit a rpart model on the provided data.
 #' @param .inducer An `InducerRpart` object. The Inducer which should be used for the fitting.
-#' @param data The data to which the model should be fitted, provided as a `Dataset` object.
+#' @param .data The data to which the model should be fitted, provided as a `Dataset` object.
 #' @param formula An optional parameter setting the `formula` argument of an `InducerRpart` object.
 #' @param weights optional case weights.
 #' @param subset optional expression saying that only a subset of the rows of the data should be used in the fit.
@@ -91,7 +91,7 @@ fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.actio
 #' @title Predict values for `fit.InducerRpart`
 #' @description Predict from the results of a rpart model
 #' @seealso [fit.InducerRpart()]
-#' @param model a linear model of class `ModelRpart`
+#' @param object a linear model of class `ModelRpart`
 #' @param newdata data of class `data.frame` or `Dataset`
 #' @param ... additional arguments
 #' @return An object with the predictions of class `numeric` or `data.frame`

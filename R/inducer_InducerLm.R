@@ -3,6 +3,7 @@
 #' a LM model will be fitted
 #' @seealso [fit.InducerLm()]
 #' @param .data data object of class `Dataset`.
+#' @param formula a formula that should be used for the linear model.
 #' @param subset An optional argument. A vector specifying a subset of observations that should be used
 #' for fitting the model.
 #' @param weights An optional argument. A vector of weights that should be used for fitting the model.

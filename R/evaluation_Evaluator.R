@@ -3,6 +3,7 @@
 #' @param .name The name of the Evaluator provided as a string.
 #' @param .configuration Optional argument for setting the configuration. The configuration has to be a named list.
 #' @param .value The value of the evaluation measure being used.
+#' @param ... optional arguments.
 #' @return An `Evaluator` object.
 Evaluator <- function(.name, .configuration = list(), .value = numeric(0), ...) {
   checkmate::assert_class(.name, "character")

@@ -11,7 +11,7 @@ ind <- list2env(
 
 #' @title Add new inducer to environment
 #' @description Add new inducer to environment
-#' @param inducer An object of class Inducer.
+#' @param .inducer An object of class Inducer.
 #' @return nothing, but environment with inducers
 #' @export
 inducer2Env <- function(.inducer) {
@@ -21,7 +21,6 @@ inducer2Env <- function(.inducer) {
     assign(x = chrInd, value = .inducer, envir = ind)
     cat("Inducer", chrInd, "successfully added to environment")
   } else if ("Inducer" %in% class(.inducer)) {
-    # TODO
   }
 }
 
@@ -33,13 +32,13 @@ inducer2Env <- function(.inducer) {
 
 #' @title Get the Hyperparameters of an inducer
 #' @description Get the Hyperparameters of an inducer.
-#' @param inducer An object of class Inducer.
-#' @value a datatable containing the name, the type and the range of the hyperparameters of an Inducer object.
+#' @param x An object of class Inducer.
+#' @param ... Optional arguments.
 #' @export
-hyperparameters <- function(.inducer, ...) {
-  assert_class(.inducer, c("Inducer", "function"))
-  stopifnot(length(class(.inducer)) == 3)
-  name <- gsub("Inducer", "", class(.inducer)[1]) # take the first class name "Inducer*name*" to get the *name*
+hyperparameters <- function(x, ...) {
+  assert_class(x, c("Inducer", "function"))
+  stopifnot(length(class(x)) == 3)
+  name <- gsub("Inducer", "", class(x)[1]) # take the first class name "Inducer*name*" to get the *name*
   hyperparams <- get(paste0("Hyperparameter", name)) # get the associated list of the hyperparameters
   hyperparams_table <- data.table::data.table(
     name = sapply(hyperparams, function(x) x$name),
