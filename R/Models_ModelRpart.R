@@ -91,7 +91,7 @@ fit.InducerRpart <- function(.inducer, .data, formula, weights, subset, na.actio
 #' @title Predict values for `fit.InducerRpart`
 #' @description Predict from the results of a rpart model
 #' @seealso [fit.InducerRpart()]
-#' @param model a linear model of class `ModelRpart`
+#' @param object a linear model of class `ModelRpart`
 #' @param newdata data of class `data.frame` or `Dataset`
 #' @param ... additional arguments
 #' @return An object with the predictions of class `numeric` or `data.frame`

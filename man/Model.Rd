@@ -18,9 +18,25 @@ Model(
 )
 }
 \arguments{
-\item{data}{The data given in an Dataset object.}
+\item{inducer.name}{The name of the inducer}
 
-\item{inducer}{An Inducer object: The applied inducer}
+\item{inducer.configuration}{The configuration of the Inducer}
+
+\item{data.name}{The name of the Dataset used in the model.}
+
+\item{data.target}{The name of the target variable.}
+
+\item{data.features}{The name of the features.}
+
+\item{fitted.values}{The fitted values by the model.}
+
+\item{coefficients}{The coefficients of the model}
+
+\item{modelInfo}{The Info of the model.}
+
+\item{model.out}{The model output.}
+
+\item{model.data}{The data of the model.}
 }
 \description{
 Create a Model object given a dataset and an inducer.

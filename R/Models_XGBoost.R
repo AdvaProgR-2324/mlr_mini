@@ -78,7 +78,7 @@ fit.InducerXGBoost <- function(.inducer, .data = NULL, nrounds = 1, eta = 0.3, g
 
 #' @title Predict values for `fit.InducerXGBoost`
 #' @description Predict from the results of a xgboost model
-#' @param model A model of class `ModelXGBoost`
+#' @param object A model of class `ModelXGBoost`
 #' @param newdata data of class `data.frame` or `Dataset`
 #' @param ... further arguments
 #' @return the fitted values. If the input is a data.frame the predicted values will be given back as a vector of

@@ -22,6 +22,8 @@ InducerLm(
 \arguments{
 \item{.data}{data object of class \code{Dataset}.}
 
+\item{formula}{a formula that should be used for the linear model.}
+
 \item{subset}{An optional argument. A vector specifying a subset of observations that should be used
 for fitting the model.}
 

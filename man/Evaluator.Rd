@@ -12,6 +12,8 @@ Evaluator(.name, .configuration = list(), .value = numeric(0), ...)
 \item{.configuration}{Optional argument for setting the configuration. The configuration has to be a named list.}
 
 \item{.value}{The value of the evaluation measure being used.}
+
+\item{...}{optional arguments.}
 }
 \value{
 An \code{Evaluator} object.
