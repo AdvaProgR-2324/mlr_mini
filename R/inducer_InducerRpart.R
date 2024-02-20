@@ -2,7 +2,6 @@
 #' @description If .data is empty an `InducerRpart` object will be created. If .data is
 #' a `Dataset` object a rpart model will be fitted.
 #' @seealso [fit.InducerRpart()]
-#' 
 #' @param .data data object of class `Dataset`
 #' @param formula a formula, with a response but no interaction terms. If this is a
 #' data frame, it is taken as the model frame
@@ -66,7 +65,7 @@ InducerRpart <- function(.data = NULL, formula, weights, subset, na.action = "na
 #' @param ... optional arguments to `print` methods.
 #' @seealso [InducerRpart()]
 #' @export
-#' @example
+#' @examples
 #' inducer <- InducerRpart()
 #' inducer
 print.InducerRpart <- function(x, ...) {
