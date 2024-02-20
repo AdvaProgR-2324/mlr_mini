@@ -2,12 +2,16 @@
 % Please edit documentation in R/evaluation_EvaluatorAccuracyROC.R
 \name{print.EvaluatorAccuracy}
 \alias{print.EvaluatorAccuracy}
-\title{Print an EvaluatorAUC}
+\title{Print an EvaluatorAccuracy}
 \usage{
 \method{print}{EvaluatorAccuracy}(x, ...)
 }
+\arguments{
+\item{...}{Optional arguments for the print function.}
+}
 \description{
-Print an \code{EvaluatorAUC} object.
+Print an \code{EvaluatorAccuracy} object.
+#' @param x An \code{EvaluatorAccuracy} object which should be printed.
 }
 \examples{
 x <- data.frame(var1 = c(1, 2, 3, 4, 5, 6, 7), target = c(1, 1, 1, 1, 0, 1, 0))

@@ -18,7 +18,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Stella Akouete \email{s.akoute@campus.lmu.de}
+\strong{Maintainer}: Stella Akouete \email{s.akouete@campus.lmu.de}
 
 Authors:
 \itemize{
