@@ -110,7 +110,7 @@ resample <- function(.data, ind, splt) {
 #' @description
 #' Internal function to set the indices for resampling.
 #'
-#' @param folds Integer number of folds.
+#' @param folds Integer number of foldls.
 #' @param repeats Interger number of repetitions.
 #' @param n Integer for number of observations.
 #'
