@@ -79,7 +79,7 @@ print.EvaluatorAccuracy <- function(x, ...) {
 #' EvaluatorAUC(predictions, x, "target")
 #' predictions <- data.frame(prediction = c(0.8, 0.2, 0.6, 0.8, 0.8), truth = c(1, 0, 1, 1, 1))
 #' EvaluatorAUC(predictions)
-#' predictions <- data.frame(prediction = c(0.8, 0.2, 0.6, 0.8, 0.8), truth = c(T, F, T, T, T))
+#' predictions <- data.frame(prediction = c(0.8, 0.2, 0.6, 0.8, 0.8), truth = c(TRUE, FALSE, TRUE, TRUE, TRUE))
 #' EvaluatorAUC(predictions)
 #' @export
 EvaluatorAUC <- function(.prediction, .dataset, .target) {
