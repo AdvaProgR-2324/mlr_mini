@@ -10,10 +10,10 @@
 SplitCV <- function(folds, repeats = 1) {
   checkmate::assertInt(folds, lower = 2)
   checkmate::assertInt(repeats, lower = 1)
-  
+
   splitcv <- function(.data) {
     checkmate::assertClass(.data, "Dataset")
-    
+
     result <- set_cv_idx(folds = folds, repeats = repeats, n = nrow(.data$data))
     class(result) <- c("SplitInstanceCV", "SplitInstance")
     result_env <- list2env(as.list(environment(splitcv), all.names = TRUE), parent = emptyenv())
@@ -22,7 +22,7 @@ SplitCV <- function(folds, repeats = 1) {
     environment(result) <- result_env
     result
   }
-  
+
   hyperparameters <- list(folds = folds, repeats = repeats)
   env <- list2env(list(
     hyperparameters = hyperparameters,
@@ -82,7 +82,7 @@ resample <- function(.data, ind, splt) {
   checkmate::assert(inherits(.data, "Dataset"))
   checkmate::assert(inherits(ind, "Inducer"))
   checkmate::assert(inherits(splt, "Split"))
-  
+
   data.split <- splt(.data)
   result <- list()
   for (subtask in seq_along(length(data.split))) {
@@ -119,7 +119,7 @@ resample <- function(.data, ind, splt) {
 set_cv_idx <- function(folds, repeats, n) {
   checkmate::assertIntegerish(folds)
   checkmate::assertIntegerish(repeats)
-  
+
   result <- list()
   for (repetition in seq(repeats)) {
     idx_sample <- sample(seq(n))
