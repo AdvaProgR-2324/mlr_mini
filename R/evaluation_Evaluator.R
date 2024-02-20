@@ -13,7 +13,8 @@ Evaluator <- function(.name, .configuration = list(), .value = numeric(0), ...) 
       name = .name,
       configuration = .configuration,
       value = .value
-    ), class = c("Evaluator", "function")
+    ),
+    class = c("Evaluator", "function")
   )
 }
 

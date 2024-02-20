@@ -25,8 +25,10 @@ EvaluatorMAE <- function(.prediction, .data, .target) {
     class(eval) <- c("EvaluatorMAE", "Evaluator", "function")
     return(eval)
   } else {
-    stopifnot(".prediction must be a `Dataset` or a `data.frame`." = class(.prediction) %in% c("data.frame",
-                                                                                               "numeric"))
+    stopifnot(".prediction must be a `Dataset` or a `data.frame`." = class(.prediction) %in% c(
+      "data.frame",
+      "numeric"
+    ))
     if (!missing(.data)) {
       stopifnot(".data must be a `Dataset` or a `data.frame`." = class(.data) %in% c("Dataset", "data.frame"))
       if (is.data.frame(.data)) {
@@ -90,8 +92,10 @@ EvaluatorMSE <- function(.prediction, .data, .target) {
     class(eval) <- c("EvaluatorMSE", "Evaluator", "function")
     return(eval)
   } else {
-    stopifnot(".prediction must be a `Dataset` or a `data.frame`." = class(.prediction) %in% c("data.frame",
-                                                                                               "numeric"))
+    stopifnot(".prediction must be a `Dataset` or a `data.frame`." = class(.prediction) %in% c(
+      "data.frame",
+      "numeric"
+    ))
     if (!missing(.data)) {
       stopifnot(".data must be a `Dataset` or a `data.frame`." = class(.data) %in% c("Dataset", "data.frame"))
       if (is.data.frame(.data)) {

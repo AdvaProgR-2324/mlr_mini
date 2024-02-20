@@ -6,11 +6,13 @@
 \usage{
 \method{print}{EvaluatorMSE}(x, ...)
 }
+
 \arguments{
 \item{x}{An \code{EvaluatorMSE} object which should be printed.}
 
 \item{...}{Optional arguments for the print function}
 }
+
 \description{
 Print an \code{EvaluatorMSE} object.
 }
