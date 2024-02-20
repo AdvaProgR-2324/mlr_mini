@@ -84,6 +84,7 @@ resample <- function(.data, ind, splt) {
   checkmate::assert(inherits(splt, "Split"))
   
   data.split <- splt(.data)
+  result <- list()
   for (subtask in seq(length(data.split))) {
     # get train and validation data
     data_train_idx <- data.split[[subtask]]$training
@@ -93,11 +94,12 @@ resample <- function(.data, ind, splt) {
     # fit model and predict
     model <- ind(data_train)
     prediction <- predict(model, data_validate)
-    
+    result[[subtask]] <- list(predictions = predictions,
+                              modl = model,
+                              task = .data$type)
     
   }
-  data_train <- .data$data[]
-  model <- ind(cars.data)
+  structure(list(result), class = "ResamplePrediction")
 }
 
 
